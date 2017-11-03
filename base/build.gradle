@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.hujiang.android-aspectjx'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "com.han.hanmaxmin"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+/**
+ * aspectjx默认会遍历项目编译后所有的.class文件和依赖的第三方库去查找符合织入条件的切点，
+ * 为了提升编译效率，可以加入过滤条件指定遍历某些库或者不遍历某些库。
+ * includeJarFilter和excludeJarFilter可以支持groupId过滤，
+ * artifactId过滤，或者依赖路径匹配过滤
+ */
+            aspectjx{
+                excludeJarFilter'.jar'
+                excludeJarFilter 'com.android.support'
+                excludeJarFilter 'com.github.bumptech'
+                excludeJarFilter 'org.greenrobot:eventbus'
+                excludeJarFilter 'com.jakewharton:butterknife'
+                excludeJarFilter 'org.aspectj:aspectjrt'
+                excludeJarFilter 'com.squareup.retrofit2'
+                excludeJarFilter 'com.squareup.okhttp3'
+                excludeJarFilter 'com.google.code.gson'
+                excludeJarFilter 'io.reactivex:rxandroid'
+                excludeJarFilter 'org.javassist:javassist'
+
+            }
+
+
+dependencies {
+    /**
+     * compile 主应用程序
+     * androidTestCompile: 测试的应用程序
+     * debugCompile: debug Build Type
+     * releaseCompile: release Build Type.
+     */
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    /*AspectJ*/
+    compile 'org.aspectj:aspectjrt:1.8.9'
+    /*Glide*/
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC0'
+    /*EventBus*/
+    compile 'org.greenrobot:eventbus:3.0.0'
+    /*okHttp*/
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    /*gson*/
+    compile 'com.google.code.gson:gson:2.8.1'
+
+}
