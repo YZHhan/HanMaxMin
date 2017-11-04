@@ -8,65 +8,97 @@ import android.widget.TextView;
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.utils.HanHelper;
-import com.han.hanmaxmin.hantext.aspect.Toast;
+import com.han.hanmaxmin.hantext.aspect.intent.Intent;
+import com.han.hanmaxmin.hantext.aspect.log.Log;
+import com.han.hanmaxmin.hantext.aspect.toast.Toast;
 
 public class
 
 
 
 
-MainActivity extends AppCompatActivity {
+MainActivity extends AppCompatActivity implements View.OnClickListener{
     private String TAG = "MainActivity";
-    private TextView main_text;
+    private TextView main_toast;
+    private TextView main_log;
+    private TextView main_intent;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         HanHelper.getInstance().getScreenHelper().pushActivity(this);
-        main_text = (TextView) findViewById(R.id.main_text);
-        main_text.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+        main_toast = (TextView) findViewById(R.id.main_toast);
+        main_log = (TextView) findViewById(R.id.main_log);
+        main_intent = (TextView) findViewById(R.id.main_intent);
+
+        main_toast.setOnClickListener(this);
+        main_log.setOnClickListener(this);
+        main_intent.setOnClickListener(this);
+    }
+
+
+    @Override public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.main_toast://Aspect——Toast
                 toast();
-            }
-        });
+                break;
+            case R.id.main_log://Aspect——Log
+                log();
+                break;
+            case R.id.main_intent://Aspect——Intent
+                intent();
+                break;
 
+        }
+    }
+    @Intent(Main2Activity.class)
+    private void intent() {
+        L.i("Toast","___________________----------Aspect_Intent");
+    }
 
+    @Log("我是被注解进来的")
+    private void log() {
+        L.i("Toast","___________________----------Aspect_Log");
     }
 
 
-    @Toast("我是注解进来的")
+    @Toast("注解Toast")
     private void toast() {
-        L.i("Toast","___________________----------方法里面啥都没有");
+        L.i("Toast","___________________----------Aspect_Toast");
     }
+
+
 
 
     @Override protected void onStart() {
         super.onStart();
-        L.i(TAG, "onStart");
     }
 
+    @Log("onRestart")
     @Override protected void onRestart() {
         super.onRestart();
-        L.i(TAG, "onRestart");
     }
 
+    @Log("onPause")
     @Override protected void onPause() {
         super.onPause();
-        L.i(TAG, "onPause");
     }
 
+    @Log("onResume")
     @Override protected void onResume() {
         super.onResume();
-        L.i(TAG, "onResume");
     }
-
+    @Log("onStop")
     @Override protected void onStop() {
         super.onStop();
-        L.i(TAG, "onStop");
     }
 
+
+    @Log("onDestroy")
     @Override protected void onDestroy() {
         super.onDestroy();
-        L.i(TAG, "onDestroy");
     }
+
+
+
 }

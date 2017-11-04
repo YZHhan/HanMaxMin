@@ -1,4 +1,4 @@
-package com.han.hanmaxmin.hantext.aspect;
+package com.han.hanmaxmin.hantext.aspect.toast;
 
 import com.han.hanmaxmin.common.log.L;
 
@@ -17,7 +17,7 @@ import java.util.Date;
 @Aspect
 public class ToastAspect {
     private static final String TAG                     = "ToastAspect";
-    public static final  String POINTCUT_METHOD_DEFAULT = "execution(@com.han.hanmaxmin.hantext.aspect.Toast * * (..)) && @annotation(toast)";
+    public static final  String POINTCUT_METHOD_DEFAULT = "execution(@com.han.hanmaxmin.hantext.aspect.toast.Toast * * (..)) && @annotation(toast)";
 
     @Before(POINTCUT_METHOD_DEFAULT) public void toastAfter(JoinPoint joinPoint,Toast toast) {
         String simpleName = joinPoint.getClass().getSimpleName();
