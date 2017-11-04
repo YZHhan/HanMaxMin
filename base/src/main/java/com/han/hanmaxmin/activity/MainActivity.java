@@ -1,18 +1,21 @@
 package com.han.hanmaxmin.activity;
 
-import android.Manifest;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.han.hanmaxmin.R;
-import com.han.hanmaxmin.common.aspect.permission.Permission;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.utils.HanHelper;
+import com.han.hanmaxmin.hantext.aspect.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class
+
+
+
+
+MainActivity extends AppCompatActivity {
     private String TAG = "MainActivity";
     private TextView main_text;
 
@@ -30,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Permission(Manifest.permission.WRITE_EXTERNAL_STORAGE) private void toast() {
-        Toast.makeText(MainActivity.this, "q", Toast.LENGTH_SHORT).show();
+
+    @Toast("我是注解进来的")
+    private void toast() {
+        L.i("Toast","___________________----------方法里面啥都没有");
     }
 
 

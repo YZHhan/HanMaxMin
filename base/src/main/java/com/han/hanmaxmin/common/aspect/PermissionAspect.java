@@ -26,7 +26,6 @@ public static final String TAG="PermissionAspect";
     @Around(POINTCUT_METHOD_DEFAULT)
     public Object onPermissionExecution(final ProceedingJoinPoint joinPoint, final Permission permission){
         startRequestPermission(joinPoint, permission);
-
         return null;
     }
 
