@@ -25,7 +25,6 @@ public static final String TAG="PermissionAspect";
     private static final String POINTCUT_METHOD_DEFAULT="execution(@com.han.hanmaxmin.common.aspect.permission.Permission * *(..)) && @annotation(permission)";
     @Around(POINTCUT_METHOD_DEFAULT)
     public Object onPermissionExecution(final ProceedingJoinPoint joinPoint, final Permission permission){
-      L.i(TAG,"permission"+permission.value().length);
         startRequestPermission(joinPoint, permission);
 
         return null;
