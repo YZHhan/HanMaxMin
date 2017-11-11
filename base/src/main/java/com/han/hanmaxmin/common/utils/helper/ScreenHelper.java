@@ -9,7 +9,16 @@ import java.util.Stack;
 /**
  * @CreateBy Administrator
  * @Date 2017/11/3  14:11
- * @Description
+ * @Description  屏幕的帮助类，主要是用于Stack的入栈和出栈。
+ * 补充一个Stack，peek()方法（返回的对象顶部的Stack，而不是移除他）
+ *
+ * 功能：
+ *  入栈：Stack的add方法
+ *  出栈：Stack的remove方法
+ *  退出堆栈中所有Activity，当前Activity除外
+ *  获取当前Activity，
+ *
+ *
  */
 
 public class ScreenHelper {

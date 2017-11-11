@@ -57,9 +57,7 @@ public abstract class AsApplication extends Application{
         return 0;
     }
 
-    public int errorLayoutId() {
-        return 0;
-    }
+    public int errorLayoutId() {return 0;}
 
 //    public int listFooterLayoutId() {
 //        return R.layout.qs_loading_footer;
