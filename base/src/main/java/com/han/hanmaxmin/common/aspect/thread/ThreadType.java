@@ -6,8 +6,8 @@ package com.han.hanmaxmin.common.aspect.thread;
  */
 
 public enum ThreadType {
+    MAIN,
     SINGLE_WORK,
     HTTP,
-    MAIN,
     WORK
 }

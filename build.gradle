@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
@@ -12,6 +13,10 @@ buildscript {
         classpath 'org.aspectj:aspectjtools:1.8.10'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        /*GrowingIO*/
+//        classpath 'com.android.tools.build:gradle:1.5.0'
+//        classpath 'com.growingio.android:vds-gradle-plugin:1.1.1'
+
     }
 }
 

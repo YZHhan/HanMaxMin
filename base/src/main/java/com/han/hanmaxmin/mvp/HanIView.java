@@ -8,9 +8,14 @@ import android.os.Bundle;
  * @CreateBy Administrator
  * @Date 2017/11/6  18:26
  * @Description  Activity的，顶层抽象
+ * 此接口，是Activity的最总父类
+ *
  */
 
 public interface HanIView<P> {
+    /**
+     *Log 输出的  TAG
+     */
     String initTag();
 
     /**
@@ -48,6 +53,9 @@ public interface HanIView<P> {
      */
     boolean isOpenEventBus();
 
+    /**
+     * 是否打开，errorLayout、emptyLayout、loadingLayout
+     */
     boolean isOpenViewState();
 
     /**
@@ -57,6 +65,9 @@ public interface HanIView<P> {
 
     void activtyFinish(boolean finishAfterTransition);
 
+    /**
+     * loading 状态
+     */
     void loading();
 
     void loading(String message);
@@ -67,6 +78,9 @@ public interface HanIView<P> {
 
     void loadClose();
 
+    /**
+     * 展示某种View
+     */
     void showLoadView();
 
     void showEmptyView();

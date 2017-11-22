@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.han.hanmaxmin.activity.Main3Activity">
+
+    <Button
+        android:id="@+id/video_base"
+        style="@style/btn_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="基础播放器"
+        />
+    <Button
+        android:id="@+id/video_high"
+        style="@style/btn_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="高级播放器"
+        />
+    <Button
+        android:id="@+id/video_ui"
+        style="@style/btn_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UI播放器"
+        />
+
+</LinearLayout>

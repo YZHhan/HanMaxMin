@@ -3,8 +3,10 @@ package com.han.hanmaxmin;
 import android.app.Activity;
 import android.app.Application;
 
+import com.han.hanmaxmin.common.http.HttpBuilder;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.utils.HanHelper;
+import com.han.hanmaxmin.common.widget.dialog.HanProgressDialog;
 
 import okhttp3.Response;
 
@@ -23,6 +25,7 @@ public abstract class AsApplication extends Application{
 
     public abstract boolean isLogOpen();
 
+    public abstract void initHttpAdapter(HttpBuilder builder);
 
     public void onActivityCreate(Activity activity) {
     }
@@ -45,9 +48,9 @@ public abstract class AsApplication extends Application{
     /**
      * 公共progressDialog
      */
-//    public QsProgressDialog getCommonProgressDialog() {
-//        return null;
-//    }
+    public HanProgressDialog getCommonProgressDialog() {
+        return null;
+    }
 
     public int loadingLayoutId() {
         return 0;

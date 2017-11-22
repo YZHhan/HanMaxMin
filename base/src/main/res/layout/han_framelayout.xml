@@ -4,4 +4,8 @@
     android:id="@android:id/custom"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_bg"/>
+    android:background="@null"/>
+
+<!--在这里background为null，
+性能的考虑
+是在封装中，避免过度绘制-->

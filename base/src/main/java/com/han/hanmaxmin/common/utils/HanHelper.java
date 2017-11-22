@@ -1,6 +1,7 @@
 package com.han.hanmaxmin.common.utils;
 
 import com.han.hanmaxmin.AsApplication;
+import com.han.hanmaxmin.common.threadpoll.HanThreadPollHelper;
 import com.han.hanmaxmin.common.utils.helper.CacheHelper;
 import com.han.hanmaxmin.common.utils.helper.ImageHelper;
 import com.han.hanmaxmin.common.utils.helper.ScreenHelper;
@@ -48,6 +49,12 @@ public class HanHelper {
     public ImageHelper getImageHelper() {
         return ImageHelper.getInstance();
     }
+
+    public HanThreadPollHelper getThreadHelper(){return HanThreadPollHelper.getInstance();}
+
+
+
+
 
 
 
