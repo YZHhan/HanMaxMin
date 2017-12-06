@@ -62,10 +62,15 @@ public abstract class AsApplication extends Application{
 
     public int errorLayoutId() {return 0;}
 
-//    public int listFooterLayoutId() {
-//        return R.layout.qs_loading_footer;
-//    }
+    /**
+     * 在HanPullListFragment作为Footer的布局，全局使用
+     * @return
+     */
+    public int listFooterLayoutId() {
+        return R.layout.han_loading_footer;
+    }
 
     public void onCommonHttpResponse(Response response) {
+
     }
 }

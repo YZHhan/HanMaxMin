@@ -7,4 +7,5 @@ package com.han.hanmaxmin.common.utils;
  */
 
 public class PresenterUtils {
+
 }

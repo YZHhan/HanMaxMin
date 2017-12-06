@@ -26,7 +26,7 @@ public interface HanIFragment extends HanIView {
 
     int errorLayoutId();
 
-    int loaddingLayoutId();
+    int loadingLayoutId();
 
     int getBackgroundColorId();
 

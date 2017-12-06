@@ -1,6 +1,6 @@
 package com.han.hanmaxmin.hantext.aspect.intent;
 
-import com.han.hanmaxmin.activity.Main2Activity;
+import com.han.hanmaxmin.activity.listview.Main2Activity;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

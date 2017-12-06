@@ -1,4 +1,4 @@
-package com.han.hanmaxmin.activity;
+package com.han.hanmaxmin.activity.listview.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;

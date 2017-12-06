@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.han.hanmaxmin.activity.Main2Activity">
+    tools:context="com.han.hanmaxmin.activity.listview.Main2Activity">
 
 
     <TextView

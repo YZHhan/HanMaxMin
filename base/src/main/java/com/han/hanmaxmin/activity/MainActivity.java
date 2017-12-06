@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.han.hanmaxmin.R;
+import com.han.hanmaxmin.activity.listview.Main2Activity;
+import com.han.hanmaxmin.activity.listview.recycler.RecyclerActivity;
+import com.han.hanmaxmin.activity.viewpager.ViewPagerActivity;
 import com.han.hanmaxmin.common.aspect.thread.ThreadPoint;
 import com.han.hanmaxmin.common.aspect.thread.ThreadType;
 import com.han.hanmaxmin.common.log.L;
@@ -65,10 +68,15 @@ MainActivity extends AppCompatActivity implements View.OnClickListener {
                 startActivity(intentVideo);
                 break;
             case R.id.thread_work://Aspect——Intent
+                Intent recyclerIntent = new Intent(this, RecyclerActivity.class);
+                startActivity(recyclerIntent);
                 intent();
                 break;
             case R.id.thread_single:
                 thread();
+                Intent viewPagerIntent = new Intent(this, ViewPagerActivity.class);
+                startActivity(viewPagerIntent);
+                intent();
                 break;
 
         }
@@ -92,7 +100,6 @@ MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ThreadPoint(ThreadType.WORK) private void intent() {
         L.i(TAG, "你点的是Work线程。。。。");
-
     }
 
     @ThreadPoint(ThreadType.MAIN) private void log() {

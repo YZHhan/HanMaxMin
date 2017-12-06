@@ -1,5 +1,6 @@
 package com.han.hanmaxmin.mvp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -55,7 +56,6 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
 
     /**
      * 次布局的background为null   解决过度绘制。。
-     *
      * @return
      */
     @Override public int layoutId() {
@@ -276,7 +276,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
      *
      */
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        @SuppressLint("RestrictedApi") List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
         if(fragmentList!=null && fragmentList.isEmpty()){
             int size = fragmentList.size();
             for (int i =size-1;i>=0;i--){
