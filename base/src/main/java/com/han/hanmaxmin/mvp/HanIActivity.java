@@ -12,5 +12,13 @@ public interface HanIActivity extends HanIView{
 
     int loadingLayoutId();
 
-    int  errorLayoutId();
+    int errorLayoutId();
+
+    boolean isTransparentStatusBar();// 控制 状态栏的
+
+    boolean isBlackIconStatusBar();
+
+
+
+
 }

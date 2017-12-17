@@ -43,9 +43,7 @@ import java.util.List;
 
 public abstract class HanActivity<P extends HanPresenter> extends FragmentActivity implements HanIActivity {
     private P                 presenter;
-    //一个Dialog
-    private HanProgressDialog mProgressDialog;
-
+    private HanProgressDialog mProgressDialog; //一个Dialog
     private ViewAnimator mViewAnimator;
     private boolean      hasInitData;
 
@@ -67,6 +65,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         //入栈 。很必要的一个动作.只有在顶层父类入栈，才能后面的一系列操作
         HanHelper.getInstance().getScreenHelper().pushActivity(this);
         HanHelper.getInstance().getApplication().onActivityCreate(this);
+        initStatusBar();//状态栏 。。。
         View view = initView();
         setContentView(view);
         //一行代码，跟ButterKnife  有关
@@ -76,6 +75,13 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
             hasInitData = true;
             initData(savedInstanceState);
         }
+    }
+
+    /**
+     * 状态栏，改变
+     */
+    private void initStatusBar() {
+
     }
 
     @Override protected void onStart() {
@@ -202,6 +208,13 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
 
     @Override public void loading(String message) {
         loading(message, true);
+    }
+
+    /**
+     *  状态栏，控制。。。。
+     */
+    @Override public boolean isTransparentStatusBar() {
+        return false;
     }
 
     //需要放在主线程 一个注解
