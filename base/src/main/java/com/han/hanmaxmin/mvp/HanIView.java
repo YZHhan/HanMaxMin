@@ -3,6 +3,7 @@ package com.han.hanmaxmin.mvp;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 
 /**
  * @CreateBy Administrator
@@ -76,12 +77,12 @@ public interface HanIView<P> {
 
     void loading(String message,boolean cancelAble);
 
-    void loadClose();
+    void loadingClose();
 
     /**
      * 展示某种View
      */
-    void showLoadView();
+    void showLoadingView();
 
     void showEmptyView();
 
@@ -91,13 +92,17 @@ public interface HanIView<P> {
 
     int showCurrentViewState();
 
+
+
     void intent2Activity(Class clazz);
 
     void intent2Activity(Class clazz,int requestCode);
 
     void intent2Activity(Class clazz,Bundle bundle);
 
-    void intent2Activity(Class clazz,Bundle bundle,int requestCode);
+    void intent2Activity(Class clazz,Bundle bundle,ActivityOptionsCompat optionsCompat);
+
+    void intent2Activity(Class clazz,Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat);
 
     void commitFragment(Fragment fragment);
 
@@ -107,13 +112,13 @@ public interface HanIView<P> {
 
     void commitFragment(int layoutId ,Fragment fragment,String trg);
 
-    void commitFragment(Fragment oldFragment,Fragment fragment);
+    void commitFragment(Fragment oldFragment, Fragment fragment);
 
-    void commitFragment(Fragment oldFragment,Fragment fragment,String trg);
+    void commitFragment(Fragment oldFragment, Fragment fragment, String trg);
 
-    void commitFragment(Fragment oldFragment,int layoutId,Fragment fragment);
+    void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment);
 
-    void commitFragment(Fragment oldFragment,int layoutId,Fragment fragment,String trg);
+    void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment,String trg);
 
     void commitBackStackFragment(Fragment fragment);
 

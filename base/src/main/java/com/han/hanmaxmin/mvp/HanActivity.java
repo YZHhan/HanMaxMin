@@ -2,6 +2,8 @@ package com.han.hanmaxmin.mvp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -9,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ViewAnimator;
 
 import com.han.hanmaxmin.R;
@@ -69,7 +73,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         View view = initView();
         setContentView(view);
         //一行代码，跟ButterKnife  有关
-        //
+        HanHelper.getInstance().
         if (isOpenEventBus() && EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         if (!isDelayDate()) {//
             hasInitData = true;
@@ -78,10 +82,36 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
     }
 
     /**
-     * 状态栏，改变
+     * 状态栏，改变  状态栏透明
      */
     private void initStatusBar() {
-
+        if(isTransparentStatusBar()){//是否是状态栏透明。。
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                Window window = getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && isBlackIconStatusBar()){
+                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                }
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.TRANSPARENT);
+            }else  if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                Window window = getWindow();
+                WindowManager.LayoutParams winParams = window.getAttributes();
+                int status = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+                winParams.flags |=status;
+                window.setAttributes(winParams);
+            }else{
+                L.e(initTag(),"当前Android SDK版本太低("+Build.VERSION.SDK_INT+"),只要SDK版本 >= KITKAT才支持透明状态栏， 推荐在actionbarLayout() 方法中根据该条件给出不同高度的布局");
+            }
+        }else {
+            if(isBlackIconStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                Window window = getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            }
+        }
     }
 
     @Override protected void onStart() {
@@ -217,6 +247,10 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         return false;
     }
 
+    @Override public boolean isBlackIconStatusBar() {
+        return false;
+    }
+
     //需要放在主线程 一个注解
     @ThreadPoint(ThreadType.MAIN) @Override public void loading(String message, boolean cancelAble) {
         if (mProgressDialog == null) mProgressDialog = HanHelper.getInstance().getApplication().getCommonProgressDialog();
@@ -229,11 +263,11 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         }
     }
 
-    @ThreadPoint(ThreadType.MAIN) @Override public void loadClose() {
+    @ThreadPoint(ThreadType.MAIN) @Override public void loadingClose() {
         if (mProgressDialog != null) mProgressDialog.dismissAllowingStateLoss();
     }
 
-    @Override public void showLoadView() {
+    @Override public void showLoadingView() {
         setViewState(HanConstants.VIEW_STATE_LOADING);
     }
 
@@ -267,7 +301,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         if (showState == HanConstants.VIEW_STATE_ERROR) {
             mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    showLoadView();
+                    showLoadingView();
                     initData(getIntent().getExtras());
                 }
             });
