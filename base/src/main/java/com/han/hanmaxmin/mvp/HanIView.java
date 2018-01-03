@@ -9,7 +9,16 @@ import android.support.v4.app.ActivityOptionsCompat;
  * @CreateBy Administrator
  * @Date 2017/11/6  18:26
  * @Description  Activity的，顶层抽象
- * 此接口，是Activity的最总父类
+ * 此接口，是Activity的最终父类
+ *
+ * 封装特性：
+ *  1.首先的有P层的接入，因为是Activity的最终父类。
+ *  2.既然是Activity 的有跳转的封装。A——A  A——F
+ *  3.Acivity的各种View的显示，{error、laod、empty、content———一个控制View显示的状态}
+ *  4.eventBud——控制
+ *  5.load ——控制
+ *  初始化数据
+ *
  *
  */
 
@@ -60,6 +69,11 @@ public interface HanIView<P> {
     boolean isOpenViewState();
 
     /**
+     * 是否是显示  返回按钮在  默认的view中
+     */
+    boolean isShowBackButtonInDefaultView();
+
+    /**
      *结束Activity
      */
     void activtyFinish();
@@ -90,7 +104,7 @@ public interface HanIView<P> {
 
     void showContentView();
 
-    int showCurrentViewState();
+    int currentViewState();
 
 
 

@@ -1,6 +1,7 @@
 package com.han.hanmaxmin.mvp.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 public abstract class HanFragment<P extends HanPresenter> extends Fragment implements HanIFragment, View.OnTouchListener {
     private P presenter;
     private boolean hasInitData;
+    private int backgroundColorId;
     private boolean enableBackgroundColor;
     protected HanProgressDialog mProgressDialog;
     protected ViewAnimator mViewAnimator;
@@ -131,6 +133,12 @@ public abstract class HanFragment<P extends HanPresenter> extends Fragment imple
 
 
 
+    public void setBackgroundColorId(@ColorRes int colorId){
+        this.backgroundColorId=colorId;
+    }
+
+
+
     protected int rootViewLayoutId() {
         return R.layout.han_fragment_state;
     }
@@ -151,6 +159,6 @@ public abstract class HanFragment<P extends HanPresenter> extends Fragment imple
     }
 
     @Override public int getBackgroundColorId() {
-        return R.color.color_bg;
+        return backgroundColorId;
     }
 }

@@ -17,12 +17,14 @@ import com.bumptech.glide.load.model.GlideUrl;
 /**
  * @CreateBy Administrator
  * @Date 2017/11/6  16:53
- * @Description
+ * @Description ImageHelper  的构建者类
  */
 
 public class ImageBuilder {
 
     private RequestManager manager;
+    private Object obeject;
+//    private Drawable
 
     public ImageBuilder(Context context) {
         manager = Glide.with(context);

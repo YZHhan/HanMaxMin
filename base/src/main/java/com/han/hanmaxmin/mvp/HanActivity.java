@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ViewAnimator;
 
 import com.han.hanmaxmin.R;
@@ -28,16 +29,17 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * @CreateBy Administrator
  * @Date 2017/11/7  10:36
- * @Description Activity 的顶层抽象类
- * 作用：
- * 顶层完善部分方法的代码逻辑
+ * @Description Activity 的顶层父类     定位抽象类，泛型P继承P层父类。本抽象继承所属Activity和实现Activity的抽象
+ * 作用：Activity的封装
  * 封装：
  * 1.Presenter的泛型
- * 2.继承FragmentActivity（在这一层就不仅仅是空方法啦，继承activity的写一些逻辑代码）
- * 3.实现抽象类 HanActivity，（因为HanActivity是继承HanIView的接口）
+ * 2.继承FragmentActivity（项目的所属Activity）
+ * 3.实现抽象类 HanActivity，（Activity的抽象的父类）
  * 4.方法实现类
  * <p>
  * <p>
@@ -46,10 +48,11 @@ import java.util.List;
  */
 
 public abstract class HanActivity<P extends HanPresenter> extends FragmentActivity implements HanIActivity {
-    private P                 presenter;
-    private HanProgressDialog mProgressDialog; //一个Dialog
-    private ViewAnimator mViewAnimator;
-    private boolean      hasInitData;
+    @BindView(android.R.id.custom) FrameLayout       custom;
+    private                        P                 presenter;
+    private                        HanProgressDialog mProgressDialog; //一个Dialog
+    private                        ViewAnimator      mViewAnimator;
+    private                        boolean           hasInitData;
 
 
     @Override public String initTag() {
@@ -58,6 +61,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
 
     /**
      * 次布局的background为null   解决过度绘制。。
+     *
      * @return
      */
     @Override public int layoutId() {
@@ -72,8 +76,8 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         initStatusBar();//状态栏 。。。
         View view = initView();
         setContentView(view);
-        //一行代码，跟ButterKnife  有关
-        HanHelper.getInstance().
+        //一行代码，自定义 封装 View  Bind   有关
+//        HanHelper.getInstance().
         if (isOpenEventBus() && EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         if (!isDelayDate()) {//
             hasInitData = true;
@@ -85,28 +89,28 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
      * 状态栏，改变  状态栏透明
      */
     private void initStatusBar() {
-        if(isTransparentStatusBar()){//是否是状态栏透明。。
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (isTransparentStatusBar()) {//是否是状态栏透明。。
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && isBlackIconStatusBar()){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && isBlackIconStatusBar()) {
                     window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
                 }
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(Color.TRANSPARENT);
-            }else  if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 Window window = getWindow();
                 WindowManager.LayoutParams winParams = window.getAttributes();
                 int status = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-                winParams.flags |=status;
+                winParams.flags |= status;
                 window.setAttributes(winParams);
-            }else{
-                L.e(initTag(),"当前Android SDK版本太低("+Build.VERSION.SDK_INT+"),只要SDK版本 >= KITKAT才支持透明状态栏， 推荐在actionbarLayout() 方法中根据该条件给出不同高度的布局");
+            } else {
+                L.e(initTag(), "当前Android SDK版本太低(" + Build.VERSION.SDK_INT + "),只要SDK版本 >= KITKAT才支持透明状态栏， 推荐在actionbarLayout() 方法中根据该条件给出不同高度的布局");
             }
-        }else {
-            if(isBlackIconStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        } else {
+            if (isBlackIconStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 Window window = getWindow();
                 window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -139,20 +143,24 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         if (presenter != null) {
 //            presenter.   销毁Presenter
             //销毁EventBus
-            if (isOpenEventBus() && EventBus.getDefault().isRegistered(this)) EventBus.getDefault().unregister(this);
         }
+        if (isOpenEventBus() && EventBus.getDefault().isRegistered(this)) EventBus.getDefault().unregister(this);
         HanHelper.getInstance().getApplication().onActivityDestroy(this);
+        HanHelper.getInstance().getScreenHelper().popActivity(this);
     }
 
 
     /**
      * 初始化：loadingLayoutId、emptyLayoutId、errorLayoutId，有isOpenViewState控制
+     * View的infalter 方法。将rootViewLayout作为一个View。然后在findVIewByID到ViewAnimator
+     * 把ViewAnimator作为跟布局将各种类型的布局加进去。
      */
     protected View initView() {
         View rootView;
         if (isOpenViewState() && loadingLayoutId() > 0 && emptyLayoutId() > 0 && errorLayoutId() > 0) {
             rootView = View.inflate(this, rootViewLayoutId(), null);
             mViewAnimator = (ViewAnimator) rootView.findViewById(android.R.id.home);
+            //表示将ViewAnimator作为跟布局，将layoutid 添加进去。
             View.inflate(this, loadingLayoutId(), mViewAnimator);
             View.inflate(this, layoutId(), mViewAnimator);
             View.inflate(this, errorLayoutId(), mViewAnimator);
@@ -233,15 +241,33 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
     }
 
     @Override public void loading() {
-        loading(getString(R.string.loading), true);
+        loading(true);
+    }
+
+    @Override public void loading(boolean cancelAble) {
+        loading(getString(R.string.loading), cancelAble);
     }
 
     @Override public void loading(String message) {
         loading(message, true);
     }
 
+    //需要放在主线程 一个注解
+    @ThreadPoint(ThreadType.MAIN) @Override public void loading(String message, boolean cancelAble) {
+        if (mProgressDialog == null) mProgressDialog = HanHelper.getInstance().getApplication().getCommonProgressDialog();
+        if (mProgressDialog != null) {
+            mProgressDialog.setmMessage(message);
+            mProgressDialog.setCancelable(cancelAble);
+                HanHelper.getInstance().
+        } else {
+            L.e(initTag(), "you shoud the method 'Application.getCommonProgressDialog' and return a dialog when called the method :loading(...) ");
+        }
+    }
+
+
+
     /**
-     *  状态栏，控制。。。。
+     * 状态栏，控制。。。。
      */
     @Override public boolean isTransparentStatusBar() {
         return false;
@@ -251,17 +277,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         return false;
     }
 
-    //需要放在主线程 一个注解
-    @ThreadPoint(ThreadType.MAIN) @Override public void loading(String message, boolean cancelAble) {
-        if (mProgressDialog == null) mProgressDialog = HanHelper.getInstance().getApplication().getCommonProgressDialog();
-        if (mProgressDialog != null) {
-            mProgressDialog.setmMessage(message);
-            mProgressDialog.setCancelable(cancelAble);
-//                HanHelper.getInstance()
-        } else {
-            L.e(initTag(), "you shoud the method 'Application.getCommonProgressDialog' and return a dialog when called the method :loading(...) ");
-        }
-    }
+
 
     @ThreadPoint(ThreadType.MAIN) @Override public void loadingClose() {
         if (mProgressDialog != null) mProgressDialog.dismissAllowingStateLoss();
@@ -308,28 +324,26 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         }
     }
 
-    @ThreadPoint(ThreadType.MAIN)
-    @Override public void onBackPressed() {
+    @ThreadPoint(ThreadType.MAIN) @Override public void onBackPressed() {
         super.onBackPressed();
     }
 
     /**
      * 将onKeyDown事件传递到当前展示的Fragement
+     *
      * @param keyCode
      * @param event
      * @return
      * @Annotation @SuppressLint（"NewApi"）作用是屏蔽Androdi lint 错误。在Androdi代码中，有时候会使用在AndroidManifest中设置的android：minSdkVersion版本更高的方法。
-     *
-     *
      */
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         @SuppressLint("RestrictedApi") List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-        if(fragmentList!=null && fragmentList.isEmpty()){
+        if (fragmentList != null && fragmentList.isEmpty()) {
             int size = fragmentList.size();
-            for (int i =size-1;i>=0;i--){
+            for (int i = size - 1; i >= 0; i--) {
                 Fragment fragment = fragmentList.get(i);
-                if(fragment!=null && !fragment.isDetached() &&  fragment.isResumed() && fragment.isAdded() && fragment instanceof Fragment){//缺少一个Fragmetn的封装
-                    L.i(initTag(),"onKeyDown... Fragment:"+fragment.getClass().getSimpleName()+"  isDetached:"+fragment.isDetached()+" isAdded:"+fragment.isAdded()+" isResumed："+fragment.isResumed());
+                if (fragment != null && !fragment.isDetached() && fragment.isResumed() && fragment.isAdded() && fragment instanceof Fragment) {//缺少一个Fragmetn的封装
+                    L.i(initTag(), "onKeyDown... Fragment:" + fragment.getClass().getSimpleName() + "  isDetached:" + fragment.isDetached() + " isAdded:" + fragment.isAdded() + " isResumed：" + fragment.isResumed());
 
 
                 }
