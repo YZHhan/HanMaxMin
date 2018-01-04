@@ -3,12 +3,14 @@ package com.han.hanmaxmin.common.utils;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -129,7 +131,7 @@ public class HanHelper {
     public void commitFragment(int layoutId, Fragment fragment, String tag) {
         FragmentActivity activity = getScreenHelper().currentActivity();
         if (activity == null) return;
-
+        commitFragment(activity.getSupportFragmentManager(), layoutId, fragment, tag);
     }
 
     @ThreadPoint(ThreadType.MAIN) public void commitFragment(FragmentManager fragmentManager, int layoutId, Fragment fragment, String tag) {
@@ -154,6 +156,7 @@ public class HanHelper {
     public void commitFragment(Fragment old, int layoutId, Fragment fragment, String tag) {
         FragmentActivity activity = getScreenHelper().currentActivity();
         if (activity == null) return;
+        commitFragment(activity.getSupportFragmentManager(), old, layoutId, fragment, tag);
     }
 
     @ThreadPoint(ThreadType.MAIN) public void commitFragment(FragmentManager fragmentManager, Fragment old, int layoutId, Fragment fragment, String tag) {
@@ -185,14 +188,25 @@ public class HanHelper {
 
     @ThreadPoint(ThreadType.MAIN) public void commitBackStackFragment(FragmentManager fragmentManager, int layoutId, Fragment fragment, String tag) {
         if (layoutId > 0 && fragment != null && !fragment.isAdded() && fragmentManager != null) {
-            if(fragment instanceof HanFragment){
+            if (fragment instanceof HanFragment) {
                 int colorId = ((HanFragment) fragment).getBackgroundColorId();
                 ((HanFragment) fragment).setBackgroundColorId(colorId > 0 ? colorId : R.color.color_bg);
-
             }
-
+            fragmentManager.beginTransaction().add(layoutId, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
         }
     }
+
+
+    public void commitDialogFragment(DialogFragment dialogFragment){
+        FragmentActivity activity = getScreenHelper().currentActivity();
+        if(dialogFragment == null || activity == null)return;
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        if(fragmentManager !=null){
+            fragmentManager.beginTransaction().add(dialogFragment, dialogFragment.getClass().getSimpleName()).commitAllowingStateLoss();
+        }
+    }
+
+
 
 
     public String getString(@StringRes int resId) {
@@ -215,5 +229,8 @@ public class HanHelper {
         return getApplication().getResources().getDimension(resId);
     }
 
+    public boolean isSdCardAvailable(){
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+    }
 
 }

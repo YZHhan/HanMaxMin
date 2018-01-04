@@ -258,7 +258,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         if (mProgressDialog != null) {
             mProgressDialog.setmMessage(message);
             mProgressDialog.setCancelable(cancelAble);
-                HanHelper.getInstance().
+                HanHelper.getInstance()
         } else {
             L.e(initTag(), "you shoud the method 'Application.getCommonProgressDialog' and return a dialog when called the method :loading(...) ");
         }
