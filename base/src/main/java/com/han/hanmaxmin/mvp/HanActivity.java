@@ -13,7 +13,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ViewAnimator;
 
 import com.han.hanmaxmin.R;
@@ -28,8 +27,6 @@ import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * @CreateBy Administrator
@@ -48,7 +45,6 @@ import butterknife.BindView;
  */
 
 public abstract class HanActivity<P extends HanPresenter> extends FragmentActivity implements HanIActivity {
-    @BindView(android.R.id.custom) FrameLayout       custom;
     private                        P                 presenter;
     private                        HanProgressDialog mProgressDialog; //一个Dialog
     private                        ViewAnimator      mViewAnimator;
@@ -258,7 +254,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         if (mProgressDialog != null) {
             mProgressDialog.setmMessage(message);
             mProgressDialog.setCancelable(cancelAble);
-                HanHelper.getInstance()
+//                HanHelper.getInstance()
         } else {
             L.e(initTag(), "you shoud the method 'Application.getCommonProgressDialog' and return a dialog when called the method :loading(...) ");
         }
