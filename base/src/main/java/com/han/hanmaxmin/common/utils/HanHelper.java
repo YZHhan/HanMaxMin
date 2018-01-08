@@ -197,16 +197,14 @@ public class HanHelper {
     }
 
 
-    public void commitDialogFragment(DialogFragment dialogFragment){
+    public void commitDialogFragment(DialogFragment dialogFragment) {
         FragmentActivity activity = getScreenHelper().currentActivity();
-        if(dialogFragment == null || activity == null)return;
+        if (dialogFragment == null || activity == null) return;
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        if(fragmentManager !=null){
+        if (fragmentManager != null) {
             fragmentManager.beginTransaction().add(dialogFragment, dialogFragment.getClass().getSimpleName()).commitAllowingStateLoss();
         }
     }
-
-
 
 
     public String getString(@StringRes int resId) {
@@ -229,7 +227,7 @@ public class HanHelper {
         return getApplication().getResources().getDimension(resId);
     }
 
-    public boolean isSdCardAvailable(){
+    public boolean isSdCardAvailable() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 

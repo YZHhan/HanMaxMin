@@ -1,6 +1,5 @@
 package com.han.hanmaxmin.mvp;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -76,9 +75,9 @@ public interface HanIView<P> {
     /**
      *结束Activity
      */
-    void activtyFinish();
+    void activityFinish();
 
-    void activtyFinish(boolean finishAfterTransition);
+    void activityFinish(boolean finishAfterTransition);
 
     /**
      * loading 状态
@@ -118,27 +117,27 @@ public interface HanIView<P> {
 
     void intent2Activity(Class clazz,Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat);
 
-    void commitFragment(Fragment fragment);
+    void commitFragment(android.support.v4.app.Fragment fragment);
 
-    void commitFragment(Fragment fragment,String trg);
+    void commitFragment(android.support.v4.app.Fragment fragment,String trg);
 
-    void commitFragment(int layoutId ,Fragment fragment);
+    void commitFragment(int layoutId , android.support.v4.app.Fragment fragment);
 
-    void commitFragment(int layoutId ,Fragment fragment,String trg);
+    void commitFragment(int layoutId , android.support.v4.app.Fragment fragment,String trg);
 
-    void commitFragment(Fragment oldFragment, Fragment fragment);
+    void commitFragment(android.support.v4.app.Fragment oldFragment, android.support.v4.app.Fragment fragment);
 
-    void commitFragment(Fragment oldFragment, Fragment fragment, String trg);
+    void commitFragment(android.support.v4.app.Fragment oldFragment, android.support.v4.app.Fragment fragment, String trg);
 
-    void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment);
+    void commitFragment(android.support.v4.app.Fragment oldFragment, int layoutId, android.support.v4.app.Fragment fragment);
 
-    void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment,String trg);
+    void commitFragment(android.support.v4.app.Fragment oldFragment, int layoutId, android.support.v4.app.Fragment fragment,String trg);
 
-    void commitBackStackFragment(Fragment fragment);
+    void commitBackStackFragment(android.support.v4.app.Fragment fragment);
 
-    void commitBackStackFragment(Fragment fragment,String trg);
+    void commitBackStackFragment(android.support.v4.app.Fragment fragment,String trg);
 
-    void commitBackStackFragment(int layoutId ,Fragment fragment);
+    void commitBackStackFragment(int layoutId , android.support.v4.app.Fragment fragment);
 
-    void commitBackStackFragment(int layoutId ,Fragment fragment,String trg);
+    void commitBackStackFragment(int layoutId , android.support.v4.app.Fragment fragment,String trg);
 }

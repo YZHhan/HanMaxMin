@@ -171,7 +171,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
      * ViewAnimator
      */
     protected int rootViewLayoutId() {
-        return R.layout.han_activity_state;
+        return R.layout.han_activity_ab_state;
     }
 
 
