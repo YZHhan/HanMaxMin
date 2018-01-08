@@ -210,11 +210,11 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         return false;
     }
 
-    @Override public void activtyFinish() {
-        activtyFinish(false);
+    @Override public void activityFinish() {
+        activityFinish(false);
     }
 
-    @Override public void activtyFinish(boolean finishAfterTransition) {
+    @Override public void activityFinish(boolean finishAfterTransition) {
         if (finishAfterTransition) {
             ActivityCompat.finishAfterTransition(this);
         } else {

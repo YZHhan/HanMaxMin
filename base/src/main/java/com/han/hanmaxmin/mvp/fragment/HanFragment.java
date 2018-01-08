@@ -118,11 +118,11 @@ public abstract class HanFragment<P extends HanPresenter> extends Fragment imple
         return false;
     }
 
-    @Override public void activtyFinish() {
-        activtyFinish(false);
+    @Override public void activityFinish() {
+        activityFinish(false);
     }
 
-    @Override public void activtyFinish(boolean finishAfterTransition) {
+    @Override public void activityFinish(boolean finishAfterTransition) {
         if(finishAfterTransition){
             ActivityCompat.finishAfterTransition(getActivity());
         }else{

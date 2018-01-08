@@ -1,6 +1,5 @@
 package com.han.hanmaxmin.mvp;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -11,7 +10,7 @@ import android.support.v4.app.ActivityOptionsCompat;
  * @Description
  */
 
-public class HanViewPagerABActivity implements HanIViewPagerABActivity {
+public abstract class HanViewPagerABActivity implements HanIViewPagerABActivity {
     @Override public int actionbarLayoutId() {
         return 0;
     }
@@ -80,11 +79,11 @@ public class HanViewPagerABActivity implements HanIViewPagerABActivity {
         return false;
     }
 
-    @Override public void activtyFinish() {
+    @Override public void activityFinish() {
 
     }
 
-    @Override public void activtyFinish(boolean finishAfterTransition) {
+    @Override public void activityFinish(boolean finishAfterTransition) {
 
     }
 
@@ -148,51 +147,51 @@ public class HanViewPagerABActivity implements HanIViewPagerABActivity {
 
     }
 
-    @Override public void commitFragment(Fragment fragment) {
+    @Override public void commitFragment(android.support.v4.app.Fragment fragment) {
 
     }
 
-    @Override public void commitFragment(Fragment fragment, String trg) {
+    @Override public void commitFragment(android.support.v4.app.Fragment fragment, String trg) {
 
     }
 
-    @Override public void commitFragment(int layoutId, Fragment fragment) {
+    @Override public void commitFragment(int layoutId, android.support.v4.app.Fragment fragment) {
 
     }
 
-    @Override public void commitFragment(int layoutId, Fragment fragment, String trg) {
+    @Override public void commitFragment(int layoutId, android.support.v4.app.Fragment fragment, String trg) {
 
     }
 
-    @Override public void commitFragment(Fragment oldFragment, Fragment fragment) {
+    @Override public void commitFragment(android.support.v4.app.Fragment oldFragment, android.support.v4.app.Fragment fragment) {
 
     }
 
-    @Override public void commitFragment(Fragment oldFragment, Fragment fragment, String trg) {
+    @Override public void commitFragment(android.support.v4.app.Fragment oldFragment, android.support.v4.app.Fragment fragment, String trg) {
 
     }
 
-    @Override public void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment) {
+    @Override public void commitFragment(android.support.v4.app.Fragment oldFragment, int layoutId, android.support.v4.app.Fragment fragment) {
 
     }
 
-    @Override public void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment, String trg) {
+    @Override public void commitFragment(android.support.v4.app.Fragment oldFragment, int layoutId, android.support.v4.app.Fragment fragment, String trg) {
 
     }
 
-    @Override public void commitBackStackFragment(Fragment fragment) {
+    @Override public void commitBackStackFragment(android.support.v4.app.Fragment fragment) {
 
     }
 
-    @Override public void commitBackStackFragment(Fragment fragment, String trg) {
+    @Override public void commitBackStackFragment(android.support.v4.app.Fragment fragment, String trg) {
 
     }
 
-    @Override public void commitBackStackFragment(int layoutId, Fragment fragment) {
+    @Override public void commitBackStackFragment(int layoutId, android.support.v4.app.Fragment fragment) {
 
     }
 
-    @Override public void commitBackStackFragment(int layoutId, Fragment fragment, String trg) {
+    @Override public void commitBackStackFragment(int layoutId, android.support.v4.app.Fragment fragment, String trg) {
 
     }
 }
