@@ -85,7 +85,7 @@
     <color name="search_url_text_normal">#7fa87f</color>
     <color name="search_url_text_selected">@android:color/black</color>
     <color name="search_url_text_pressed">@android:color/black</color>
-    <color name="search_widget_corpus_item_background">@android:color/lighter_gray</color>
+    <!--<color name="search_widget_corpus_item_background">@android:color/lighter_gray</color>-->
 
     <!-- SlidingTab -->
     <color name="sliding_tab_text_color_active">@android:color/black</color>
