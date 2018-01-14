@@ -1,6 +1,7 @@
 package com.han.hanmaxmin.mvp;
 
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.widget.viewpager.HanViewPager;
 import com.han.hanmaxmin.common.widget.viewpager.PagerSlidingTabStrip;
 import com.han.hanmaxmin.mvp.adapter.HanViewPagerAdapter;
+import com.han.hanmaxmin.mvp.model.HanModelPager;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 
 /**
@@ -56,11 +58,83 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
         tabs.setTabBackground(getTabOnClickTitleColor());//设置
         tabs.setBackgroundResource(getTabBackgroundResource());
         tabs.setTabWidth(getTabWidth());
+        tabs.setTabMarginsLeftRight(getTabMargin());
+        tabs.setTabPaddingLeftRight(getTabPaddingLeftRight());
+        tabs.setIndicatorMargin(getTabIndicatorMargin());
+        tabs.setIsCurrentItemAnimation(getTabCurrentItemAnimation());
 
 
 
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positonOffset, int postionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onPageSelected(View childAt, View oldView, int position, int oldPosition) {
+
+    }
+
+    @Override
+    public void replaceViewPagerItem(HanModelPager... modelPagers) {
+        if(adapter != null){
+//            adapter.re//
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void setIndex(int index, boolean bool) {
+        int childCount = pager.getAdapter().getCount();
+        if(0 < index && index < childCount){
+            pager.setCurrentItem(index, bool);
+        }
+    }
+
+    @Override
+    public PagerSlidingTabStrip getTabs() {
+        return tabs;
+    }
+
+    @Override
+    public HanViewPager getViewPager() {
+        return pager;
+    }
+
+    @Override
+    public HanViewPagerAdapter getViewPagerAdapter() {
+        return adapter;
+    }
+
+    @Override
+    public Fragment getCurrentFragment() {
+//        return adapter.get;
+        return null;
+    }
 
 
+
+    protected boolean getTabCurrentItemAnimation() {
+        return false;
+    }
+
+    protected int getTabIndicatorMargin() {
+        return 0;
+    }
+
+    protected int getTabPaddingLeftRight() {
+        return 20;
+    }
+
+    protected int getTabMargin() {
+        return 0;
     }
 
     protected int getTabWidth() {

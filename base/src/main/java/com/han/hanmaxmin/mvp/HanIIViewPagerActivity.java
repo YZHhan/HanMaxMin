@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.han.hanmaxmin.common.widget.viewpager.HanViewPager;
 import com.han.hanmaxmin.common.widget.viewpager.PagerSlidingTabStrip;
+import com.han.hanmaxmin.mvp.adapter.HanViewPagerAdapter;
 import com.han.hanmaxmin.mvp.model.HanModelPager;
 
 /**
@@ -53,6 +54,8 @@ public interface HanIIViewPagerActivity extends HanIActivity{
    PagerSlidingTabStrip getTabs();
 
    HanViewPager getViewPager();
+
+   HanViewPagerAdapter getViewPagerAdapter();
 
    int getTabItemLayout();
 
