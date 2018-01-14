@@ -59,7 +59,7 @@ MainActivity extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.thread_main://Aspect——Toast
 //                toast();
-                Intent intent = new Intent(this, Main2Activity.class);
+                Intent intent = new android.content.Intent(this, Main2Activity.class);
                 startActivity(intent);
                 break;
             case R.id.thread_http://Aspect——Log
@@ -152,6 +152,11 @@ MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Log("onDestroy") @Override protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @com.han.hanmaxmin.hantext.aspect.intent.Intent(Main2Activity.class)
+     public void intetn(){
+
     }
 
 
