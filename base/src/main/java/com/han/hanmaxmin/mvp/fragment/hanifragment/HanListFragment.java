@@ -3,7 +3,7 @@ package com.han.hanmaxmin.mvp.fragment.hanifragment;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 
-import com.han.hanmaxmin.common.widget.viewpager.InnerScrollerContainer;
+import com.han.hanmaxmin.common.widget.viewpager.headerviewpager.InnerScrollerContainer;
 import com.han.hanmaxmin.mvp.fragment.HanFragment;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 

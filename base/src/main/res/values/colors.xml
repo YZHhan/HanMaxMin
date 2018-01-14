@@ -1,9 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="color_bg">#F1F1F1</color>
     <color name="color_toolbar_bg">#FFFFFF</color>
+
+    <!-- For settings framework -->
+    <color name="lighter_gray">#ddd</color>
+    <color name="darker_gray">#aaa</color>
+    <drawable name="screen_background_light">#ffffffff</drawable>
+    <drawable name="screen_background_dark">#ff000000</drawable>
+    <drawable name="status_bar_closed_default_background">#ff000000</drawable>
+    <drawable name="status_bar_opened_default_background">#ff000000</drawable>
+    <drawable name="search_bar_default_color">#ff000000</drawable>
+    <drawable name="safe_mode_background">#60000000</drawable>
+    <!-- Background drawable that can be used for a transparent activity to
+         be able to display a dark UI: this darkens its background to make
+         a dark (default theme) UI more visible. -->
+    <drawable name="screen_background_dark_transparent">#80000000</drawable>
+    <!-- Background drawable that can be used for a transparent activity to
+         be able to display a light UI: this lightens its background to make
+         a light UI more visible. -->
+    <drawable name="screen_background_light_transparent">#80ffffff</drawable>
+    <color name="safe_mode_text">#80ffffff</color>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="background_dark">#ff000000</color>
+    <color name="background_light">#ffffffff</color>
+    <color name="bright_foreground_dark">@android:color/background_light</color>
+    <color name="bright_foreground_light">@android:color/background_dark</color>
+    <color name="bright_foreground_dark_disabled">#80ffffff</color>
+    <color name="bright_foreground_light_disabled">#80000000</color>
+    <color name="bright_foreground_dark_inverse">@android:color/bright_foreground_light</color>
+    <color name="bright_foreground_light_inverse">@android:color/bright_foreground_dark</color>
+    <color name="dim_foreground_dark">#bebebe</color>
+    <color name="dim_foreground_dark_disabled">#80bebebe</color>
+    <color name="dim_foreground_dark_inverse">#323232</color>
+    <color name="dim_foreground_dark_inverse_disabled">#80323232</color>
+    <color name="hint_foreground_dark">#808080</color>
+    <color name="dim_foreground_light">#323232</color>
+    <color name="dim_foreground_light_disabled">#80323232</color>
+    <color name="dim_foreground_light_inverse">#bebebe</color>
+    <color name="dim_foreground_light_inverse_disabled">#80bebebe</color>
+    <color name="hint_foreground_light">#808080</color>
+    <color name="highlighted_text_dark">#9983CC39</color>
+    <color name="highlighted_text_light">#9983CC39</color>
+    <color name="link_text_dark">#5c5cff</color>
+    <color name="link_text_light">#0000ee</color>
+    <color name="suggestion_highlight_text">#177bbd</color>
+
+    <!--<drawable name="stat_notify_sync_noanim">@drawable/stat_notify_sync_anim0</drawable>-->
+    <!--<drawable name="stat_sys_download_done">@drawable/stat_sys_download_done_static</drawable>-->
+    <!--<drawable name="stat_sys_upload_done">@drawable/stat_sys_upload_anim0</drawable>-->
+    <!--<drawable name="dialog_frame">@drawable/panel_background</drawable>-->
+    <!--<drawable name="alert_dark_frame">@drawable/popup_full_dark</drawable>-->
+    <!--<drawable name="alert_light_frame">@drawable/popup_full_bright</drawable>-->
+    <!--<drawable name="menu_frame">@drawable/menu_background</drawable>-->
+    <!--<drawable name="menu_full_frame">@drawable/menu_background_fill_parent_width</drawable>-->
+    <!--<drawable name="editbox_dropdown_dark_frame">@drawable/editbox_dropdown_background_dark</drawable>-->
+    <!--<drawable name="editbox_dropdown_light_frame">@drawable/editbox_dropdown_background</drawable>-->
+
+    <drawable name="input_method_fullscreen_background">#fff9f9f9</drawable>
+    <color name="input_method_navigation_guard">#ff000000</color>
+
+    <color name="system_error">#fff4511e</color> <!-- deep orange 600 -->
+
+    <!-- For date picker widget -->
+    <drawable name="selected_day_background">#ff0092f4</drawable>
+
+    <!-- For settings framework -->
+    <color name="lighter_gray" tools:ignore="DuplicateDefinition">#ddd</color>
+    <color name="darker_gray" tools:ignore="DuplicateDefinition">#aaa</color>
+
+    <!-- For security permissions -->
+    <color name="perms_dangerous_grp_color">#33b5e5</color>
+    <color name="perms_dangerous_perm_color">#33b5e5</color>
+    <color name="shadow">#cc222222</color>
+    <color name="perms_costs_money">#fff4511e</color>
+
+    <!-- For search-related UIs -->
+    <color name="search_url_text_normal">#7fa87f</color>
+    <color name="search_url_text_selected">@android:color/black</color>
+    <color name="search_url_text_pressed">@android:color/black</color>
+    <color name="search_widget_corpus_item_background">@android:color/lighter_gray</color>
+
+    <!-- SlidingTab -->
+    <color name="sliding_tab_text_color_active">@android:color/black</color>
+    <color name="sliding_tab_text_color_shadow">@android:color/black</color>
+
+    <!-- keyguard tab -->
+    <color name="keyguard_text_color_normal">#ffffff</color>
+    <color name="keyguard_text_color_unlock">#a7d84c</color>
+    <color name="keyguard_text_color_soundoff">#ffffff</color>
+    <color name="keyguard_text_color_soundon">#e69310</color>
+    <color name="keyguard_text_color_decline">#fe0a5a</color>
 </resources>
