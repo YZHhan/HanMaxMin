@@ -41,52 +41,60 @@ import java.util.List;
  */
 
 public abstract class HanABActivity<P extends HanPresenter> extends AppCompatActivity implements HanIABActivity {
-    private   P                 presenter;
+    private P presenter;
     protected HanProgressDialog mPreogressDialog;
-    private   ViewAnimator      mViewAnimator;
-    private   boolean           hasInitData;
+    private ViewAnimator mViewAnimator;
+    private boolean hasInitData;
 
-    @Override public String initTag() {
+    @Override
+    public String initTag() {
         return getClass().getSimpleName();
     }
 
-    @Override public int layoutId() {
+    @Override
+    public int layoutId() {
         return R.layout.han_framelayout;
     }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         HanHelper.getInstance().getScreenHelper().pushActivity(this);
         HanHelper.getInstance().getApplication().onActivityCreate(this);
         initStatusBar();
-        View view = ininView();
+        View view = initView();
         setContentView(view);
         //自己封装的  ViewBind
 //        HanHelper.getInstance().ge
         //进行EventBus  的注册。
-        if (isOpenEventBus() && !EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
+        if (isOpenEventBus() && !EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
         if (!isDelayDate()) {
             hasInitData = true;
             initData(savedInstanceState);
         }
     }
 
-    @Override protected void onStart() {
+    @Override
+    protected void onStart() {
         super.onStart();
         HanHelper.getInstance().getApplication().onActivityStart(this);
     }
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
         HanHelper.getInstance().getApplication().onActivityResume(this);
     }
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
         HanHelper.getInstance().getApplication().onActivityPause(this);
     }
 
-    @Override protected void onStop() {
+    @Override
+    protected void onStop() {
         super.onStop();
         HanHelper.getInstance().getApplication().onActivityStop(this);
     }
@@ -94,13 +102,15 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
     /**
      * 重新赋值 Presenter的对象为null  在把EventBus给接触注册
      */
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         if (presenter != null) {//  对Presenter  进行clear
 //            presenter.setD
             presenter = null;
         }
-        if (isOpenEventBus() && EventBus.getDefault().isRegistered(this)) EventBus.getDefault().unregister(this);
+        if (isOpenEventBus() && EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
         HanHelper.getInstance().getApplication().onActivityDestroy(this);
         HanHelper.getInstance().getScreenHelper().popActivity(this);
     }
@@ -139,7 +149,7 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         }
     }
 
-    protected View ininView() {
+    protected View initView() {
         View rootView;
         Toolbar mToolBar;
         if (isOpenViewState() && loadingLayoutId() > 0 && emptyLayoutId() > 0 && errorLayoutId() > 0) {
@@ -177,61 +187,77 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         }
     }
 
-    @Override public Context getContext() {
+    @Override
+    public Context getContext() {
         return this;
     }
 
-    @Override public boolean isOpenEventBus() {
+    @Override
+    public boolean isOpenEventBus() {
         return false;
     }
 
-    @Override public boolean isOpenViewState() {
+    @Override
+    public boolean isOpenViewState() {
         return false;
     }
 
-    @Override public boolean isDelayDate() {
+    @Override
+    public boolean isDelayDate() {
         return false;
     }
 
-    @Override public void activityFinish() {
+    @Override
+    public void activityFinish() {
         activityFinish(false);
     }
 
-    @Override public void activityFinish(boolean finishAfterTransition) {
+    @Override
+    public void activityFinish(boolean finishAfterTransition) {
         if (finishAfterTransition) ActivityCompat.finishAfterTransition(this);
         else finish();
     }
 
-    @Override public boolean isTransparentStatusBar() {
+    @Override
+    public boolean isTransparentStatusBar() {
         return false;
     }
 
-    @Override public int loadingLayoutId() {
+    @Override
+    public int loadingLayoutId() {
         return HanHelper.getInstance().getApplication().loadingLayoutId();
     }
 
-    @Override public int emptyLayoutId() {
+    @Override
+    public int emptyLayoutId() {
         return HanHelper.getInstance().getApplication().emptyLayoutId();
     }
 
-    @Override public int errorLayoutId() {
+    @Override
+    public int errorLayoutId() {
         return HanHelper.getInstance().getApplication().errorLayoutId();
     }
 
-    @Override public void loading() {
+    @Override
+    public void loading() {
         loading(true);
     }
 
-    @Override public void loading(boolean cancelAble) {
+    @Override
+    public void loading(boolean cancelAble) {
         loading(getString(R.string.loading), cancelAble);
     }
 
-    @Override public void loading(String message) {
+    @Override
+    public void loading(String message) {
         loading(message, true);
     }
 
-    @ThreadPoint(ThreadType.MAIN) @Override public void loading(String message, boolean cancelAble) {
-        if (mPreogressDialog == null) mPreogressDialog = HanHelper.getInstance().getApplication().getCommonProgressDialog();
+    @ThreadPoint(ThreadType.MAIN)
+    @Override
+    public void loading(String message, boolean cancelAble) {
+        if (mPreogressDialog == null)
+            mPreogressDialog = HanHelper.getInstance().getApplication().getCommonProgressDialog();
         if (mPreogressDialog != null) {
             mPreogressDialog.setmMessage(message);
             mPreogressDialog.setCancelable(cancelAble);
@@ -241,50 +267,61 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         }
     }
 
-    @Override public void loadingClose() {
+    @Override
+    public void loadingClose() {
         if (mPreogressDialog != null) mPreogressDialog.dismissAllowingStateLoss();
     }
 
-    @Override public void showLoadingView() {
+    @Override
+    public void showLoadingView() {
         setViewState(HanConstants.VIEW_STATE_LOADING);
     }
 
-    @Override public void showEmptyView() {
+    @Override
+    public void showEmptyView() {
         setViewState(HanConstants.VIEW_STATE_EMPTY);
     }
 
-    @Override public void showContentView() {
+    @Override
+    public void showContentView() {
         setViewState(HanConstants.VIEW_STATE_CONTENT);
     }
 
-    @Override public void showErrorView() {
+    @Override
+    public void showErrorView() {
 
     }
 
-    @Override public int currentViewState() {
+    @Override
+    public int currentViewState() {
         if (isOpenViewState() && mViewAnimator != null) {
             return mViewAnimator.getDisplayedChild();
         }
         return -1;
     }
 
-    @Override public void intent2Activity(Class clazz) {
+    @Override
+    public void intent2Activity(Class clazz) {
         intent2Activity(clazz, null, 0, null);
     }
 
-    @Override public void intent2Activity(Class clazz, int requestCode) {
+    @Override
+    public void intent2Activity(Class clazz, int requestCode) {
         intent2Activity(clazz, null, requestCode, null);
     }
 
-    @Override public void intent2Activity(Class clazz, Bundle bundle) {
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle) {
         intent2Activity(clazz, bundle, 0, null);
     }
 
-    @Override public void intent2Activity(Class clazz, Bundle bundle, ActivityOptionsCompat optionsCompat) {
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, ActivityOptionsCompat optionsCompat) {
         intent2Activity(clazz, bundle, 0, optionsCompat);
     }
 
-    @Override public void intent2Activity(Class clazz, Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat) {
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat) {
         if (clazz != null) {
             Intent intent = new Intent();
             intent.setClass(this, clazz);
@@ -305,73 +342,88 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         }
     }
 
-    @Override public void commitFragment(android.support.v4.app.Fragment fragment) {
+    @Override
+    public void commitFragment(android.support.v4.app.Fragment fragment) {
         commitFragment(fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitFragment(android.support.v4.app.Fragment fragment, String trg) {
+    @Override
+    public void commitFragment(android.support.v4.app.Fragment fragment, String trg) {
         commitFragment(android.R.id.custom, fragment, trg);
     }
 
-    @Override public void commitFragment(int layoutId, android.support.v4.app.Fragment fragment) {
+    @Override
+    public void commitFragment(int layoutId, android.support.v4.app.Fragment fragment) {
         commitFragment(layoutId, fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitFragment(int layoutId, android.support.v4.app.Fragment fragment, String tag) {
+    @Override
+    public void commitFragment(int layoutId, android.support.v4.app.Fragment fragment, String tag) {
         HanHelper.getInstance().commitFragment(getSupportFragmentManager(), layoutId, fragment, tag);
     }
 
-    @Override public void commitFragment(Fragment oldFragment, Fragment fragment) {
+    @Override
+    public void commitFragment(Fragment oldFragment, Fragment fragment) {
         commitFragment(oldFragment, fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitFragment(Fragment oldFragment, Fragment fragment, String tag) {
+    @Override
+    public void commitFragment(Fragment oldFragment, Fragment fragment, String tag) {
         commitFragment(oldFragment, android.R.id.custom, fragment, tag);
     }
 
-    @Override public void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment) {
+    @Override
+    public void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment) {
         HanHelper.getInstance().commitFragment(getSupportFragmentManager(), oldFragment, layoutId, fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitBackStackFragment(Fragment fragment) {
+    @Override
+    public void commitBackStackFragment(Fragment fragment) {
         commitBackStackFragment(fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void commitBackStackFragment(Fragment fragment, String trg) {
+    @Override
+    public void commitBackStackFragment(Fragment fragment, String trg) {
         commitBackStackFragment(android.R.id.custom, fragment, trg);
     }
 
-    @Override public void commitBackStackFragment(int layoutId, Fragment fragment) {
+    @Override
+    public void commitBackStackFragment(int layoutId, Fragment fragment) {
         commitBackStackFragment(layoutId, fragment, getClass().getSimpleName());
     }
 
-    @Override public void commitBackStackFragment(int layoutId, Fragment fragment, String trg) {
+    @Override
+    public void commitBackStackFragment(int layoutId, Fragment fragment, String trg) {
         HanHelper.getInstance().commitBackStackFragment(getSupportFragmentManager(), layoutId, fragment, fragment.getClass().getSimpleName());
     }
 
-    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 //        PermissionUtils.getInstance().pare
     }
 
-    @Override public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
         super.onBackPressed();
     }
 
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         @SuppressLint("RestrictedApi") List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
         if (fragmentList != null && fragmentList.isEmpty()) {
             int size = fragmentList.size();
             for (int i = size - 1; i > 0; i--) {
                 Fragment fragment = fragmentList.get(i);
                 if (fragment != null && !fragment.isDetached() && fragment.isResumed() && fragment.isAdded() && fragment instanceof HanFragment) {
-                    L.i(initTag(), "onKeyDown... Fragment:" + fragment.getClass().getSimpleName()+"  isDetached: "+((HanFragment) fragment).isDelayDate()+ "isAdded: "+fragment.isAdded() + "  isResumed: "+fragment.isResumed());
+                    L.i(initTag(), "onKeyDown... Fragment:" + fragment.getClass().getSimpleName() + "  isDetached: " + ((HanFragment) fragment).isDelayDate() + "isAdded: " + fragment.isAdded() + "  isResumed: " + fragment.isResumed());
                 }
             }
         }
         return super.onKeyDown(keyCode, event);
     }
 
-    @ThreadPoint(ThreadType.MAIN) public void setViewState(int showState) {
+    @ThreadPoint(ThreadType.MAIN)
+    public void setViewState(int showState) {
         L.i(initTag(), "setViewState() showState=" + showState);
         if (!isOpenViewState()) {
             L.i(initTag(), "当前Activity 没有打开状态模式! isOpenViewState() = false");
@@ -390,7 +442,8 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         mViewAnimator.setDisplayedChild(showState);
         if (showState == HanConstants.VIEW_STATE_ERROR) {
             mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                     showLoadingView();
                     initData(getIntent().getExtras());
                 }
