@@ -21,9 +21,9 @@ import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 
 public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanActivity<P> implements HanIIViewPagerActivity {
 
-    private HanViewPagerAdapter adapter;
-    private HanViewPager pager;
-    private PagerSlidingTabStrip tabs;
+    private HanViewPagerAdapter adapter;    //ViewPager的adapter
+    private HanViewPager pager;             //Viewpager
+    private PagerSlidingTabStrip tabs;      //单行标题   TAB
 
     @Override
     public int layoutId() {

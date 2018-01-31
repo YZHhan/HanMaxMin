@@ -20,9 +20,9 @@ import com.han.hanmaxmin.mvp.presenter.HanPresenter;
  */
 
 public abstract class HanViewPagerABActivity<P extends HanPresenter> extends HanABActivity implements HanIViewPagerABActivity {
-    private HanViewPagerAdapter adapter;//ViewPager的adapter的
-    private HanViewPager pager;//自己封装的ViewPager
-    private PagerSlidingTabStrip tabs;//ViewPager的滑动的tab
+    private HanViewPagerAdapter adapter;   //ViewPager的adapter的
+    private HanViewPager pager;            //自己封装的ViewPager
+    private PagerSlidingTabStrip tabs;    //ViewPager的滑动的tab
 
 
     @Override

@@ -4,9 +4,10 @@ buildscript {
     repositories {
         jcenter()
 
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:3.0.1'
 
         /*AspectJ*/
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:1.0.10'
@@ -25,6 +26,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 
