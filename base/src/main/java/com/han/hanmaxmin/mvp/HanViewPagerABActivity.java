@@ -1,13 +1,15 @@
 package com.han.hanmaxmin.mvp;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
+import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.widget.viewpager.HanViewPager;
 import com.han.hanmaxmin.common.widget.viewpager.PagerSlidingTabStrip;
+import com.han.hanmaxmin.mvp.adapter.HanTabViewPagerAdapter;
 import com.han.hanmaxmin.mvp.adapter.HanViewPagerAdapter;
 import com.han.hanmaxmin.mvp.model.HanModelPager;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
@@ -34,7 +36,7 @@ public abstract class HanViewPagerABActivity<P extends HanPresenter> extends Han
     protected View initView() {
         View view = super.initView();// 调用父类HanABActivity的方法()，
         initViewPager(view);
-        return super.initView();
+       return view;
     }
 
     private   void initViewPager(View view){//初始化布局里的 ViewPager和tab
@@ -47,241 +49,165 @@ public abstract class HanViewPagerABActivity<P extends HanPresenter> extends Han
     @Override
     public void initViewPager(HanModelPager[] modelPagers, int offScreenPageLimit) {
         if (modelPagers != null){
-            getPageAdapter(pager, tabs);
+            adapter = getPageAdapter(pager, tabs);
+            adapter.setModelPagers(modelPagers);
+            pager.setAdapter(adapter);
+            final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+            pager.setPageMargin(margin);
+            pager.setOffscreenPageLimit(offScreenPageLimit);
+            tabs.setViewPager(pager);
         }
 
 
     }
 
     public HanViewPagerAdapter getPageAdapter(HanViewPager pager, PagerSlidingTabStrip tabs) {
-
-        return new ;
+        return new HanTabViewPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this);
     }
 
+
+    @Override
+    public void onPageSelected(View childAt, View oldView, int position, int oldPosition) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageScrollStaeChanged(int state) {
+
+    }
+
+    @Override
+    public void replaceViewPagerItem(HanModelPager... modelPagers) {
+        if(adapter != null){
+            adapter.replaceViewPagerDatas(modelPagers);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void setIndex(int index, boolean bool) {
+        int count = pager.getAdapter().getCount();
+        if(0 <= index && count < index){
+            pager.setCurrentItem(index, bool);
+        }
+    }
+
+    @Override
+    public PagerSlidingTabStrip getTabs() {
+        return tabs;
+    }
+
+    @Override
+    public HanViewPager getViewPager() {
+        return pager;
+    }
+
+    @Override
+    public HanViewPagerAdapter getViewPagerAdapter() {
+        return adapter;
+    }
+
+    @Override
+    public Fragment getCurrentFragemnt() {
+        return adapter.getAllData()[pager.getCurrentItem()].fragment;
+    }
+
+
+
+    /**
+     * 给PagerSlidingTabStrip  设置属性。
+     * @param tabs
+     */
     private   void initTabValues(PagerSlidingTabStrip tabs){
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        tabs.setShouldExpand(getTabShouldExpand());//  设置tab是自动填充屏幕的
+        tabs.setDividerColor(getDividerColor());//设置tab分割线的颜色
+        tabs.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, getTabUnderlineHeight(), dm));//设置tab底部线的高度
+        tabs.setUnderlineColor(getUnderlineColor());//设置tab底部线的颜色
+        tabs.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, getTabIndicatorSize(), dm));//设置tab Indicator的高度
+        tabs.setIndicatorColor(getTabIndicatorColor());
+        tabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, getTabTitleSize(), dm));//设置title的size
+        tabs.setSelectedTextColor(getTabSelectedTitleColor());//设置title选择的颜色
+        tabs.setTextColor(getTabsTitleColor());//设置tab的title的颜色
+        tabs.setTabBackground(getTabOnClickTitleColor());//设置
+        tabs.setBackgroundResource(getTabBackgroundResource());
+        tabs.setTabWidth(getTabWidth());
+        tabs.setTabMarginsLeftRight(getTabMargin());
+        tabs.setTabPaddingLeftRight(getTabPaddingLeftRight());
+        tabs.setIndicatorMargin(getTabIndicatorMargin());
+        tabs.setIsCurrentItemAnimation(getTabCurrentItemAnimation());
+
+
+
 
     }
 
-    @Override
-    public void setActivityTitle(Object value, int code) {
-
+    protected boolean getTabCurrentItemAnimation() {
+        return false;
     }
 
-    @Override
-    public int emptyLayoutId() {
+    protected int getTabIndicatorMargin() {
         return 0;
     }
 
-    @Override
-    public int loadingLayoutId() {
+    protected int getTabPaddingLeftRight() {
+        return 20;
+    }
+
+    protected int getTabMargin() {
         return 0;
     }
 
-    @Override
-    public int errorLayoutId() {
+    protected int getTabWidth() {
         return 0;
     }
 
-    @Override
-    public boolean isTransparentStatusBar() {
-        return false;
+    protected int getTabBackgroundResource() {
+        return android.R.color.transparent;
     }
 
-    @Override
-    public boolean isBlackIconStatusBar() {
-        return false;
+    protected int getTabOnClickTitleColor() {
+        return getResources().getColor(R.color.colorAccent);
     }
 
-    @Override
-    public String initTag() {
-        return null;
-    }
-
-
-    @Override
-    public void initData(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    public boolean isDelayDate() {
-        return false;
-    }
-
-    @Override
-    public void initDataWhenDelay() {
-
-    }
-
-    @Override
-    public Object getPresenter() {
-        return null;
-    }
-
-    @Override
-    public Context getContext() {
-        return null;
-    }
-
-    @Override
-    public boolean isOpenEventBus() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpenViewState() {
-        return false;
-    }
-
-    @Override
-    public boolean isShowBackButtonInDefaultView() {
-        return false;
-    }
-
-    @Override
-    public void activityFinish() {
-
-    }
-
-    @Override
-    public void activityFinish(boolean finishAfterTransition) {
-
-    }
-
-    @Override
-    public void loading() {
-
-    }
-
-    @Override
-    public void loading(String message) {
-
-    }
-
-    @Override
-    public void loading(boolean cancelAble) {
-
-    }
-
-    @Override
-    public void loading(String message, boolean cancelAble) {
-
-    }
-
-    @Override
-    public void loadingClose() {
-
-    }
-
-    @Override
-    public void showLoadingView() {
-
-    }
-
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void showErrorView() {
-
-    }
-
-    @Override
-    public void showContentView() {
-
-    }
-
-    @Override
-    public int currentViewState() {
+    protected int getTabsTitleColor() {
         return 0;
     }
 
-    @Override
-    public void intent2Activity(Class clazz) {
-
+    protected int getTabSelectedTitleColor() {
+        return 0;
     }
 
-    @Override
-    public void intent2Activity(Class clazz, int requestCode) {
-
+    protected int getTabIndicatorColor() {
+        return 0;
     }
 
-    @Override
-    public void intent2Activity(Class clazz, Bundle bundle) {
-
+    protected float getTabTitleSize() {
+        return 12;
     }
 
-    @Override
-    public void intent2Activity(Class clazz, Bundle bundle, ActivityOptionsCompat optionsCompat) {
-
+    protected float getTabIndicatorSize() {
+        return 2;
     }
 
-    @Override
-    public void intent2Activity(Class clazz, Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat) {
-
+    protected int getUnderlineColor() {
+        return Color.TRANSPARENT;
     }
 
-    @Override
-    public void commitFragment(android.support.v4.app.Fragment fragment) {
-
+    protected float getTabUnderlineHeight() {
+        return 1;
     }
 
-    @Override
-    public void commitFragment(android.support.v4.app.Fragment fragment, String trg) {
-
+    protected int getDividerColor() {
+        return Color.TRANSPARENT;
     }
 
-    @Override
-    public void commitFragment(int layoutId, android.support.v4.app.Fragment fragment) {
-
+    protected  boolean getTabShouldExpand(){
+        return true;
     }
-
-    @Override
-    public void commitFragment(int layoutId, android.support.v4.app.Fragment fragment, String trg) {
-
-    }
-
-    @Override
-    public void commitFragment(android.support.v4.app.Fragment oldFragment, android.support.v4.app.Fragment fragment) {
-
-    }
-
-    @Override
-    public void commitFragment(android.support.v4.app.Fragment oldFragment, android.support.v4.app.Fragment fragment, String trg) {
-
-    }
-
-    @Override
-    public void commitFragment(android.support.v4.app.Fragment oldFragment, int layoutId, android.support.v4.app.Fragment fragment) {
-
-    }
-
-    @Override
-    public void commitFragment(android.support.v4.app.Fragment oldFragment, int layoutId, android.support.v4.app.Fragment fragment, String trg) {
-
-    }
-
-    @Override
-    public void commitBackStackFragment(android.support.v4.app.Fragment fragment) {
-
-    }
-
-    @Override
-    public void commitBackStackFragment(android.support.v4.app.Fragment fragment, String trg) {
-
-    }
-
-    @Override
-    public void commitBackStackFragment(int layoutId, android.support.v4.app.Fragment fragment) {
-
-    }
-
-    @Override
-    public void commitBackStackFragment(int layoutId, android.support.v4.app.Fragment fragment, String trg) {
-
-    }
-
-
 }

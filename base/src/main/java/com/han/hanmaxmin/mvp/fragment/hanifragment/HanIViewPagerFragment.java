@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.han.hanmaxmin.mvp.fragment.HanIFragment;
+import com.han.hanmaxmin.mvp.model.HanModelPager;
 
 /**
  * @CreateBy Administrator
@@ -35,7 +36,7 @@ public interface HanIViewPagerFragment extends HanIFragment {
 
     int getTabItemLayout();
 
-    void initTab(View view);//待完善   void initTab(View view, QsModelPager modelPager);
+    void initTab(View view, HanModelPager modelPager);//待完善   void initTab(View view, QsModelPager modelPager);
 
     Fragment getCurrentFragment();
 

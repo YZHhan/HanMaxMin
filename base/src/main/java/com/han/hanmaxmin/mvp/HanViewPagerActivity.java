@@ -9,6 +9,7 @@ import android.view.View;
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.widget.viewpager.HanViewPager;
 import com.han.hanmaxmin.common.widget.viewpager.PagerSlidingTabStrip;
+import com.han.hanmaxmin.mvp.adapter.HanTabViewPagerAdapter;
 import com.han.hanmaxmin.mvp.adapter.HanViewPagerAdapter;
 import com.han.hanmaxmin.mvp.model.HanModelPager;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
@@ -16,7 +17,7 @@ import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 /**
  * @CreateBy Administrator
  * @Date 2018/1/4  21:32
- * @Description
+ * @Description 作为ViewPager和Activity的混合
  */
 
 public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanActivity<P> implements HanIIViewPagerActivity {
@@ -33,15 +34,45 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
     @Override
     protected View initView() {
         View view = super.initView();//spter可以调用父类的方法
-        initViewPager(view);
+        initViewPager(view);//给当前的View绑定对象。ViewPager和PagerSlidingTabStrip
         return view;
     }
 
+    /**
+     * 初始化组件对象，ViewPager和PagerSlidingTabStrip。
+     * 初始化Tab的属性
+     * 初始化ViewPager的属性
+     * @param view
+     */
     private void initViewPager(View view){
         pager = (HanViewPager) view.findViewById(R.id.han_viewpager);
         tabs = (PagerSlidingTabStrip) view.findViewById(android.R.id.tabs);
-        initTabValue(tabs);
-        initViewPager(getModelPagers(), 3);
+        initTabValue(tabs);// 初始化Tab的属性。
+        initViewPager(getModelPagers(), 3);// 初始化ViewPager的一些属性，adapter等等。
+    }
+
+    /**
+     * 得到适配器
+     * 设置model
+     * 绑定适配器
+     * 设置ViewPage的属性。预加载，margin。
+     * pager和tab的绑定
+     */
+    @Override
+    public void initViewPager(HanModelPager[] modelPagers, int offScreenPageLimit) {
+        if(modelPagers != null){
+             adapter = getPagerAdapter(pager, tabs);
+             adapter.setModelPagers(modelPagers);
+             pager.setAdapter(adapter);
+             final int pagerMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());//将其他尺寸转化为px
+             pager.setPageMargin(pagerMargin);
+             pager.setOffscreenPageLimit(offScreenPageLimit);//预加载页面个数。
+             tabs.setViewPager(pager);
+        }
+    }
+
+    public HanViewPagerAdapter getPagerAdapter(HanViewPager pager, PagerSlidingTabStrip tabs){
+        return new HanTabViewPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager,this);
     }
 
     public final void initTabValue(PagerSlidingTabStrip tabs){
@@ -82,10 +113,14 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
 
     }
 
+    /**
+     * 替换ViewPager的 item
+     * @param modelPagers
+     */
     @Override
     public void replaceViewPagerItem(HanModelPager... modelPagers) {
         if(adapter != null){
-//            adapter.re//
+            adapter.replaceViewPagerDatas(modelPagers);
             adapter.notifyDataSetChanged();
         }
     }
@@ -115,8 +150,7 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
 
     @Override
     public Fragment getCurrentFragment() {
-//        return adapter.get;
-        return null;
+        return adapter.getAllData()[pager.getCurrentItem()].fragment;
     }
 
 
