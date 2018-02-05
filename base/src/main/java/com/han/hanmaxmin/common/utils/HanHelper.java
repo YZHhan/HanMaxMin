@@ -20,6 +20,7 @@ import com.han.hanmaxmin.AsApplication;
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.aspect.thread.ThreadPoint;
 import com.han.hanmaxmin.common.aspect.thread.ThreadType;
+import com.han.hanmaxmin.common.http.HttpAdapter;
 import com.han.hanmaxmin.common.threadpoll.HanThreadPollHelper;
 import com.han.hanmaxmin.common.utils.helper.CacheHelper;
 import com.han.hanmaxmin.common.utils.helper.ImageHelper;
@@ -37,6 +38,7 @@ public class HanHelper {
     private static final String TAG = "HanHelper";
     private static HanHelper helper;
     private        ViewBind  viewBind;
+    private HttpAdapter httpAdapter;
 
     public static HanHelper getInstance() {
         if (helper == null) {
@@ -74,6 +76,15 @@ public class HanHelper {
 
     public HanThreadPollHelper getThreadHelper() {
         return HanThreadPollHelper.getInstance();
+    }
+
+    public HttpAdapter getHttpHelper(){
+        if(httpAdapter == null){
+            synchronized (this){
+                if(httpAdapter == null)httpAdapter =new HttpAdapter();
+            }
+        }
+        return httpAdapter;
     }
 
 

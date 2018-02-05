@@ -2,11 +2,14 @@ package com.han.hanmaxmin.mvp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
@@ -21,6 +24,7 @@ import com.han.hanmaxmin.common.aspect.thread.ThreadType;
 import com.han.hanmaxmin.common.constants.HanConstants;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.utils.HanHelper;
+import com.han.hanmaxmin.common.utils.PresenterUtils;
 import com.han.hanmaxmin.common.widget.dialog.HanProgressDialog;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 
@@ -318,6 +322,135 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
                 }
             });
         }
+    }
+
+    @Override
+    public int currentViewState() {
+        if(isOpenViewState() && mViewAnimator != null){
+            return mViewAnimator.getDisplayedChild();
+        }
+        return -1;
+    }
+
+
+//    _________________________________________________________________________  跳转
+
+
+    @Override
+    public void intent2Activity(Class clazz) {
+        intent2Activity(clazz, null, 0, null);
+    }
+
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle) {
+        intent2Activity(clazz, bundle, 0, null);
+    }
+
+    @Override
+    public void intent2Activity(Class clazz, int requestCode) {
+        intent2Activity(clazz, null, requestCode, null);
+    }
+
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, ActivityOptionsCompat optionsCompat) {
+        intent2Activity(clazz, bundle, 0, optionsCompat);
+    }
+
+    /**
+     * Androdi 5.0 新增跳转动画，为了兼容低版本。所以使用ActivityOptionsCompat。。
+     */
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, int requestCode, ActivityOptionsCompat optionsCompat) {
+        if(clazz !=null){
+            Intent intent=new Intent();
+            intent.setClass(this, clazz);
+            if (bundle != null)intent.putExtras(bundle);
+            if(optionsCompat == null){
+                if(requestCode > 0){
+                    startActivityForResult(intent, requestCode);
+                }else {
+                    startActivity(intent);
+                }
+            } else {
+                if(requestCode > 0){
+                    ActivityCompat.startActivityForResult(this, intent, requestCode, optionsCompat.toBundle());
+                } else {
+                    ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void commitFragment(Fragment fragment) {
+        commitFragment(fragment, fragment.getClass().getSimpleName());
+    }
+
+    @Override
+    public void commitFragment(Fragment fragment, String trg) {
+        commitFragment(android.R.id.custom, fragment, trg);
+    }
+
+    @Override
+    public void commitFragment(int layoutId, Fragment fragment) {
+        commitFragment(layoutId, fragment, fragment.getClass().getName());
+    }
+
+    /**
+     * 最终是由HanHelper来进行的
+     * @param layoutId
+     * @param fragment
+     * @param trg
+     */
+    @Override
+    public void commitFragment(int layoutId, Fragment fragment, String trg) {
+        HanHelper.getInstance().commitFragment(getSupportFragmentManager(), layoutId, fragment, trg);
+    }
+
+    @Override
+    public void commitFragment(Fragment oldFragment, Fragment fragment) {
+        commitFragment(oldFragment, fragment, fragment.getClass().getSimpleName());
+    }
+
+    @Override
+    public void commitFragment(Fragment oldFragment, Fragment fragment, String trg) {
+        commitFragment(oldFragment, android.R.id.custom, fragment, trg);
+    }
+
+    @Override
+    public void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment) {
+    commitFragment(oldFragment, layoutId, fragment, fragment.getClass().getSimpleName());
+    }
+
+    @Override
+    public void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment, String trg) {
+HanHelper.getInstance().commitFragment(getSupportFragmentManager(), oldFragment, layoutId, fragment, trg);
+    }
+    @Override
+    public void commitBackStackFragment(Fragment fragment) {
+        commitFragment(fragment, fragment.getClass().getSimpleName());
+
+    }
+
+    @Override
+    public void commitBackStackFragment(Fragment fragment, String trg) {
+        commitFragment(android.R.id.custom, fragment, trg);
+    }
+
+    @Override
+    public void commitBackStackFragment(int layoutId, Fragment fragment) {
+        commitFragment(layoutId, fragment, fragment.getClass().getSimpleName());
+    }
+
+    @Override
+    public void commitBackStackFragment(int layoutId, Fragment fragment, String trg) {
+        HanHelper.getInstance().commitBackStackFragment(getSupportFragmentManager(), layoutId, fragment, trg);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
     }
 
     @ThreadPoint(ThreadType.MAIN) @Override public void onBackPressed() {

@@ -1,5 +1,7 @@
 package com.han.hanmaxmin.mvp.fragment.hanifragment;
 
+import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
+
 /**
  * @CreateBy Administrator
  * @Date 2017/11/23  15:27
@@ -17,7 +19,7 @@ public interface HanIPullListFragment<D> extends HanIListFragment<D> {
 
     void stopRefreshing();
 
-    void setLoadingState();//待完善
+    void setLoadingState(LoadingFooter.State state);//待完善
 
     void openPullRefreshing();
 

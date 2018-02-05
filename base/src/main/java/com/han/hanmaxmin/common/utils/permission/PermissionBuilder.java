@@ -13,10 +13,10 @@ import java.util.List;
 
 public class PermissionBuilder {
 
-    private List<String> wantPermissionArr   = new ArrayList<>();
-    private boolean      mIsShowCustomDialog = true;
+    private List<String> wantPermissionArr   = new ArrayList<>();//  添加权限的需求  不止一个
+    private boolean      mIsShowCustomDialog = true;//   是否展示dialog
 
-    private int                        mRequestCode;
+    private int                        mRequestCode;// 请求code、
     private PermissionCallbackListener mListener;
     private Activity                   mActivity;
 
@@ -24,6 +24,9 @@ public class PermissionBuilder {
         return wantPermissionArr;
     }
 
+    /**
+     * 添加权限到数组、不可重复。
+     */
     public PermissionBuilder addWantPermission(String permission) {
         if (!wantPermissionArr.contains(permission)) wantPermissionArr.add(permission);
         return this;

@@ -13,4 +13,11 @@ public class LoadingFooter extends RelativeLayout {
     public LoadingFooter(Context context) {
         super(context);
     }
+
+    public enum State {
+        Normal,
+        TheEnd,
+        Loading,
+        NetWorkError
+    }
 }

@@ -26,6 +26,7 @@ import com.han.hanmaxmin.common.aspect.thread.ThreadType;
 import com.han.hanmaxmin.common.constants.HanConstants;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.utils.HanHelper;
+import com.han.hanmaxmin.common.utils.PresenterUtils;
 import com.han.hanmaxmin.common.widget.dialog.HanProgressDialog;
 import com.han.hanmaxmin.mvp.fragment.HanFragment;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
@@ -75,6 +76,14 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         }
     }
 
+    /**
+     *  无内容。减少子类的重写
+     */
+    @Override
+    public void setActivityTitle(Object value, int code) {
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -115,6 +124,27 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         HanHelper.getInstance().getScreenHelper().popActivity(this);
     }
 
+    @Override
+    public P getPresenter() {
+        if(presenter == null){
+            synchronized (this){
+                if(presenter == null){
+                    PresenterUtils.class
+                }
+            }
+        }
+    }
+
+    /**
+     * 数据延期处理
+     */
+    @Override
+    public void initDataWhenDelay() {
+        if(!hasInitData && isDelayDate()){
+            initData(getIntent().getExtras());
+            hasInitData = true;
+        }
+    }
 
     /**
      * 控制状态栏的  透明
@@ -374,6 +404,11 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
 
     @Override
     public void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment) {
+        commitFragment(oldFragment, layoutId, fragment, fragment.getClass().getSimpleName());
+    }
+
+    @Override
+    public void commitFragment(Fragment oldFragment, int layoutId, Fragment fragment, String trg) {
         HanHelper.getInstance().commitFragment(getSupportFragmentManager(), oldFragment, layoutId, fragment, fragment.getClass().getSimpleName());
     }
 
@@ -449,5 +484,15 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
                 }
             });
         }
+    }
+
+    @Override
+    public boolean isBlackIconStatusBar() {
+        return false;
+    }
+
+    @Override
+    public boolean isShowBackButtonInDefaultView() {
+        return false;
     }
 }

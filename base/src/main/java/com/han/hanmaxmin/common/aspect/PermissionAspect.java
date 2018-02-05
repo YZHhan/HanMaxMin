@@ -21,7 +21,7 @@ import org.aspectj.lang.annotation.Aspect;
  */
 @Aspect
 public class PermissionAspect {
-public static final String TAG="PermissionAspect";
+    public static final String TAG="PermissionAspect";
     private static final String POINTCUT_METHOD_DEFAULT="execution(@com.han.hanmaxmin.common.aspect.permission.Permission * *(..)) && @annotation(permission)";
     @Around(POINTCUT_METHOD_DEFAULT)
     public Object onPermissionExecution(final ProceedingJoinPoint joinPoint, final Permission permission){
@@ -34,15 +34,14 @@ public static final String TAG="PermissionAspect";
      */
     private void startRequestPermission(final ProceedingJoinPoint joinPoint, final Permission permission) {
         if (permission == null) return;
-        L.i(TAG,"permission"+permission.value()[0]);
         String[] values = permission.value();
         if (values.length < 1) {
             return;
         }
-
+        L.i(TAG,"permission"+permission.value()[0]);
         FragmentActivity activity = HanHelper.getInstance().getScreenHelper().currentActivity();
         if (activity != null) {
-            PermissionBuilder builder = PermissionUtils.getInstance().createBuilder();
+            PermissionBuilder builder = PermissionUtils.getInstance().createBuilder();//  之所以不进行联调，是因为for循环遍历对象。
             for (String permissionStr : values) {
                 builder.addWantPermission(permissionStr);
             }
