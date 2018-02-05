@@ -32,6 +32,8 @@ import okhttp3.ResponseBody;
  * @CreateBy Administrator
  * @Date 2017/11/15  21:17
  * @Description 设置网络请求的默认值。
+ *
+ *
  */
 
 public class HttpAdapter {
@@ -60,15 +62,14 @@ public class HttpAdapter {
         }
 
         if (converter == null) {
-//            converter = new HttpConverter(gson);
+            converter = new HttpConverter();
         }
     }
 
-    private HttpBuilder getHttpBuidler(Object requestType) {//
-//        HttpBuilder httpBuilder = new HttpBuilder();
-//        HanHelper.getInstance().getApplication().initHttpAdapter(httpBuilder);
-//        return httpBuilder;
-        return null;
+    private HttpBuilder getHttpBuidler(Object requestTag, String path, Object[] args) {
+        HttpBuilder httpBuilder = new HttpBuilder(requestTag, path, args);
+        HanHelper.getInstance().getApplication().initHttpAdapter(httpBuilder);
+        return httpBuilder;
     }
 
 
@@ -77,8 +78,9 @@ public class HttpAdapter {
     }
 
     public <T> T create(Class<T> clazz, Object requestType) {
+        L.i("proxy","我是HTTPAdapter的  create");
         validateIsInterface(clazz, requestType);
-        validataIsExtendInterface(clazz, requestType);
+        validateIsExtendInterface(clazz, requestType);
         HttpHandler handler = new HttpHandler(this, requestType);
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz}, handler);
     }
@@ -104,8 +106,8 @@ public class HttpAdapter {
      * @param requestType
      * @param <T>
      */
-    private static <T> void validataIsExtendInterface(Class<T> service, Object requestType) {
-        if (service != null || service.getInterfaces().length > 0) {
+    private static <T> void validateIsExtendInterface(Class<T> service, Object requestType) {
+        if (service.getInterfaces().length > 0) {
             throw new HanException(HanExceptionType.UNEXPECTEN, requestType, String.valueOf(service) + "can not extened interface");
         }
     }
@@ -141,7 +143,7 @@ public class HttpAdapter {
 
         checkParameterAnnotation(annotations, args, method.getName(), reqeustTag);
 
-        HttpBuilder httpBuilder = new HttpBuilder(requestType);
+        HttpBuilder httpBuilder = new HttpBuilder(requestType, path, args);
         StringBuilder url = getUrl(TextUtils.isEmpty(terminal) ? httpBuilder.getTerminal() : terminal, path, method, args, reqeustTag);
 
         if (TextUtils.isEmpty(url)) throw new HanException(HanExceptionType.UNEXPECTEN, reqeustTag, "The url error... method :" + method.getName() + " request url is null...");

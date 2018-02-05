@@ -129,10 +129,11 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         if(presenter == null){
             synchronized (this){
                 if(presenter == null){
-                    PresenterUtils.class
+//                    PresenterUtils.class
                 }
             }
         }
+        return null;
     }
 
     /**

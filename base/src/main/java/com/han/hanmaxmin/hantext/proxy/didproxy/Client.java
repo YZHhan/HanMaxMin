@@ -1,4 +1,4 @@
-package com.han.hanmaxmin.hantext.proxy;
+package com.han.hanmaxmin.hantext.proxy.didproxy;
 
 /**
  * @CreateBy Administrator

@@ -16,13 +16,17 @@ import okhttp3.Headers;
  */
 
 public class HttpBuilder {
-    private final Object requestTag;
-    private       String terminal;
+    private final Object   requestTag;
+    private final String   path;
+    private final Object[] args;
+    private       String   terminal;
 
     private Headers.Builder headBuilder = new Headers.Builder();
 
-    public HttpBuilder(Object requestTag) {
+    HttpBuilder(Object requestTag, String path, Object[] args) {
         this.requestTag = requestTag;
+        this.path = path;
+        this.args = args;
     }
 
     public HttpBuilder addHeader(String key, String value) {
@@ -48,7 +52,19 @@ public class HttpBuilder {
         return this;
     }
 
-    public String getTerminal() {
+    public String getPath() {
+        return path;
+    }
+
+    public Object getRequestTag() {
+        return requestTag;
+    }
+
+    public Object[] getArgs() {
+        return args;
+    }
+
+    String getTerminal() {
         return terminal;
     }
 }

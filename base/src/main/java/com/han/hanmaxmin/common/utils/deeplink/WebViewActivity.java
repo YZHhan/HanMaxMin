@@ -35,10 +35,7 @@ public class WebViewActivity extends HanABActivity  {
 
     }
 
-    @Override
-    public Object getPresenter() {
-        return null;
-    }
+
 
     @Override
     public boolean isShowBackButtonInDefaultView() {
