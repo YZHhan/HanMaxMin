@@ -10,9 +10,10 @@ import com.han.hanmaxmin.mvp.HanABActivity;
 public class Main4Activity extends HanABActivity {
 
     private TextView textView;
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4);
+
+    @Override
+    public int layoutId() {
+        return R.layout.activity_main4;
     }
 
     @Override
@@ -25,8 +26,4 @@ public class Main4Activity extends HanABActivity {
 
     }
 
-    @Override
-    public Object getPresenter() {
-        return null;
-    }
 }
