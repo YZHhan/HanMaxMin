@@ -2,6 +2,8 @@ package com.han.hanmaxmin.common.proxy;
 
 import com.han.hanmaxmin.common.http.HttpAdapter;
 import com.han.hanmaxmin.common.log.L;
+import com.han.hanmaxmin.common.widget.toast.HanToast;
+import com.han.hanmaxmin.hantext.aspect.toast.Toast;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -38,6 +40,7 @@ public class HttpHandler implements InvocationHandler{
     @Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         L.i(TAG,"网络请求代理接口："+method.getName()+" requestType:"+tag);
         L.i("proxy","网络请求代理接口："+method.getName()+" requestType:"+tag);
-        return adapter.toString();
+        HanToast.show("nihap ");
+        return adapter.startRequest(method, args, tag);
     }
 }

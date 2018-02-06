@@ -8,4 +8,8 @@ import com.han.hanmaxmin.common.aspect.network.method.GET;
 
 public interface AuthApi {
     @GET("/user/info")void request();
+    @GET("/user/info")void request1();
+    @GET("/user/info")void request2();
+    @GET("/user/info")void request3();
+
 }

@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.utils.HanHelper;
+import com.han.hanmaxmin.common.utils.PresenterUtils;
+import com.han.hanmaxmin.common.widget.toast.HanToast;
+import com.han.hanmaxmin.hantext.proxy.doingproxy.Subject;
 import com.han.hanmaxmin.mvp.HanABActivity;
 
 public class Main4Activity extends HanABActivity {
@@ -25,6 +28,7 @@ public class Main4Activity extends HanABActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         HanHelper.getInstance().getHttpHelper().create(AuthApi.class);
+
     }
 
 }

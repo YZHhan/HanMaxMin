@@ -2,7 +2,12 @@ package com.han.hanmaxmin.common.http;
 
 import android.text.TextUtils;
 
+import com.han.hanmaxmin.common.aspect.network.method.DELETE;
+import com.han.hanmaxmin.common.aspect.network.method.GET;
+import com.han.hanmaxmin.common.aspect.network.method.HEAD;
+import com.han.hanmaxmin.common.aspect.network.method.PATCH;
 import com.han.hanmaxmin.common.aspect.network.method.POST;
+import com.han.hanmaxmin.common.aspect.network.method.PUT;
 import com.han.hanmaxmin.common.aspect.network.method.TERMINAL;
 import com.han.hanmaxmin.common.aspect.network.parameter.Body;
 import com.han.hanmaxmin.common.aspect.network.parameter.Path;
@@ -94,7 +99,7 @@ public class HttpAdapter {
      */
     private static <T> void validateIsInterface(Class<T> service, Object requestType) {
         if (service == null || !service.isInterface()) {
-            throw new HanException(HanExceptionType.UNEXPECTEN, requestType, String.valueOf(service) + "is not interface");
+            throw new HanException(HanExceptionType.UNEXPECTED, requestType, String.valueOf(service) + "is not interface");
         }
     }
 
@@ -108,15 +113,17 @@ public class HttpAdapter {
      */
     private static <T> void validateIsExtendInterface(Class<T> service, Object requestType) {
         if (service.getInterfaces().length > 0) {
-            throw new HanException(HanExceptionType.UNEXPECTEN, requestType, String.valueOf(service) + "can not extened interface");
+            throw new HanException(HanExceptionType.UNEXPECTED, requestType, String.valueOf(service) + "can not extened interface");
         }
     }
 
     public Object startRequest(Method method, Object[] args, Object requestTag) {
+        L.i("proxy", "HttpAdapter  ...  startRequest....");
         Annotation[] annotations = method.getAnnotations();
         if (annotations == null || annotations.length < 1) {
-            throw new HanException(HanExceptionType.UNEXPECTEN, requestTag, "Annotatio error...  the method:" + method.getName() + " must have one annotaion at least!! @GET or @POST or @PUT");
-        } Annotation pathAnnotation = null;
+            throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "Annotation error... the method:" + method.getName() + " must have one annotation at least!! @GET @POST or @PUT");
+        }
+        Annotation pathAnnotation = null;
         String terminal = null;
         for (Annotation annotation : annotations) {
             if (annotation instanceof TERMINAL) {
@@ -126,15 +133,35 @@ public class HttpAdapter {
             }
         }
         if (pathAnnotation == null) {
-            throw new HanException(HanExceptionType.UNEXPECTEN, requestTag, "Annotation error... the method:" + method.getName() + "create(Object.class) the method must has an annotation, such as: @GET or @POST @PUT...");
+            throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "Annotation error... the method:" + method.getName() + " create(Object.class) the method must has an annotation,such as:@PUT @POST or @GET...");
         }
-
         if (pathAnnotation instanceof POST) {
             String path = ((POST) pathAnnotation).value();
+            return executeWithOkHttp(terminal, method, args, path, requestTag, "POST");
 
+        } else if (pathAnnotation instanceof GET) {
+            String path = ((GET) pathAnnotation).value();
+            return executeWithOkHttp(terminal, method, args, path, requestTag, "GET");
+
+        } else if (pathAnnotation instanceof PUT) {
+            String path = ((PUT) pathAnnotation).value();
+            return executeWithOkHttp(terminal, method, args, path, requestTag, "PUT");
+
+        } else if (pathAnnotation instanceof DELETE) {
+            String path = ((DELETE) pathAnnotation).value();
+            return executeWithOkHttp(terminal, method, args, path, requestTag, "DELETE");
+
+        } else if (pathAnnotation instanceof HEAD) {
+            String path = ((HEAD) pathAnnotation).value();
+            return executeWithOkHttp(terminal, method, args, path, requestTag, "HEAD");
+
+        } else if (pathAnnotation instanceof PATCH) {
+            String path = ((PATCH) pathAnnotation).value();
+            return executeWithOkHttp(terminal, method, args, path, requestTag, "PATCH");
+
+        } else {
+            throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "Annotation error... the method:" + method.getName() + "create(Object.class) the method must has an annotation, such as:@PUT @POST or @GET...");
         }
-
-        return  null;
     }
 
 
@@ -146,7 +173,7 @@ public class HttpAdapter {
         HttpBuilder httpBuilder = new HttpBuilder(requestType, path, args);
         StringBuilder url = getUrl(TextUtils.isEmpty(terminal) ? httpBuilder.getTerminal() : terminal, path, method, args, reqeustTag);
 
-        if (TextUtils.isEmpty(url)) throw new HanException(HanExceptionType.UNEXPECTEN, reqeustTag, "The url error... method :" + method.getName() + " request url is null...");
+        if (TextUtils.isEmpty(url)) throw new HanException(HanExceptionType.UNEXPECTED, reqeustTag, "The url error... method :" + method.getName() + " request url is null...");
 
         RequestBody requestBody = null;
         Object body = null;
@@ -159,7 +186,7 @@ public class HttpAdapter {
             if (annotation instanceof Body) {
                 body = args[i];
                 mimeType = ((Body) annotation).mimeType();
-                if (TextUtils.isEmpty(mimeType)) throw new HanException(HanExceptionType.UNEXPECTEN, reqeustTag, "The reqeust body exception ...method:" + method.getName() + " the annotaation @Body not have mimeType value");
+                if (TextUtils.isEmpty(mimeType)) throw new HanException(HanExceptionType.UNEXPECTED, reqeustTag, "The reqeust body exception ...method:" + method.getName() + " the annotaation @Body not have mimeType value");
                 break;
             } else if (annotation instanceof Query) {
                 if (params == null) params = new HashMap<>();
@@ -235,15 +262,15 @@ public class HttpAdapter {
 
     private StringBuilder getUrl(String terminal, String path, Method method, Object[] args, Object requestTag) {
         if (TextUtils.isEmpty(terminal)) {
-            throw new HanException(HanExceptionType.UNEXPECTEN, requestTag, "The url terminal error... method:" + method.getName() + " termial is null ...");
+            throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "The url terminal error... method:" + method.getName() + " termial is null ...");
         }
 
         if (TextUtils.isEmpty(path)) {
-            throw new HanException(HanExceptionType.UNEXPECTEN, requestTag, "The url path error... method:" + method.getName() + "path is null...");
+            throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "The url path error... method:" + method.getName() + "path is null...");
         }
 
         if (!path.endsWith("/")) {
-            throw new HanException(HanExceptionType.UNEXPECTEN, requestTag, "The url path error... method:" + method.getName() + " path=" + path + " (path is not start with '/')");
+            throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "The url path error... method:" + method.getName() + " path=" + path + " (path is not start with '/')");
         }
 
         Annotation[][] annotations = method.getParameterAnnotations();
@@ -255,11 +282,11 @@ public class HttpAdapter {
                 String[] split = path.split(PATH_REPLACE);
                 Object arg = args[i];
                 if (!(arg instanceof String[])) {
-                    throw new HanException(HanExceptionType.UNEXPECTEN, requestTag, "The params error... method:" + method.getName() + " @Path annotation only fix String[] arg !");
+                    throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "The params error... method:" + method.getName() + " @Path annotation only fix String[] arg !");
                 }
                 String[] param = (String[]) arg;
                 if (split.length - param.length > 1) {
-                    throw new HanException(HanExceptionType.UNEXPECTEN, requestTag, "The params error... method:" + method.getName() + " the path with '{xx}' is more than @Path annotation arg length!");
+                    throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "The params error... method:" + method.getName() + " the path with '{xx}' is more than @Path annotation arg length!");
                 }
 
                 for (int index = 0; index < split.length; index++) {
@@ -289,9 +316,9 @@ public class HttpAdapter {
      */
     private void checkParameterAnnotation(Annotation[][] annotations, Object[] args, String methodName, Object requestTag) {
         if (annotations != null && args != null && annotations.length > 0 && args.length > 0) {
-            if (annotations.length == args.length) throw new HanException(HanExceptionType.UNEXPECTEN, requestTag, "params error method :" + methodName + " params have to have one annotaiton, such as @Query @Path");
+            if (annotations.length == args.length) throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "params error method :" + methodName + " params have to have one annotaiton, such as @Query @Path");
             for (Annotation[] annotationsArr : annotations) {
-                if (annotationsArr.length != 1) throw new HanException(HanExceptionType.UNEXPECTEN, requestTag, "params error method :" + methodName + " params have to have one annotation, but there is more than one!");
+                if (annotationsArr.length != 1) throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "params error method :" + methodName + " params have to have one annotation, but there is more than one!");
             }
 
         }

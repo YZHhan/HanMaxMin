@@ -47,7 +47,7 @@ public class HttpBuilder {
             }
             this.terminal=terminal;
         }else{
-            throw new HanException(HanExceptionType.UNEXPECTEN,requestTag,"Dear! The terminal is emtpty...");
+            throw new HanException(HanExceptionType.UNEXPECTED,requestTag,"Dear! The terminal is emtpty...");
         }
         return this;
     }

@@ -9,6 +9,6 @@ package com.han.hanmaxmin.common.exception;
 public enum HanExceptionType {
     NETWORK_ERROR,
     HTTP_ERROR,
-    UNEXPECTEN,
+    UNEXPECTED,
     CANCEL
 }
