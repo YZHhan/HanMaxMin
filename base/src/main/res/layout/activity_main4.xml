@@ -6,10 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context="com.han.hanmaxmin.activity.Main4Activity">
 
     <TextView
         android:id="@+id/textText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="你猜好啦没。。。。"
+        />
+    <TextView
+        android:id="@+id/textText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="你猜好啦没。。。。"
