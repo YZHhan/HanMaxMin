@@ -40,7 +40,6 @@ public class HttpHandler implements InvocationHandler{
     @Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         L.i(TAG,"网络请求代理接口："+method.getName()+" requestType:"+tag);
         L.i("proxy","网络请求代理接口："+method.getName()+" requestType:"+tag);
-        HanToast.show("nihap ");
         return adapter.startRequest(method, args, tag);
     }
 }

@@ -119,7 +119,7 @@ public class HttpAdapter {
 
     public Object startRequest(Method method, Object[] args, Object requestTag) {
         L.i("proxy", "HttpAdapter  ...  startRequest....");
-        Annotation[] annotations = method.getAnnotations();
+        Annotation[] annotations = method.getAnnotations();//   获取注解。
         if (annotations == null || annotations.length < 1) {
             throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "Annotation error... the method:" + method.getName() + " must have one annotation at least!! @GET @POST or @PUT");
         }

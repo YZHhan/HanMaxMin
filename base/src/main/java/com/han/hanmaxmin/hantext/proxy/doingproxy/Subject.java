@@ -24,17 +24,3 @@ class RealSubject implements Subject{
     }
 }
 
-class ProxyHandler implements InvocationHandler{
-    private Object tar;
-
-    public  Object bind(Object tar){
-        this.tar = tar;
-        return Proxy.newProxyInstance(tar.getClass().getClassLoader(), tar.getClass().getInterfaces(), this);
-    }
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
-        return null;
-    }
-}
