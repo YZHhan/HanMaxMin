@@ -14,27 +14,30 @@ import java.lang.reflect.Type;
 
 public final class PresenterUtils {
 
-//            public static <P extends HanPresenter, V extends HanIView> P createPresenter(V  iView){
-//                Class<? extends HanIView> viewClass = iView.getClass();
-//                P presenterImpl;
-//                Type genericSuperclass = viewClass.getGenericSuperclass();//getGenericSuperclass 可以获取当前对象的直接超类的Type
-//                if(genericSuperclass instanceof ParameterizedType){//ParameterizedType  是一个接口，用来检验泛型是否被参数化
-//                    Type[] typeArguments = ((ParameterizedType) genericSuperclass).getActualTypeArguments();//返回表示此类型实际类型参数的type对象数组
-//                    if(typeArguments != null && typeArguments.length > 0){
-//                        Class typeArgument = (Class) typeArguments[0];
-//                        try {
-//                            presenterImpl = (P) typeArgument.newInstance();//  和new的作用一样，有区别
-////                            presenterImpl.in
-//
-//                        } catch (InstantiationException e) {
-//                            e.printStackTrace();
-//                        } catch (IllegalAccessException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                }
-//
-//            }
-
+    /**
+     * 创建业务类
+     */
+    public static <P extends HanPresenter, V extends HanIView> P createPresenter(V  iView){
+        Class<? extends HanIView> viewClass = iView.getClass();
+        P presenterImpl;
+        Type genericSuperclass = viewClass.getGenericSuperclass();//getGenericSuperclass 可以获取当前对象的直接超类的Type
+        if(genericSuperclass instanceof ParameterizedType){//ParameterizedType  是一个接口，用来检验泛型是否被参数化
+            Type[] typeArguments = ((ParameterizedType) genericSuperclass).getActualTypeArguments();//返回表示此类型实际类型参数的type对象数组
+            if(typeArguments != null && typeArguments.length > 0){
+                Class typeArgument = (Class) typeArguments[0];
+                try {
+                    presenterImpl = (P) typeArgument.newInstance();//  和new的作用一样，有区别
+                    presenterImpl.initPresenter(iView);
+                    return presenterImpl;
+                } catch (InstantiationException e) {
+                    throw new IllegalArgumentException(String.valueOf(viewClass) + "，实例化异常！");
+                } catch (IllegalAccessException e) {
+                    throw new IllegalArgumentException(String.valueOf(viewClass) + "，访问权限异常！");
+                }
+            }
+        }
+        presenterImpl = (P) new HanPresenter<>();
+        presenterImpl.initPresenter(iView);
+        return presenterImpl;
+    }
 }

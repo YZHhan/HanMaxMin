@@ -141,8 +141,8 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
     @Override protected void onDestroy() {
         super.onDestroy();
         if (presenter != null) {
-//            presenter.   销毁Presenter
-            //销毁EventBus
+            presenter.setDetach();
+            presenter = null;
         }
         if (isOpenEventBus() && EventBus.getDefault().isRegistered(this)) EventBus.getDefault().unregister(this);
         HanHelper.getInstance().getApplication().onActivityDestroy(this);
@@ -183,7 +183,10 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         if (presenter == null) {
             synchronized (this) {
                 if (presenter == null) {
-//                    presenter= PresenterUtils.crea  创造Presenter
+                    presenter= PresenterUtils.createPresenter(this);
+                    if(presenter == null){
+                        L.i(initTag(), "当前的Presenter为空，，，，，");
+                    }
                     L.i(initTag(), "Presenter 初始化完成.....");
                 }
             }

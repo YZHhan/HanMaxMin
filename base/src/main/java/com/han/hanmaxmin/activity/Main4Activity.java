@@ -1,17 +1,14 @@
 package com.han.hanmaxmin.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.han.hanmaxmin.R;
-import com.han.hanmaxmin.common.HanNoDoubleClickListener;
+import com.han.hanmaxmin.common.listener.HanNoDoubleClickListener;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.utils.HanHelper;
-import com.han.hanmaxmin.common.utils.PresenterUtils;
-import com.han.hanmaxmin.common.widget.toast.HanToast;
-import com.han.hanmaxmin.hantext.proxy.doingproxy.Subject;
+import com.han.hanmaxmin.hantext.httptext.AppActivity;
 import com.han.hanmaxmin.mvp.HanABActivity;
 
 public class Main4Activity extends HanABActivity {
@@ -37,6 +34,7 @@ public class Main4Activity extends HanABActivity {
             @Override
             protected void onNoDoubleClick(View v) {
                 L.i("onClick","223456765412345678-------------");
+                intent2Activity(AppActivity.class);
             }
         });
 
@@ -47,8 +45,6 @@ public class Main4Activity extends HanABActivity {
 
             }
         });
-        HanHelper.getInstance().getHttpHelper().create(AuthApi.class);
-
     }
 
 }

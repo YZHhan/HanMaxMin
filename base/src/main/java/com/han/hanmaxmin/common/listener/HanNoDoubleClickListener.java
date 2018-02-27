@@ -1,4 +1,4 @@
-package com.han.hanmaxmin.common;
+package com.han.hanmaxmin.common.listener;
 
 import android.view.View;
 

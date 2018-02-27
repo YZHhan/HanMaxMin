@@ -115,7 +115,7 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
     protected void onDestroy() {
         super.onDestroy();
         if (presenter != null) {//  对Presenter  进行clear
-//            presenter.setD
+            presenter.setDetach();
             presenter = null;
         }
         if (isOpenEventBus() && EventBus.getDefault().isRegistered(this))
@@ -129,11 +129,15 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         if(presenter == null){
             synchronized (this){
                 if(presenter == null){
-//                    PresenterUtils.class
+                   presenter =  PresenterUtils.createPresenter(this);
+                    if(presenter == null){
+                        L.i(initTag(), "当前Presenter为null，，，，，，，");
+                    }
+                    L.i(initTag(), "Presenter 初始化完成。。。。");
                 }
             }
         }
-        return null;
+        return presenter;
     }
 
     /**

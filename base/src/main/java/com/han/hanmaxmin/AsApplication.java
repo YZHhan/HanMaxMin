@@ -25,7 +25,7 @@ public abstract class AsApplication extends Application{
 
     public abstract boolean isLogOpen();
 
-    public abstract void initHttpAdapter(HttpBuilder builder);
+    public abstract void initHttpAdapter(HttpBuilder httpBuilder);
 
     public void onActivityCreate(Activity activity) {
     }

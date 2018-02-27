@@ -11,6 +11,7 @@ import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.model.HanModel;
 import com.han.hanmaxmin.common.utils.HanHelper;
 import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
+import com.han.hanmaxmin.common.widget.toast.HanToast;
 import com.han.hanmaxmin.mvp.HanIView;
 import com.han.hanmaxmin.mvp.fragment.hanifragment.HanIPullListFragment;
 import com.han.hanmaxmin.mvp.fragment.hanifragment.HanPullListFragment;
@@ -67,19 +68,29 @@ public class HanPresenter<V extends HanIView> {
 
     public void setDetach(){
         isAttach =false;
-            cancelHttpRequest();
+        cancelHttpRequest();
     }
+
 
     /**
      * 取消当前Presenter发出的HTTP 请求
      */
     protected void cancelHttpRequest() {
-//            HanHelper.getInstance().getHttpHelper().create()//
+        try {
+            HanHelper.getInstance().getHttpHelper().cancelRequest(getClass().getSimpleName());
+        }catch (Exception e){
+            L.e(initTag(), "cancel http request failed :" +e.getMessage());
+        }
     }
 
     protected <T> T createHttpRequest(Class<T> clazz) {
         return createHttpRequest(clazz, clazz.getSimpleName());
     }
+
+    protected <T> T createHttpRequest(Class <T> clazz, String requestTag){
+        return HanHelper.getInstance().getHttpHelper().create(clazz, requestTag);
+    }
+
 
     protected String getString(int stringId){
        return HanHelper.getInstance().getApplication().getString(stringId);
@@ -89,16 +100,17 @@ public class HanPresenter<V extends HanIView> {
             return  isSuccess(baseModel, false);
     }
 
+    /**
+     * 请求网络成功，判断数据的完整性。
+     */
     protected boolean isSuccess(HanModel baseModel, boolean shouldToast){
         if(baseModel != null && baseModel.isResponseOK()){
             return true;
         }else if (!isViewDetach()){
             resetViewState();
-
+            if(baseModel != null && shouldToast) HanToast.show(baseModel.getMessage());
         }
-
         return false;
-
     }
 
     /**
@@ -113,21 +125,26 @@ public class HanPresenter<V extends HanIView> {
                 view.stopRefreshing();
                 view.setLoadingState(LoadingFooter.State.NetWorkError);
             }
-hanView.loadingClose();
+            hanView.loadingClose();
         }
 
     }
 
-    protected <T> T createHttpRequest(Class <T> clazz, String requestTag){
-        return HanHelper.getInstance().getHttpHelper().create(clazz, requestTag);
-    }
+
 
     /**
      * 自定义异常处理。
      */
     public void methodError(HanException exception) {
-        L.e(initTag(),"methodError... errorType："+exception.getExceptionType()+"errorMessage:"+exception.getMessage());
-    }
+        L.e(initTag(), "methodError... errorType:" + exception.getExceptionType() + " requestTag:" + exception.getRequestTag() + " errorMessage:" + exception.getMessage());
+        switch (exception.getExceptionType()) {
+            case HTTP_ERROR:
+            case NETWORK_ERROR:
+            case UNEXPECTED:
+            case CANCEL:
+                break;
+        }
+        resetViewState();    }
 
     /**
      * 是否View 分离。

@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.han.hanmaxmin.AsApplication;
+import com.han.hanmaxmin.HanMacMinApplication;
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.aspect.thread.ThreadPoint;
 import com.han.hanmaxmin.common.aspect.thread.ThreadType;
@@ -87,6 +88,9 @@ public class HanHelper {
         return httpAdapter;
     }
 
+    public void resetHttpAdapter (){
+        httpAdapter = null;
+    }
 
     public void intent2Activity(Class clazz) {
         intent2Activity(clazz, null, 0, null);

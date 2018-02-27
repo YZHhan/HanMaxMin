@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".HanMacMinApplication"
+        android:name=".HanApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -29,6 +29,8 @@
         <activity android:name=".activity.listview.recycler.RecyclerActivity">
         </activity>
         <activity android:name=".activity.viewpager.ViewPagerActivity">
+        </activity>
+        <activity android:name=".hantext.httptext.AppActivity">
         </activity>
     </application>
 
