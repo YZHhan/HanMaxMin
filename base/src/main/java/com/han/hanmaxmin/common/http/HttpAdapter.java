@@ -165,6 +165,8 @@ public class HttpAdapter {
         if (pathAnnotation == null) {
             throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "Annotation error... the method:" + method.getName() + " create(Object.class) the method must has an annotation,such as:@PUT @POST or @GET...");
         }
+
+        // 解析Annotation的注解信息来进行请求区分。。。。。
         if (pathAnnotation instanceof POST) {
             String path = ((POST) pathAnnotation).value();
             return executeWithOkHttp(terminal, method, args, path, requestTag, "POST");
@@ -228,12 +230,12 @@ public class HttpAdapter {
 
     /**
      * \
-     * @param terminal
-     * @param method
+     * @param terminal 终端地址
+     * @param method 进行请求参数的获取。
      * @param args
      * @param path
-     * @param reqeustTag
-     * @param requestType
+     * @param reqeustTag  请求唯一标识
+     * @param requestType  请求方式
      * @return
      */
     private Object executeWithOkHttp(String terminal, Method method, Object[] args, String path, Object reqeustTag, String requestType) {
@@ -294,10 +296,11 @@ public class HttpAdapter {
         }
         L.i(TAG, "The url is append after :" + url);
 
-        Request.Builder requestBuidler = new Request.Builder();
+         Request.Builder requestBuidler = new Request.Builder();
         requestBuidler.headers(httpBuilder.getHeadBuilder().build());
         if (reqeustTag != null) requestBuidler.tag(reqeustTag);
 
+        //
         Request request = requestBuidler.url(url.toString()).method(requestType, requestBody).build();
         try {
             Call call = client.newCall(request);
@@ -311,7 +314,7 @@ public class HttpAdapter {
     }
 
     /**
-     *
+     *  对response  进行策略。公共回调给Application。  responseCode策略
      * @param method
      * @param response
      * @param reqeustTag
