@@ -1,4 +1,4 @@
-package com.han.hanmaxmin.common.widget.viewpager.headerviewpager.base;
+package com.han.hanmaxmin.common.widget.viewpager.headerpager.base;
 
 import android.support.v4.view.ViewPager;
 

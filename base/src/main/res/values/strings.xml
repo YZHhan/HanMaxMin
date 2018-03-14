@@ -3,6 +3,7 @@
     <string name="loading">加载中…</string>
     <string name="http_error">网络异常</string>
     <string name="push_loading">上拉加载</string>
+    <string name="none_more">没有更多了</string>
 
     <string name="request_permission_end">权限被禁止了，需开启才能执行后续操作!</string>
     <string name="request_constants_permission">通讯录</string>

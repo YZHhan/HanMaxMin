@@ -7,7 +7,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 /**
  * @CreateBy Administrator
  * @Date 2017/11/6  18:26
- * @Description  Activity的，顶层抽象
+ * @Description  View  顶层抽象
  * 此接口，是Activity的最终父类
  *
  * 封装特性：
@@ -119,25 +119,25 @@ public interface HanIView<P> {
 
     void commitFragment(android.support.v4.app.Fragment fragment);
 
-    void commitFragment(android.support.v4.app.Fragment fragment,String trg);
+    void commitFragment(android.support.v4.app.Fragment fragment,String tag);
 
     void commitFragment(int layoutId , android.support.v4.app.Fragment fragment);
 
-    void commitFragment(int layoutId , android.support.v4.app.Fragment fragment,String trg);
+    void commitFragment(int layoutId , android.support.v4.app.Fragment fragment,String tag);
 
     void commitFragment(android.support.v4.app.Fragment oldFragment, android.support.v4.app.Fragment fragment);
 
-    void commitFragment(android.support.v4.app.Fragment oldFragment, android.support.v4.app.Fragment fragment, String trg);
+    void commitFragment(android.support.v4.app.Fragment oldFragment, android.support.v4.app.Fragment fragment, String tag);
 
     void commitFragment(android.support.v4.app.Fragment oldFragment, int layoutId, android.support.v4.app.Fragment fragment);
 
-    void commitFragment(android.support.v4.app.Fragment oldFragment, int layoutId, android.support.v4.app.Fragment fragment,String trg);
+    void commitFragment(android.support.v4.app.Fragment oldFragment, int layoutId, android.support.v4.app.Fragment fragment,String tag);
 
     void commitBackStackFragment(android.support.v4.app.Fragment fragment);
 
-    void commitBackStackFragment(android.support.v4.app.Fragment fragment,String trg);
+    void commitBackStackFragment(android.support.v4.app.Fragment fragment,String tag);
 
     void commitBackStackFragment(int layoutId , android.support.v4.app.Fragment fragment);
 
-    void commitBackStackFragment(int layoutId , android.support.v4.app.Fragment fragment,String trg);
+    void commitBackStackFragment(int layoutId , android.support.v4.app.Fragment fragment,String tag);
 }

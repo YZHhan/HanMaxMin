@@ -294,7 +294,7 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         if (mPreogressDialog == null)
             mPreogressDialog = HanHelper.getInstance().getApplication().getCommonProgressDialog();
         if (mPreogressDialog != null) {
-            mPreogressDialog.setmMessage(message);
+            mPreogressDialog.setMessage(message);
             mPreogressDialog.setCancelable(cancelAble);
             HanHelper.getInstance().commitDialogFragment(mPreogressDialog);
         } else {

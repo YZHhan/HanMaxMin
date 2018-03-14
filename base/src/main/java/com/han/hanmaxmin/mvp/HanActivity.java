@@ -259,7 +259,7 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
     @ThreadPoint(ThreadType.MAIN) @Override public void loading(String message, boolean cancelAble) {
         if (mProgressDialog == null) mProgressDialog = HanHelper.getInstance().getApplication().getCommonProgressDialog();
         if (mProgressDialog != null) {
-            mProgressDialog.setmMessage(message);
+            mProgressDialog.setMessage(message);
             mProgressDialog.setCancelable(cancelAble);
 //                HanHelper.getInstance()
         } else {

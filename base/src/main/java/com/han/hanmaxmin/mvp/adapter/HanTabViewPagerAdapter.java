@@ -1,6 +1,5 @@
 package com.han.hanmaxmin.mvp.adapter;
 
-import android.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
@@ -8,7 +7,7 @@ import com.han.hanmaxmin.common.widget.viewpager.HanViewPager;
 import com.han.hanmaxmin.common.widget.viewpager.PagerSlidingTabStrip;
 import com.han.hanmaxmin.mvp.HanIIViewPagerActivity;
 import com.han.hanmaxmin.mvp.HanIViewPagerABActivity;
-import com.han.hanmaxmin.mvp.fragment.hanifragment.HanIViewPagerFragment;
+import com.han.hanmaxmin.mvp.fragment.HanIViewPagerFragment;
 
 
 /**

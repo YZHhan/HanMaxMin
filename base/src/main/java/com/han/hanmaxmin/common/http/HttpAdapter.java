@@ -48,6 +48,7 @@ import okhttp3.ResponseBody;
 public class HttpAdapter {
     private static final String TAG          = "HttpAdapter";
     private static final String PATH_REPLACE = "\\{\\w*\\}";//正则表达式。    匹配包括下划线的任何单词字符。类似但不等价于“[A-Za-z0-9_]”，这里的"单词"字符使用Unicode字符集。
+//    private static final String PATH_REPLACE = "\\{\\w*}";
     private static final int    timeOut      = 10;  //  超时时间
     private OkHttpClient  client;
     private HttpConverter converter;
@@ -416,7 +417,7 @@ public class HttpAdapter {
      */
     private void checkParameterAnnotation(Annotation[][] annotations, Object[] args, String methodName, Object requestTag) {
         if (annotations != null && args != null && annotations.length > 0 && args.length > 0) {
-            if (annotations.length == args.length) throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "params error method :" + methodName + " params have to have one annotaiton, such as @Query @Path");
+            if (annotations.length != args.length) throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "params error method :" + methodName + " params have to have one annotaiton, such as @Query @Path");
             for (Annotation[] annotationsArr : annotations) {
                 if (annotationsArr.length != 1) throw new HanException(HanExceptionType.UNEXPECTED, requestTag, "params error method :" + methodName + " params have to have one annotation, but there is more than one!");
             }

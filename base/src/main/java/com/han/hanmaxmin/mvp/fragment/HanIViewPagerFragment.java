@@ -1,4 +1,4 @@
-package com.han.hanmaxmin.mvp.fragment.hanifragment;
+package com.han.hanmaxmin.mvp.fragment;
 
 import android.support.v4.app.Fragment;
 import android.view.View;

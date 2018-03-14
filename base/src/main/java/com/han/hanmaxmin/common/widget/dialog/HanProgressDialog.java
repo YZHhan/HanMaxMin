@@ -13,11 +13,11 @@ public abstract class HanProgressDialog extends HanDialogFragment {
 
     private CharSequence mMessage;
 
-    public CharSequence getmMessage() {
+    public CharSequence getMessage() {
         return mMessage;
     }
 
-    public void setmMessage(CharSequence mMessage) {
+    public void setMessage(CharSequence mMessage) {
         this.mMessage = mMessage;
     }
 

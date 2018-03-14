@@ -1,6 +1,5 @@
 package com.han.hanmaxmin.mvp.adapter;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
@@ -10,12 +9,11 @@ import android.view.ViewGroup;
 
 import com.han.hanmaxmin.common.widget.viewpager.HanViewPager;
 import com.han.hanmaxmin.common.widget.viewpager.PagerSlidingTabStrip;
-import com.han.hanmaxmin.common.widget.viewpager.headerviewpager.base.OuterPagerAdapter;
-import com.han.hanmaxmin.common.widget.viewpager.headerviewpager.base.OuterScroller;
+import com.han.hanmaxmin.common.widget.viewpager.headerpager.base.OuterPagerAdapter;
+import com.han.hanmaxmin.common.widget.viewpager.headerpager.base.OuterScroller;
 import com.han.hanmaxmin.mvp.HanIIViewPagerActivity;
 import com.han.hanmaxmin.mvp.HanIViewPagerABActivity;
-import com.han.hanmaxmin.mvp.HanViewPagerActivity;
-import com.han.hanmaxmin.mvp.fragment.hanifragment.HanIViewPagerFragment;
+import com.han.hanmaxmin.mvp.fragment.HanIViewPagerFragment;
 import com.han.hanmaxmin.mvp.model.HanModelPager;
 
 /**

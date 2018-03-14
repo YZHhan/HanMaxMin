@@ -2,7 +2,6 @@ package com.han.hanmaxmin.hantext.httptext;
 
 import com.han.hanmaxmin.common.exception.HanException;
 import com.han.hanmaxmin.mvp.HanIView;
-import com.han.hanmaxmin.mvp.fragment.hanifragment.HanIPullListFragment;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 
 /**

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/GC_Theme">
         <activity
-            android:name=".activity.Main4Activity"
+            android:name=".hantext.httptext.AppActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -30,8 +30,7 @@
         </activity>
         <activity android:name=".activity.viewpager.ViewPagerActivity">
         </activity>
-        <activity android:name=".hantext.httptext.AppActivity">
-        </activity>
+
     </application>
 
 </manifest>

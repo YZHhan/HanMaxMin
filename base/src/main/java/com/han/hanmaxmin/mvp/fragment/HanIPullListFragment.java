@@ -1,6 +1,8 @@
-package com.han.hanmaxmin.mvp.fragment.hanifragment;
+package com.han.hanmaxmin.mvp.fragment;
 
 import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
+import com.han.hanmaxmin.common.widget.ptr.PtrFrameLayout;
+import com.han.hanmaxmin.common.widget.ptr.PtrUIHandler;
 
 /**
  * @CreateBy Administrator
@@ -9,9 +11,9 @@ import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
  */
 
 public interface HanIPullListFragment<D> extends HanIListFragment<D> {
-    void getPtrUIHandlerView();//待完善
+    PtrUIHandler getPtrUIHandlerView();
 
-    void onRefresh();
+    void onRefresh();//
 
     void onLoad();
 
@@ -19,7 +21,7 @@ public interface HanIPullListFragment<D> extends HanIListFragment<D> {
 
     void stopRefreshing();
 
-    void setLoadingState(LoadingFooter.State state);//待完善
+    void setLoadingState(LoadingFooter.State state);
 
     void openPullRefreshing();
 
@@ -27,7 +29,7 @@ public interface HanIPullListFragment<D> extends HanIListFragment<D> {
 
     void openPullLoading();
 
-    void slosePullLoading();
+    void closePullLoading();
 
-    void getPtrFragment();
+    PtrFrameLayout getPtrFragment();
 }

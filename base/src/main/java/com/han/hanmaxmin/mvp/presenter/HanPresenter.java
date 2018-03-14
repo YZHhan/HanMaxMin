@@ -13,8 +13,8 @@ import com.han.hanmaxmin.common.utils.HanHelper;
 import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
 import com.han.hanmaxmin.common.widget.toast.HanToast;
 import com.han.hanmaxmin.mvp.HanIView;
-import com.han.hanmaxmin.mvp.fragment.hanifragment.HanIPullListFragment;
-import com.han.hanmaxmin.mvp.fragment.hanifragment.HanPullListFragment;
+import com.han.hanmaxmin.mvp.fragment.HanIPullListFragment;
+import com.han.hanmaxmin.mvp.fragment.HanPullListFragment;
 
 /**
  * @CreateBy Administrator

@@ -7,11 +7,14 @@ import com.han.hanmaxmin.mvp.HanIView;
 /**
  * @CreateBy Administrator
  * @Date 2017/11/14  15:36
- * @Description
+ * @Description  Fragment的顶层抽象接口
  */
 
 public interface HanIFragment extends HanIView {
-
+    /**
+     * 结合Activity的Action
+     * 使用在onCreateOptionsMenu
+     */
     void onActionBar();
 
     void setActivityTitle(Object value);
