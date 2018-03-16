@@ -34,12 +34,13 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
     public static final int TYPE_LIST = 1 << 2;
     public static final int TYPE_GRID = 2 << 2;
     public static final int TYPE_STAGGEREDGRID = 3 << 2;
-
     private final List<D> mList = new ArrayList<>();
 
     private HeaderFooterRecyclerView mRecyclerView;
     protected RecyclerView.Adapter mRecyclerViewAdapter;
     protected LoadingFooter mLoadingFooter;
+    private View headerView;
+    private View footerView;
     protected StaggeredGridLayoutManager staggeredGridLayoutManager;// 实现交错式网格布局
 
     @Override
@@ -97,24 +98,22 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
         if (mRecyclerView == null)
             throw new RuntimeException("HeaderFooterRecyclerView is not exit or its id 'android.R.id.list' in current layout !!");
         if (getHeaderLayout() > 0) {
-            View headerView = inflater.inflate(getHeaderLayout(), null);
-            if (headerView != null) {
-                mRecyclerView.addHeaderView(headerView);
+             headerView = inflater.inflate(getHeaderLayout(), null);
+             mRecyclerView.addHeaderView(headerView);
 //                HanHelper.getInstance()//  bindView
-
-            }
         }
+
         if (getFooterLayout() > 0) {
-            View footerView = inflater.inflate(getFooterLayout(), null);
-            if (footerView != null) {
-                if (footerView instanceof LoadingFooter) {
-                    mLoadingFooter = (LoadingFooter) footerView;
-                } else {
-                    mLoadingFooter = (LoadingFooter) footerView.findViewById(R.id.loading_footer);
-                }
-                mRecyclerView.addFooterView(view);
+            footerView = inflater.inflate(getFooterLayout(), null);
+//            if (footerView != null) {
+//                if (footerView instanceof LoadingFooter) {
+//                    mLoadingFooter = (LoadingFooter) footerView;
+//                } else {
+//                    mLoadingFooter = (LoadingFooter) footerView.findViewById(R.id.loading_footer);
+//                }
+            mRecyclerView.addFooterView(view);
 //               HanHelper.getInstance()   // BindView
-            }
+//            }
         }
 
         mRecyclerViewAdapter = onCreateAdapter();
@@ -123,7 +122,7 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
         }
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
 
-        switch (getRecyclerViewType()){
+        switch (getRecyclerViewType()) {
             case TYPE_LIST:// listView
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 break;
@@ -133,12 +132,12 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
                     @Override
                     public int getSpanSize(int position) {
                         // 当有footer 或者 header 要做特殊处理时，让他占满一条
-                        L.i(initTag(), "getSpanSize  position :" +position);
-                        if(getHeaderLayout() > 0 && position == 0 ){
+                        L.i(initTag(), "getSpanSize  position :" + position);
+                        if (getHeaderLayout() > 0 && position == 0) {
                             return getSpanCount();
-                        } else if (getHeaderLayout() > 0 && getFooterLayout() > 0 && position == mList.size() + 1){
+                        } else if (getHeaderLayout() > 0 && getFooterLayout() > 0 && position == mList.size() + 1) {
                             return getSpanCount();
-                        } else if (getHeaderLayout() == 0 && getFooterLayout() > 0 && position == mList.size()){
+                        } else if (getHeaderLayout() == 0 && getFooterLayout() > 0 && position == mList.size()) {
                             return getSpanCount();
                         } else {
                             return 1;
@@ -163,6 +162,14 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
         return mRecyclerViewAdapter;
     }
 
+    public View getHeaderView(){
+        return headerView;
+    }
+
+    public View getFooterView(){
+        return footerView;
+    }
+
     @Override
     public void setData(List<D> list) {
         setData(list, true);
@@ -170,17 +177,17 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
 
     @Override
     public void setData(List<D> list, boolean showEmptyView) {
-        synchronized (mList){
+        synchronized (mList) {
             mList.clear();
-            if(list != null && !list.isEmpty()) mList.addAll(list);
+            if (list != null && !list.isEmpty()) mList.addAll(list);
             updateAdapter(showEmptyView);
         }
     }
 
     @Override
     public void addData(D d) {
-        if(d != null){
-            synchronized (mList){
+        if (d != null) {
+            synchronized (mList) {
                 mList.add(d);
                 updateAdapter(true);
             }
@@ -189,20 +196,22 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
 
     @Override
     public void addData(List<D> list) {
-        if(list != null && !list.isEmpty()){
-            synchronized (list){
+        if (list != null && !list.isEmpty()) {
+            synchronized (list) {
                 mList.addAll(list);
                 updateAdapter(true);
             }
         }
     }
 
-    @Override @ThreadPoint(ThreadType.MAIN)
+    @Override
+    @ThreadPoint(ThreadType.MAIN)
     public void addData(List<D> list, int position) {
-        if(list != null && !list.isEmpty() && position >= 0){
-            synchronized (mList){
-                position = (position <mList.size()) ? position : mList.size();
-                if(mRecyclerViewAdapter != null)mRecyclerViewAdapter.notifyItemRangeChanged(position, list.size());
+        if (list != null && !list.isEmpty() && position >= 0) {
+            synchronized (mList) {
+                position = (position < mList.size()) ? position : mList.size();
+                if (mRecyclerViewAdapter != null)
+                    mRecyclerViewAdapter.notifyItemRangeChanged(position, list.size());
                 mList.addAll(position, list);
                 updateAdapter(true);
             }
@@ -211,18 +220,19 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
 
     @Override
     public void delete(D d) {
-        if (d == null)return;
-        synchronized (mList){
+        if (d == null) return;
+        synchronized (mList) {
             mList.remove(d);
             updateAdapter(true);
         }
     }
 
-    @Override @ThreadPoint(ThreadType.MAIN)
+    @Override
+    @ThreadPoint(ThreadType.MAIN)
     public void delete(int position) {
-        synchronized (mList){
-            if(position >= 0 && position < mList.size()){
-                if(mRecyclerViewAdapter != null)mRecyclerViewAdapter.notifyItemRemoved(position);
+        synchronized (mList) {
+            if (position >= 0 && position < mList.size()) {
+                if (mRecyclerViewAdapter != null) mRecyclerViewAdapter.notifyItemRemoved(position);
                 mList.remove(position);
                 updateAdapter(true);
             }
@@ -231,7 +241,7 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
 
     @Override
     public void deleteAll() {
-        synchronized (mList){
+        synchronized (mList) {
             mList.clear();
             updateAdapter(true);
         }
@@ -239,7 +249,7 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
 
     @Override
     public D getData(int position) {
-        if(position >= 0 && position < mList.size()){
+        if (position >= 0 && position < mList.size()) {
             return mList.get(position);
         }
         return null;
@@ -250,12 +260,13 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
         return mList;
     }
 
-    @Override @ThreadPoint(ThreadType.MAIN)
+    @Override
+    @ThreadPoint(ThreadType.MAIN)
     public void updateAdapter(boolean showEmptyView) {
-        if(mRecyclerViewAdapter != null){
+        if (mRecyclerViewAdapter != null) {
             mRecyclerViewAdapter.notifyDataSetChanged();
-            if(mViewAnimator != null){
-                if(mList.isEmpty() && showEmptyView){
+            if (mViewAnimator != null) {
+                if (mList.isEmpty() && showEmptyView) {
                     showEmptyView();
                 } else {
                     showContentView();
@@ -264,7 +275,7 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
         }
     }
 
-    protected void initTopBottomView(View rootView, LayoutInflater inflater) {
+    protected void initTopBottomView(View    rootView, LayoutInflater inflater) {
         if (rootView instanceof LinearLayout) {
             if (getTopLayout() > 0) {
                 ((LinearLayout) rootView).addView(inflater.inflate(getTopLayout(), null), 0);
@@ -320,7 +331,7 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            MyRecyclerViewHolder <Object> j2WRecyclerViewHolder = (MyRecyclerViewHolder<Object>) holder;
+            MyRecyclerViewHolder<Object> j2WRecyclerViewHolder = (MyRecyclerViewHolder<Object>) holder;
             j2WRecyclerViewHolder.setPosition(position, getItemCount());// 设置给ViewHolder的当前索引和item的总数
             j2WRecyclerViewHolder.onBindData(mList.get(position), position, mList.size());
 
@@ -337,9 +348,11 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
         }
     }
 
-    protected int getSpanCount(){return 2;}
+    protected int getSpanCount() {
+        return 2;
+    }
 
-    protected int getRecyclerViewType(){
+    protected int getRecyclerViewType() {
         return TYPE_LIST;
     }
 

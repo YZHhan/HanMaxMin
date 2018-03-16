@@ -22,6 +22,7 @@ import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.aspect.thread.ThreadPoint;
 import com.han.hanmaxmin.common.aspect.thread.ThreadType;
 import com.han.hanmaxmin.common.http.HttpAdapter;
+import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.threadpoll.HanThreadPollHelper;
 import com.han.hanmaxmin.common.utils.helper.CacheHelper;
 import com.han.hanmaxmin.common.utils.helper.ImageHelper;
@@ -151,7 +152,8 @@ public class HanHelper {
 
     @ThreadPoint(ThreadType.MAIN) public void commitFragment(FragmentManager fragmentManager, int layoutId, Fragment fragment, String tag) {
         if (fragment != null && !fragment.isAdded() && fragmentManager != null && layoutId > 0) {
-            fragmentManager.beginTransaction().replace(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_NONE).commitAllowingStateLoss();
+            int i = fragmentManager.beginTransaction().replace(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_NONE).commitAllowingStateLoss();
+            L.i("HanMaxMin", i+"========================");
         }
     }
 

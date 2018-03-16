@@ -24,12 +24,12 @@ public interface HanIIViewPagerActivity extends HanIActivity{
    /**
     * ViewPager页滑动的监听
     */
-   void onPageSelected(View childAt, View oldView, int position, int oldPosition);
+   void onPageSelected(View currentTabItem, View oldTabItem, int position, int oldPosition);
 
    /**
     *ViewPager页的滑动
     */
-   void onPageScrolled(int position, float positonOffset, int postionOffsetPixels);
+   void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
 
    /**
     * 初始化ViewPAger
@@ -59,7 +59,7 @@ public interface HanIIViewPagerActivity extends HanIActivity{
 
    int getTabItemLayout();
 
-   void initTab(View view, HanModelPager modelPager);
+   void initTab(View tabItem, HanModelPager modelPager);
 
    android.support.v4.app.Fragment getCurrentFragment();
 

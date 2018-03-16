@@ -74,7 +74,7 @@ public class HanThreadPollHelper {
     /**
      * 执行完之前提交的任务后终止
      */
-    public synchronized void shutDown(){
+    public synchronized void shutdown(){
         L.i(TAG,"shutDown");
         if(workThreadPoll!=null){
             workThreadPoll.shutdown();

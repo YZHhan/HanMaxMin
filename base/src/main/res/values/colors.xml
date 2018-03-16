@@ -7,6 +7,19 @@
     <color name="color_bg">#F1F1F1</color>
     <color name="color_toolbar_bg">#FFFFFF</color>
 
+
+
+    <color name="color_dark_grey">#34455C</color>
+    <color name="color_slate_grey">#616B7A</color>
+    <color name="color_slate1_grey">#61657A</color>
+    <color name="color_cool_grey">#8E98A4</color>
+    <color name="color_silver">#C4C7CC</color>
+    <color name="color_silver_two">#DCDEE0</color>
+    <color name="color_pale_grey">#F0F2F5</color>
+    <color name="color_pale_lilac">#E8E5FF</color>
+
+
+
     <!-- For settings framework -->
     <color name="lighter_gray">#ddd</color>
     <color name="darker_gray">#aaa</color>

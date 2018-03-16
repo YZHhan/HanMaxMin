@@ -11,4 +11,5 @@ public class ModelApp extends BaseModel {
     public String  downloadUrl;
     public String  updateTitle;
     public boolean isForcedUpdate;
+    public String name;
 }

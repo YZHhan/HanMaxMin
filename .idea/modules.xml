@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/HanMaxMin.iml" filepath="$PROJECT_DIR$/HanMaxMin.iml" />
       <module fileurl="file://D:\githundemotext\HanMaxMin\base\app.iml" filepath="D:\githundemotext\HanMaxMin\base\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/temperature/temperature.iml" filepath="$PROJECT_DIR$/temperature/temperature.iml" />
     </modules>
   </component>
 </project>

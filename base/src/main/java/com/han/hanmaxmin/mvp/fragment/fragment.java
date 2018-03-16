@@ -86,7 +86,7 @@ public class fragment{
  *         MyAdapter：此处的有点，将ListView的适配器封装，对外暴露操作的API。
  *         主要有两块：复杂ListView 和 getView的适配。
  *              A:在HanListFragment里面，写入getItemViewType  和  getViewTypeCount .在适配器的方法里面调用Fragment的方法，关联。
- *              B.getView中
+ *              B.getView中。声明单条Item的Adapter。（HanListAdapterItem）
  *         3.setData  addData  delete  updateAdapter——对数据进行操作的时候，数据改变。adapter刷新。ViewAnimator进行显示。说白了也就是，数据的改变，view的刷新。
  *         4.
  *

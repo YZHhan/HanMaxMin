@@ -10,12 +10,8 @@
 
 
     <TextView
+        android:id="@+id/jump_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="跳转的Activity"/>
-    <ListView
-        android:id="@+id/actiivty2_listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
 </LinearLayout>

@@ -21,7 +21,7 @@ public class Main2Activity extends AppCompatActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        listView= (ListView) findViewById(R.id.actiivty2_listView);
+//        listView= (ListView) findViewById(R.id.actiivty2_listView);
         List<String > list=new ArrayList<>();
         for(int i =0;i<40;i++){
             list.add("是"+i);

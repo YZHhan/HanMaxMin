@@ -18,6 +18,7 @@ import com.han.hanmaxmin.mvp.presenter.HanPresenter;
  * @CreateBy Administrator
  * @Date 2018/1/4  21:32
  * @Description 作为ViewPager和Activity的混合
+ *  下Tab 加 ViewPager
  */
 
 public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanActivity<P> implements HanIIViewPagerActivity {
@@ -33,8 +34,8 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
 
     @Override
     protected View initView() {
-        View view = super.initView();//spter可以调用父类的方法
-        initViewPager(view);//给当前的View绑定对象。ViewPager和PagerSlidingTabStrip
+        View view = super.initView();//super可以调用父类的方法
+        initTabAndPager(view);//给当前的View绑定对象。ViewPager和PagerSlidingTabStrip
         return view;
     }
 
@@ -44,7 +45,7 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
      * 初始化ViewPager的属性
      * @param view
      */
-    private void initViewPager(View view){
+    private void initTabAndPager(View view){
         pager = (HanViewPager) view.findViewById(R.id.han_viewpager);
         tabs = (PagerSlidingTabStrip) view.findViewById(android.R.id.tabs);
         initTabValue(tabs);// 初始化Tab的属性。
@@ -61,7 +62,7 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
     @Override
     public void initViewPager(HanModelPager[] modelPagers, int offScreenPageLimit) {
         if(modelPagers != null){
-             adapter = getPagerAdapter(pager, tabs);
+             adapter = createPagerAdapter(pager, tabs);
              adapter.setModelPagers(modelPagers);
              pager.setAdapter(adapter);
              final int pagerMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());//将其他尺寸转化为px
@@ -71,8 +72,12 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
         }
     }
 
-    public HanViewPagerAdapter getPagerAdapter(HanViewPager pager, PagerSlidingTabStrip tabs){
-        return new HanTabViewPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager,this);
+    public HanViewPagerAdapter createPagerAdapter(HanViewPager pager, PagerSlidingTabStrip tabs){
+        if(getTabItemLayout() > 0){
+                return new HanTabViewPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this);
+        } else {
+                return new HanViewPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this);
+        }
     }
 
     public final void initTabValue(PagerSlidingTabStrip tabs){
@@ -99,7 +104,7 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
     }
 
     @Override
-    public void onPageScrolled(int position, float positonOffset, int postionOffsetPixels) {
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
 

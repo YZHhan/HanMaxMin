@@ -33,9 +33,11 @@ public abstract class HanListFragment<P extends HanPresenter, D> extends HanFrag
 
     protected  final List<D> mList = new ArrayList<>();
 
-    protected ListView mListView;
-    protected BaseAdapter mListAdapter;
-    protected LoadingFooter mLoadingFooter;
+    private ListView mListView;
+    private BaseAdapter mListAdapter;
+    private View headerView;
+    private View footerView;
+
 
     /**
      * listView 的布局
@@ -86,16 +88,11 @@ public abstract class HanListFragment<P extends HanPresenter, D> extends HanFrag
         }
         if(mListView == null) throw new RuntimeException("ListView is not exit or its id not 'android.R.id.list' in current layout !");
         if(getHeaderLayout() != 0){
-            View headerView = inflater.inflate(getHeaderLayout(), null);
+            headerView = inflater.inflate(getHeaderLayout(), null);
             mListView.addHeaderView(headerView);
         }
         if(getFooterLayout() != 0){
-            View footerView = inflater.inflate(getFooterLayout(), null);
-            if(footerView instanceof LoadingFooter){
-                mLoadingFooter = (LoadingFooter) footerView;//赋值LoadingFooter
-            } else {
-                mLoadingFooter = (LoadingFooter) footerView.findViewById(R.id.loading_footer);
-            }
+            footerView = inflater.inflate(getFooterLayout(), null);
             mListView.addFooterView(footerView);
         }
         mListView.setOnItemClickListener(this);
@@ -230,6 +227,15 @@ public abstract class HanListFragment<P extends HanPresenter, D> extends HanFrag
         return mListAdapter;
     }
 
+    public View getHeaderView(){
+        return headerView;
+    }
+
+    public View getFooterView(){
+        return footerView;
+    }
+
+
     /**
      * Adapter封装在Fragment中，
      * 如果需要重写{@link #onCreateAdapter()}
@@ -273,17 +279,17 @@ public abstract class HanListFragment<P extends HanPresenter, D> extends HanFrag
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            HanListAdapterItem item = null;
-            if(convertView == null){
-                int count = getViewTypeCount();
-                if(count > 1){
-                    int type = getItemViewType(position);
-                    getListAdapterItem(type);
+            HanListAdapterItem item = null;// 声明Item的Adapter。把适配器的工作转给HanListAdapterItem。
+            if(convertView == null){// 判断当前view
+                int count = getViewTypeCount();// 得到当前布局的个数。
+                if(count > 1){// 如果大于1，就是复杂布局。
+                    int type = getItemViewType(position);//  得到当前布局的的type
+                    getListAdapterItem(type);// 传入Fragment的抽象方法，getListAdapterItem返回的是HanListAdapterItem。type用作区分不同。
                 } else {
                     getListAdapterItem(0);
                 }
                 convertView = LayoutInflater.from(getActivity()).inflate(item.getItemLayout(), null, false);
-                item.init(convertView);
+                item.init(convertView);//  进行适配器的ViewBind。
                 convertView.setTag(item);
             }
             if(item == null) item = (HanListAdapterItem) convertView.getTag();

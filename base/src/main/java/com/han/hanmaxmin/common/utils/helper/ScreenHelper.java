@@ -3,6 +3,7 @@ package com.han.hanmaxmin.common.utils.helper;
 import android.support.v4.app.FragmentActivity;
 
 import com.han.hanmaxmin.common.log.L;
+import com.han.hanmaxmin.common.utils.HanHelper;
 
 import java.util.Stack;
 
@@ -78,6 +79,8 @@ public class ScreenHelper {
             L.i(TAG,"popActivity 传入的参数为空");
         }
         if(fragmentActivitys.size()<=0){//清除缓存
+//            HanHelper.getInstance().getImageHelper().clearMemoryCache();
+            HanHelper.getInstance().getThreadHelper().shutdown();
 
         }
     }
@@ -85,7 +88,7 @@ public class ScreenHelper {
      * 退出堆栈中所有Activity, 当前的Activity除外
      * @param clazz 当前活动窗口
      */
-    public void popAllActivityExceprMain(Class clazz){
+    public void popAllActivityExceptMain(Class clazz){
         while (true){
             FragmentActivity activity=currentActivity();
             if(activity==null)break;
