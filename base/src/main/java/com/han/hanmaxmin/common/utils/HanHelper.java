@@ -152,8 +152,7 @@ public class HanHelper {
 
     @ThreadPoint(ThreadType.MAIN) public void commitFragment(FragmentManager fragmentManager, int layoutId, Fragment fragment, String tag) {
         if (fragment != null && !fragment.isAdded() && fragmentManager != null && layoutId > 0) {
-            int i = fragmentManager.beginTransaction().replace(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_NONE).commitAllowingStateLoss();
-            L.i("HanMaxMin", i+"========================");
+            fragmentManager.beginTransaction().replace(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_NONE).commitAllowingStateLoss();
         }
     }
 

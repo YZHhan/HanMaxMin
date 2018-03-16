@@ -21,7 +21,7 @@ public class HomePullPresenter extends HanPresenter <HomePullListFragment>{
             ModelApp modelApp = new ModelApp();
             modelApp.name = "葡萄学院"+i;
             list.add(modelApp);
-            getView().setData(list);
+//            getView().setData(list);
         }
     }
 
