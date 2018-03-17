@@ -284,11 +284,11 @@ public abstract class HanListFragment<P extends HanPresenter, D> extends HanFrag
                 int count = getViewTypeCount();// 得到当前布局的个数。
                 if(count > 1){// 如果大于1，就是复杂布局。
                     int type = getItemViewType(position);//  得到当前布局的的type
-                    getListAdapterItem(type);// 传入Fragment的抽象方法，getListAdapterItem返回的是HanListAdapterItem。type用作区分不同。
+                    item = getListAdapterItem(type);// 传入Fragment的抽象方法，getListAdapterItem返回的是HanListAdapterItem。type用作区分不同。
                 } else {
-                    getListAdapterItem(0);
+                    item = getListAdapterItem(0);
                 }
-                convertView = LayoutInflater.from(getActivity()).inflate(item.getItemLayout(), null, false);
+                convertView = LayoutInflater.from(getActivity()).inflate(item.getItemLayout(), null, false);// getItemLayout 可能为空
                 item.init(convertView);//  进行适配器的ViewBind。
                 convertView.setTag(item);
             }

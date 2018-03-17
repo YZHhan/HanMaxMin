@@ -88,4 +88,7 @@ dependencies {
     /*ButterKnife*/
     compile 'com.jakewharton:butterknife:8.4.0'
 //    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    debugCompile 'me.drakeet.library:crashwoodpecker:0.9.7'
+
 }

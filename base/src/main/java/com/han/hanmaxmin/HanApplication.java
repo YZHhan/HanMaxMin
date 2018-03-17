@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import com.han.hanmaxmin.common.http.HttpBuilder;
 
+import me.drakeet.library.CrashWoodpecker;
+
 /**
  * Created by ptxy on 2018/2/27.
  */
@@ -17,6 +19,8 @@ public class HanApplication extends AsApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashWoodpecker.fly().to(this);
+
     }
 
     /**
@@ -33,4 +37,6 @@ public class HanApplication extends AsApplication {
         httpBuilder.addHeader("platform", "android");
         httpBuilder.addHeader("Authorization", "");
     }
+
+
 }

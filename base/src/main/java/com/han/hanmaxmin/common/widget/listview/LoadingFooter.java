@@ -20,7 +20,7 @@ import com.han.hanmaxmin.common.widget.recyclerview.HeaderFooterRecyclerAdapter;
 
 public class LoadingFooter extends RelativeLayout implements HeaderFooterRecyclerAdapter.OnRecyclerViewAdapterBindViewHolder{
 
-    private static final String TAG = "LoadingFooer";
+    private static final String TAG = "LoadingFooter";
 
     private State mState;
     private View  mNormalView;
@@ -60,7 +60,7 @@ public class LoadingFooter extends RelativeLayout implements HeaderFooterRecycle
             return;
         }
         this.mState = states;
-        setViewState(states);
+        setViewState(states);//  ------
     }
 
     public State getState(){
@@ -91,7 +91,7 @@ public class LoadingFooter extends RelativeLayout implements HeaderFooterRecycle
                    mLoadingView.setVisibility(VISIBLE);
                } else {
                    ViewStub viewStub = (ViewStub) findViewById(R.id.loading_viewStub);
-                   mLoadingView = viewStub.inflate();
+                   mLoadingView = viewStub.inflate();//  空指针出现过
                }
                break;
 

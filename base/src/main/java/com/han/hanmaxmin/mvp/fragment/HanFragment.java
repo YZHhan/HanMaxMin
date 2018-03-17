@@ -101,7 +101,7 @@ public abstract class HanFragment<P extends HanPresenter> extends Fragment imple
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(isDelayDate()){
+        if(!isDelayDate()){
             hasInitData = true;
             initData(savedInstanceState);//  initData 是对下面子类所暴露的API   进行初始化等等。
         }
