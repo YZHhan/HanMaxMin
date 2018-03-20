@@ -11,6 +11,11 @@ import me.drakeet.library.CrashWoodpecker;
  */
 
 public class HanApplication extends AsApplication {
+    /**
+     * 每次打正式包，必须把  true改为false
+     * true开启日志
+     * false关闭日志
+     */
     @Override
     public boolean isLogOpen() {
         return true;
@@ -38,5 +43,26 @@ public class HanApplication extends AsApplication {
         httpBuilder.addHeader("Authorization", "");
     }
 
+    /**
+     * 页面为空的布局
+     */
+    @Override
+    public int emptyLayoutId() {
+        return R.layout.view_empty_layout;
+    }
 
+    /**
+     * 页面加载的布局
+     */
+    @Override
+    public int loadingLayoutId() {
+        return R.layout.view_load_layout;    }
+
+    /**
+     * 页面错误的布局
+     */
+    @Override
+    public int errorLayoutId() {
+        return R.layout.view_error_layout;
+    }
 }

@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.style.QuoteSpan;
 import android.util.EventLog;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -93,6 +94,7 @@ public abstract class HanFragment<P extends HanPresenter> extends Fragment imple
        super.onCreate(savedInstanceState);
         View rootView=initView(inflater);//初始化View     Empty  Loading  Error  Layout
         //  此处省略  一个ViewBind的初始化。
+        HanHelper.getInstance().getViewBindHelper().bind(this,rootView);
         rootView.setOnTouchListener(this);//  给ViewAnimator  设置监听。
         if(isOpenEventBus() && !EventBus.getDefault().isRegistered(this))EventBus.getDefault().register(this);
         return rootView;
@@ -138,7 +140,7 @@ public abstract class HanFragment<P extends HanPresenter> extends Fragment imple
             view=inflater.inflate(rootViewLayoutId(),null);//  rootView  本身就是以ViewAnimator 为父布局
             mViewAnimator= (ViewAnimator) view.findViewById(android.R.id.home);
             inflater.inflate(loadingLayoutId(),mViewAnimator);
-            View contentView = inflater.inflate(layoutId(), null);
+            View contentView = inflater.inflate(layoutId(), mViewAnimator);
             inflater.inflate(emptyLayoutId(),mViewAnimator);
             inflater.inflate(errorLayoutId(),mViewAnimator);
             if(getBackgroundColorId() > 0)contentView.setBackgroundColor(HanHelper.getInstance().getColor(getBackgroundColorId()));// 考虑到性能优化，默认Fragment无背景
@@ -422,7 +424,9 @@ public abstract class HanFragment<P extends HanPresenter> extends Fragment imple
 
 
     /**
-     * 设置View的状态  最后loading和initData
+     * 设置View的状态  最后loading和initData  这是页面处理的最终逻辑
+     * 只有在Error的时候，才进行刷新处理。
+     *
      * @param showState
      */
     @ThreadPoint(ThreadType.MAIN)private void setViewState(final int showState){

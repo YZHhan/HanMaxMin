@@ -30,12 +30,12 @@ import java.lang.reflect.Method;
 @Aspect
 public class ThreadAspect {
 
-    private static final String TAG = "ThreadAspct";
+    private static final String TAG = "ThreadAspect";
 
     private static final String POINTCUT_METHOD_MAIN        = "execution(@com.han.hanmaxmin.common.aspect.thread.ThreadPoint(com.han.hanmaxmin.common.aspect.thread.ThreadType.MAIN) * *(..))";
     private static final String POINTCUT_METHOD_HTTP        = "execution(@com.han.hanmaxmin.common.aspect.thread.ThreadPoint(com.han.hanmaxmin.common.aspect.thread.ThreadType.HTTP) * *(..))";
     private static final String POINTCUT_METHOD_WORK        = "execution(@com.han.hanmaxmin.common.aspect.thread.ThreadPoint(com.han.hanmaxmin.common.aspect.thread.ThreadType.WORK) * *(..))";
-    private static final String POINTCUT_METHOD_SINGLE_WOEK = "execution(@com.han.hanmaxmin.common.aspect.thread.ThreadPoint(com.han.hanmaxmin.common.aspect.thread.ThreadType.SINGLE_WORK) * *(..))";
+    private static final String POINTCUT_METHOD_SINGLE_WORK = "execution(@com.han.hanmaxmin.common.aspect.thread.ThreadPoint(com.han.hanmaxmin.common.aspect.thread.ThreadType.SINGLE_WORK) * *(..))";
 
     @Pointcut(value = POINTCUT_METHOD_MAIN) public void onMainPoint() {
 
@@ -49,7 +49,7 @@ public class ThreadAspect {
 
     }
 
-    @Pointcut(value = POINTCUT_METHOD_SINGLE_WOEK) public void onSingleWorkPoint() {
+    @Pointcut(value = POINTCUT_METHOD_SINGLE_WORK) public void onSingleWorkPoint() {
 
     }
 

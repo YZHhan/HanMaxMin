@@ -28,6 +28,7 @@ import com.han.hanmaxmin.common.utils.helper.CacheHelper;
 import com.han.hanmaxmin.common.utils.helper.ImageHelper;
 import com.han.hanmaxmin.common.utils.helper.ScreenHelper;
 import com.han.hanmaxmin.common.viewbind.ViewBind;
+import com.han.hanmaxmin.common.viewbind.ViewBindImpl;
 import com.han.hanmaxmin.mvp.fragment.HanFragment;
 
 /**
@@ -87,6 +88,15 @@ public class HanHelper {
             }
         }
         return httpAdapter;
+    }
+
+    public ViewBind getViewBindHelper(){
+        if(viewBind == null){
+            synchronized (HanHelper.class){
+                if(viewBind == null) viewBind = new ViewBindImpl();
+            }
+        }
+        return viewBind;
     }
 
     public void resetHttpAdapter (){

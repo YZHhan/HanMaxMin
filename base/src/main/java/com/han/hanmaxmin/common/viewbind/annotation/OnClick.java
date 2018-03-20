@@ -8,7 +8,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Description  事件注解
+ * @Description
+ * 事件注解
  * 被注解的方法必须具备以下形式
  * 1。private 修饰
  * 2.返回值类型没有要求
@@ -26,12 +27,12 @@ public @interface OnClick {
     int [] value();
 
     /**
-     * 控件的parent 控件id集合，组合为（value[i] ,parnetId[i] or 0 ）
+     * 控件的parent 控件id集合，组合为（value[i] ,parentId[i] or 0 ）
      */
     int [] parentId () default 0;
 
     /**
-     * 事件的linstener ,默认的点击事件
+     * 事件的listener ,默认的点击事件
      */
     Class <?> type () default View.OnClickListener.class;
 

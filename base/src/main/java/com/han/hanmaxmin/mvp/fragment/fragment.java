@@ -1,12 +1,36 @@
 package com.han.hanmaxmin.mvp.fragment;
 
 
+import com.han.hanmaxmin.common.exception.HanException;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+
 public class fragment{
 
 
 /**
  * Fragment 封装
  */
+//--------------------------页面的异常处理-------------------------------
+            // Http请求中的错误。
+            //页面数据错误
+    /**
+     * showContent
+     * showError
+     * showLoad
+     * showEmpty
+     * {@link com.han.hanmaxmin.common.aspect.ThreadAspect#startOriginalMethod(ProceedingJoinPoint)}
+     * 在线程Aspect中会引用methodError。并且在展示error页面。
+     * {@link com.han.hanmaxmin.mvp.presenter.HanPresenter#methodError(HanException)}
+     *
+     * {@link HanFragment#setViewState(int)}
+     * 在View层都会有， 对data的add set remove get，然后进行updateAdapter。{@link HanFragment#showEmptyView() showContentView}
+     *
+     *
+     */
+
+
+
 //--------------------------HanIView-------------------------------------
         //View 的顶层父类
         //initTag  layoutId

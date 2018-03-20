@@ -5,6 +5,13 @@
     <string name="push_loading">上拉加载</string>
     <string name="none_more">没有更多了</string>
 
+    <string name="common_empty_tips">Data Is Null</string>
+    <string name="common_network_error_tips">NetWork Is Null !</string>
+    <string name="loading_again">Again Loading !</string>
+
+
+
+
     <string name="request_permission_end">权限被禁止了，需开启才能执行后续操作!</string>
     <string name="request_constants_permission">通讯录</string>
     <string name="request_call_permission">电话</string>

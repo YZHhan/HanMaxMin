@@ -13,8 +13,14 @@ import com.han.hanmaxmin.common.utils.HanHelper;
 import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
 import com.han.hanmaxmin.common.widget.toast.HanToast;
 import com.han.hanmaxmin.mvp.HanIView;
+import com.han.hanmaxmin.mvp.fragment.HanIPullHeaderViewPagerFragment;
 import com.han.hanmaxmin.mvp.fragment.HanIPullListFragment;
+import com.han.hanmaxmin.mvp.fragment.HanIPullRecyclerFragment;
+import com.han.hanmaxmin.mvp.fragment.HanIRecyclerFragment;
+import com.han.hanmaxmin.mvp.fragment.HanIViewPagerFragment;
 import com.han.hanmaxmin.mvp.fragment.HanPullListFragment;
+
+import org.aspectj.lang.ProceedingJoinPoint;
 
 /**
  * @CreateBy Administrator
@@ -23,8 +29,8 @@ import com.han.hanmaxmin.mvp.fragment.HanPullListFragment;
  */
 
 public class HanPresenter<V extends HanIView> {
-    private boolean isAttach ;//  是否附加。。
-    private V  mView;
+    private boolean isAttach;//  是否附加。。
+    private V mView;
 
     protected String initTag() {
         return getClass().getSimpleName();
@@ -33,41 +39,43 @@ public class HanPresenter<V extends HanIView> {
     /**
      * 得到View的Context。
      */
-    public Context getContext(){
-        if(!isViewDetach())return mView.getContext();
+    public Context getContext() {
+        if (!isViewDetach()) return mView.getContext();
         return null;
     }
 
     /**
      * 初始化Presenter  也就是在PresenterUtils里面调用。给次view赋值。
+     *
      * @param view
      */
-    public void initPresenter(V  view){
-       isAttach = true;
-       mView = view;
+    public void initPresenter(V view) {
+        isAttach = true;
+        mView = view;
     }
 
     /**
      * 会做一个判断。如果当前线程不属于自定义的线程的话，当前方法不能使用。。。。
+     *
      * @return
      */
-    public V getView(){
-        if(isViewDetach()){//判断View  是否分离。
+    public V getView() {
+        if (isViewDetach()) {//判断View  是否分离。
             String threadName = Thread.currentThread().getName();
-            switch (threadName){
+            switch (threadName) {
                 case HanConstants.NAME_HTTP_THREAD:
                 case HanConstants.NAME_SINGLE_THREAD:
                 case HanConstants.NAME_WORK_THREAD:
-                    throw new HanException(HanExceptionType.CANCEL, null, "current thread :"+ threadName+ "execute" + getClass().getSimpleName() +".getView() return null, maybe view"+(mView == null ? "" : "("+mView.getClass().getSimpleName()+ ")") + "is  destory。。。。");
+                    throw new HanException(HanExceptionType.CANCEL, null, "current thread :" + threadName + "execute" + getClass().getSimpleName() + ".getView() return null, maybe view" + (mView == null ? "" : "(" + mView.getClass().getSimpleName() + ")") + "is  destory。。。。");
                 default:
                     throw new HanException(HanExceptionType.CANCEL, null, "当前线程:" + threadName + "执行" + getClass().getSimpleName() + ".getView()方法返回null, 因为View层" + (mView == null ? "" : "(" + mView.getClass().getSimpleName() + ")") + "销毁了，为了规避这种风险，请不要在Presenter里面通过非@ThreadPoint注解的方式创建线程并在该线程中调用getView()方法...");
             }
         }
-    return mView;
+        return mView;
     }
 
-    public void setDetach(){
-        isAttach =false;
+    public void setDetach() {
+        isAttach = false;
         cancelHttpRequest();
     }
 
@@ -78,8 +86,8 @@ public class HanPresenter<V extends HanIView> {
     protected void cancelHttpRequest() {
         try {
             HanHelper.getInstance().getHttpHelper().cancelRequest(getClass().getSimpleName());
-        }catch (Exception e){
-            L.e(initTag(), "cancel http request failed :" +e.getMessage());
+        } catch (Exception e) {
+            L.e(initTag(), "cancel http request failed :" + e.getMessage());
         }
     }
 
@@ -87,53 +95,63 @@ public class HanPresenter<V extends HanIView> {
         return createHttpRequest(clazz, clazz.getSimpleName());
     }
 
-    protected <T> T createHttpRequest(Class <T> clazz, String requestTag){
+    protected <T> T createHttpRequest(Class<T> clazz, String requestTag) {
         return HanHelper.getInstance().getHttpHelper().create(clazz, requestTag);
     }
 
 
-    protected String getString(int stringId){
-       return HanHelper.getInstance().getApplication().getString(stringId);
+    protected String getString(int stringId) {
+        return HanHelper.getInstance().getApplication().getString(stringId);
     }
 
-    protected boolean isSuccess(HanModel baseModel){
-            return  isSuccess(baseModel, false);
+    protected boolean isSuccess(HanModel baseModel) {
+        return isSuccess(baseModel, false);
     }
 
     /**
      * 请求网络成功，判断数据的完整性。
      */
-    protected boolean isSuccess(HanModel baseModel, boolean shouldToast){
-        if(baseModel != null && baseModel.isResponseOK()){
+    protected boolean isSuccess(HanModel baseModel, boolean shouldToast) {
+        if (baseModel != null && baseModel.isResponseOK()) {
             return true;
-        }else if (!isViewDetach()){
+        } else if (!isViewDetach()) {
             resetViewState();
-            if(baseModel != null && shouldToast) HanToast.show(baseModel.getMessage());
+            if (baseModel != null && shouldToast) HanToast.show(baseModel.getMessage());
         }
         return false;
     }
 
     /**
-     * 还原View 的状态。。
-     * 待完善、、、、
+     * 还原View 的状态。。 也就是说进行页面的异常处理
      */
-    @ThreadPoint(ThreadType.MAIN) private void resetViewState() {
-        if(!isViewDetach()){
-            HanIView hanView = getView();
-            if (hanView instanceof HanIPullListFragment){
-                HanPullListFragment view = (HanPullListFragment) hanView;
+    @ThreadPoint(ThreadType.MAIN)
+    private void resetViewState() {
+        if (!isViewDetach()) {
+            HanIView hanIView = getView();
+            if (hanIView instanceof HanIPullListFragment) {
+                HanPullListFragment view = (HanPullListFragment) hanIView;
                 view.stopRefreshing();
                 view.setLoadingState(LoadingFooter.State.NetWorkError);
+            } else if (hanIView instanceof HanIPullRecyclerFragment) {
+                HanIPullRecyclerFragment view = (HanIPullRecyclerFragment) hanIView;
+                view.stopRefreshing();
+                view.setLoadingState(LoadingFooter.State.NetWorkError);
+            } else if (hanIView instanceof HanIPullHeaderViewPagerFragment) {
+                HanIPullHeaderViewPagerFragment view = (HanIPullHeaderViewPagerFragment) hanIView;
+                view.stopRefreshing();
             }
-            hanView.loadingClose();
+
+            if (hanIView.currentViewState() != HanConstants.VIEW_STATE_CONTENT) {
+                hanIView.showErrorView();
+            }
+            hanIView.loadingClose();
         }
-
     }
-
 
 
     /**
      * 自定义异常处理。
+     * {@link com.han.hanmaxmin.common.aspect.ThreadAspect#startOriginalMethod(ProceedingJoinPoint)}
      */
     public void methodError(HanException exception) {
         L.e(initTag(), "methodError... errorType:" + exception.getExceptionType() + " requestTag:" + exception.getRequestTag() + " errorMessage:" + exception.getMessage());
@@ -142,14 +160,16 @@ public class HanPresenter<V extends HanIView> {
             case NETWORK_ERROR:
             case UNEXPECTED:
             case CANCEL:
+                resetViewState();
                 break;
         }
-        resetViewState();    }
+
+    }
 
     /**
      * 是否View 分离。
      */
-    public boolean isViewDetach(){
+    public boolean isViewDetach() {
         return !isAttach || mView == null;
     }
 

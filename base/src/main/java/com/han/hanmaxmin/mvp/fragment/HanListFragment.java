@@ -27,11 +27,16 @@ import java.util.List;
  * @CreateBy Administrator
  * @Date 2017/11/23  16:31
  * @Description  继承Fragment的顶级父类。HanFragment,
+ *
+ *  页面异常处理。页面需要根据不同的需求展示不同的页面 Empty  Error Loading 过期处理 {@link #updateAdapter(boolean)}
+ *
  */
 
 public abstract class HanListFragment<P extends HanPresenter, D> extends HanFragment<P> implements HanIListFragment<D>, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, AbsListView.OnScrollListener,InnerScrollerContainer {
-
-    protected  final List<D> mList = new ArrayList<>();
+    /**
+     * {@link #getData()}
+     */
+    protected  final List<D> mList = new ArrayList<>();//  一个页面的数据集合.
 
     private ListView mListView;
     private BaseAdapter mListAdapter;
@@ -202,8 +207,14 @@ public abstract class HanListFragment<P extends HanPresenter, D> extends HanFrag
         return null;
     }
 
-    @ThreadPoint(ThreadType.MAIN)
-    @Override
+    /**
+     * 刷新适配器，主要是在数据进行改变的时候，{@link #addData(Object)} () {@link #setData(List) {@link #delete(Object)} } }
+     * showEmptyView()  {@link HanFragment {@link #showEmptyView()}}
+     * showContentView()  {@link HanFragment {@link #showContentView()}}
+     * mViewAnimator {@link HanFragment {@link #mViewAnimator}}
+     * @param showEmptyView
+     */
+    @ThreadPoint(ThreadType.MAIN) @Override
     public void updateAdapter(boolean showEmptyView) {
         if(mListAdapter != null){
             mListAdapter.notifyDataSetChanged();
