@@ -3,6 +3,9 @@ package com.han.hanmaxmin.mvp.fragment;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.han.hanmaxmin.common.widget.viewpager.HanViewPager;
+import com.han.hanmaxmin.common.widget.viewpager.PagerSlidingTabStrip;
+import com.han.hanmaxmin.mvp.adapter.HanViewPagerAdapter;
 import com.han.hanmaxmin.mvp.fragment.HanIFragment;
 import com.han.hanmaxmin.mvp.model.HanModelPager;
 
@@ -16,27 +19,27 @@ public interface HanIViewPagerFragment extends HanIFragment {
 
     void onPageScrollStateChanged(int state);
 
-    void onPageSelected(View childAt, View oldView, int position, int oldPosition);
+    void onPageSelected(View currentTabItem, View oldTabItem, int position, int oldPosition);
 
-    void onPageScrolled(int position, float positionOffet, int positionOffsetPixels);
+    void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
 
-    void initViewPager();//待完善   void initViewPager(QsModelPager[] modelPagers, int offScreenPageLimit);
+    void initViewPager(HanModelPager [] modelPagers, int offScreenPageLimit);
 
-    void getModelPager();//待完善   QsModelPager[] getModelPagers();
+    HanModelPager [] getModelPager();
 
-    void replaceViewPagerItem();//待完善 void replaceViewPageItem(QsModelPager... modelPagers);
+    void replaceViewPageItem(HanModelPager... modelPagers );
 
     void setIndex(int index, boolean bool);
 
-    void getTabs();//待完善   PagerSlidingTabStrip getTabs();
+    PagerSlidingTabStrip getTabs();
 
-    void getViewPager();//待完善   PagerSlidingTabStrip getTabs();
+    HanViewPager getViewPager();
 
-    void getViewPagerAdapter();//待完善 QsViewPagerAdapter getViewPagerAdapter();
+    HanViewPagerAdapter getViewPagerAdapter();
 
     int getTabItemLayout();
 
-    void initTab(View view, HanModelPager modelPager);//待完善   void initTab(View view, QsModelPager modelPager);
+    void initTab(View view, HanModelPager modelPager);
 
     Fragment getCurrentFragment();
 

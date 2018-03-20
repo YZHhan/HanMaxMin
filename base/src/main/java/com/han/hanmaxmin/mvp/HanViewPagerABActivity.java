@@ -49,22 +49,25 @@ public abstract class HanViewPagerABActivity<P extends HanPresenter> extends Han
     @Override
     public void initViewPager(HanModelPager[] modelPagers, int offScreenPageLimit) {
         if (modelPagers != null){
-            adapter = getPageAdapter(pager, tabs);
+            adapter = createPagerAdapter(pager, tabs);
             adapter.setModelPagers(modelPagers);
             pager.setAdapter(adapter);
             final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
             pager.setPageMargin(margin);
-            pager.setOffscreenPageLimit(offScreenPageLimit);
+            pager.setOffscreenPageLimit(offScreenPageLimit);//限定预加载个数
             tabs.setViewPager(pager);
         }
 
 
     }
 
-    public HanViewPagerAdapter getPageAdapter(HanViewPager pager, PagerSlidingTabStrip tabs) {
-        return new HanTabViewPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this);
+    protected  HanViewPagerAdapter createPagerAdapter(HanViewPager pager, PagerSlidingTabStrip tabs){
+        if(getTabItemLayout() > 0){
+            return new HanTabViewPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this);
+        } else {
+            return new HanViewPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this);
+        }
     }
-
 
     @Override
     public void onPageSelected(View childAt, View oldView, int position, int oldPosition) {
@@ -77,7 +80,7 @@ public abstract class HanViewPagerABActivity<P extends HanPresenter> extends Han
     }
 
     @Override
-    public void onPageScrollStaeChanged(int state) {
+    public void onPageScrollStateChanged(int state) {
 
     }
 

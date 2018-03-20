@@ -72,7 +72,11 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
         }
     }
 
-    public HanViewPagerAdapter createPagerAdapter(HanViewPager pager, PagerSlidingTabStrip tabs){
+    /**
+     * 创建Adapter
+     * 区分有tab的无tab的
+     */
+    protected HanViewPagerAdapter createPagerAdapter(HanViewPager pager, PagerSlidingTabStrip tabs){
         if(getTabItemLayout() > 0){
                 return new HanTabViewPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this);
         } else {

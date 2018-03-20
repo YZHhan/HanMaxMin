@@ -15,7 +15,7 @@ import com.han.hanmaxmin.mvp.model.HanModelPager;
  */
 
 public interface HanIViewPagerABActivity extends HanIABActivity{
-       void onPageScrollStaeChanged(int state);
+       void onPageScrollStateChanged(int state);
 
        void onPageSelected(View childAt, View oldView, int position, int oldPosition);
 
