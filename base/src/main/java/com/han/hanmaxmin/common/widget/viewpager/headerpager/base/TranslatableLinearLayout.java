@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 
+import com.han.hanmaxmin.common.widget.viewpager.headerpager.HeaderViewPager;
+
 /**
  * @CreateBy QS
  * @Date 16/11/20  下午7:21

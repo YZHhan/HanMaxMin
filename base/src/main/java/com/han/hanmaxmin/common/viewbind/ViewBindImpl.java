@@ -117,34 +117,28 @@ public final class ViewBindImpl implements ViewBind {
                 }
                 OnClick annotation = method.getAnnotation(OnClick.class);
                 if (annotation != null) {
-                    int[] values = annotation.value();
-                    int[] pIds = annotation.parentId();
-                    int length = pIds.length;
-                    for (int i = 0; i < length; i++){
-                        int value = values[i];
-                        if(value > 0){
-                            ViewInfo info =new ViewInfo();
-                            info.value = value;
-                            info.parentId = length > i ? pIds[i] : 0;
-                            method.setAccessible(true);
-                          EventListenerManager.addEventMethod(finder, info, annotation, handler, method);
+                    try {
+                        int[] values = annotation.value();
+                        int[] pIds = annotation.parentId();
+                        int parentIdsLen = pIds.length;
+                        for (int i = 0; i < values.length; i++){
+                            int value = values[i];
+                            if(value > 0){
+                                ViewInfo info =new ViewInfo();
+                                info.value = value;
+                                info.parentId = parentIdsLen > i ? pIds[i] : 0;
+                                method.setAccessible(true);
+                                EventListenerManager.addEventMethod(finder, info, annotation, handler, method);
+                            }
                         }
-
-
+                    } catch (Throwable ex){
+                        ex.printStackTrace();
                     }
-
-                    String method1 = annotation.method();
-
-
                 }
 
             }
         }
-
-
     }
-
-
 }
 
 

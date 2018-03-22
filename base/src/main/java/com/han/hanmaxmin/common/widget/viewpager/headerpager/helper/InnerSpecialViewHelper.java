@@ -10,7 +10,7 @@ import com.han.hanmaxmin.common.widget.viewpager.headerpager.base.OuterScroller;
 
 
 /**
- * @Description Helper of special views in InnerScroller.
+ * @Description MigrationHelper of special views in InnerScroller.
  */
 public class InnerSpecialViewHelper {
     Context       mContext;
