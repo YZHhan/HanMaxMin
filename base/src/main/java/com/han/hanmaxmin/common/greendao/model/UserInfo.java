@@ -16,6 +16,7 @@ public class UserInfo {
     private String age;
     private String number;
     private String like;
+    private String like1;
 
     private String love;
     private String speak;
@@ -26,28 +27,41 @@ public class UserInfo {
     private String teacher_tag_t1;
     private String teacher_tag_t2;
     private String teacher_tag_t3;
+    //升级 6
+    private String teacher_tag_t4;
+
+    // 7
+    private String update;
+
 
     // update Db  5
     private String title;
 
-    @Generated(hash = 781746111)
+    // update Db  9
+    private String wokao;
+
+    @Generated(hash = 1364223744)
     public UserInfo(long id, String name, String sex, String age, String number,
-            String like, String love, String speak, String want,
+            String like, String like1, String love, String speak, String want,
             String teacher_tag_t1, String teacher_tag_t2, String teacher_tag_t3,
-            String title) {
+            String teacher_tag_t4, String update, String title, String wokao) {
         this.id = id;
         this.name = name;
         this.sex = sex;
         this.age = age;
         this.number = number;
         this.like = like;
+        this.like1 = like1;
         this.love = love;
         this.speak = speak;
         this.want = want;
         this.teacher_tag_t1 = teacher_tag_t1;
         this.teacher_tag_t2 = teacher_tag_t2;
         this.teacher_tag_t3 = teacher_tag_t3;
+        this.teacher_tag_t4 = teacher_tag_t4;
+        this.update = update;
         this.title = title;
+        this.wokao = wokao;
     }
     @Generated(hash = 1279772520)
     public UserInfo() {
@@ -129,6 +143,30 @@ public class UserInfo {
     }
     public void setTitle(String title) {
         this.title = title;
+    }
+    public String getTeacher_tag_t4() {
+        return this.teacher_tag_t4;
+    }
+    public void setTeacher_tag_t4(String teacher_tag_t4) {
+        this.teacher_tag_t4 = teacher_tag_t4;
+    }
+    public String getUpdate() {
+        return this.update;
+    }
+    public void setUpdate(String update) {
+        this.update = update;
+    }
+    public String getLike1() {
+        return this.like1;
+    }
+    public void setLike1(String like1) {
+        this.like1 = like1;
+    }
+    public String getWokao() {
+        return this.wokao;
+    }
+    public void setWokao(String wokao) {
+        this.wokao = wokao;
     }
 
 }

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.han.hanmaxmin.common.greendao.model.DaoMaster;
 import com.han.hanmaxmin.common.greendao.model.UserInfoDao;
+import com.han.hanmaxmin.common.log.L;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -30,6 +31,7 @@ public class MyOpenHelper extends DaoMaster.OpenHelper {
     @Override
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
         super.onUpgrade(db, oldVersion, newVersion);
+        L.i("HanMaxMin","数据库升级的时候");
         MigrationHelper.getInstance().migrate(db, UserInfoDao.class);
     }
 

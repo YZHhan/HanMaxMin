@@ -83,6 +83,8 @@ public class DataBaseHelper {
 
     /**
      * 获取可读数据库
+     * @param context
+     * @return
      */
     public static SQLiteDatabase getReadableDatabase(Context context) {
         if (null == devOpenHelper) {

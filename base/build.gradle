@@ -26,7 +26,7 @@ android {
     }
 
     greendao {
-        schemaVersion 5
+        schemaVersion 9
 //        daoPackage 'com.zgl.greentest.gen'   由GreenDao自动生成代码所在的包名，默认的是在项目包下面新建一个gen。
 //        targetGenDir 'src/main/java'   设置自动生成代码的目录。
     }

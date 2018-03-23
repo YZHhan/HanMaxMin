@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.han.hanmaxmin.common.greendao.model.DaoMaster;
+import com.han.hanmaxmin.common.log.L;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
@@ -47,15 +48,15 @@ public class MigrationHelper {
             DaoConfig daoConfig = new DaoConfig(db, daoClasses[i]);
 
             String divider = "";
-            String tableName = daoConfig.tablename;
-            String tempTableName = daoConfig.tablename.concat("_TEMP");
-            ArrayList<String> properties = new ArrayList<>();
+            String tableName = daoConfig.tablename;// 得到数据库的表命
+            String tempTableName = daoConfig.tablename.concat("_TEMP");// 生成新的表名
+            ArrayList<String> properties = new ArrayList<>();// 键值对
 
             StringBuilder createTableStringBuilder = new StringBuilder();
 
-            createTableStringBuilder.append("CREATE TABLE ").append(tempTableName).append(" (");
+            createTableStringBuilder.append("CREATE TABLE ").append(tempTableName).append(" (");// 生成sqlite语句。
 
-            for (int j = 0; j < daoConfig.properties.length; j++) {
+            for (int j = 0; j < daoConfig.properties.length; j++) {//得到数据库表的字段
                 String columnName = daoConfig.properties[j].columnName;
 
                 if (getColumns(db, tableName).contains(columnName)) {
@@ -74,12 +75,13 @@ public class MigrationHelper {
                     if (daoConfig.properties[j].primaryKey) {
                         createTableStringBuilder.append(" PRIMARY KEY");
                     }
+                    L.i("HanMaxMin","createTableStringBuilder:"+createTableStringBuilder.toString());
 
                     divider = ",";
                 }
             }
             createTableStringBuilder.append(");");
-
+            L.i("HanMaxMin","createTableStringBuilder.append()"+createTableStringBuilder.toString());
             db.execSQL(createTableStringBuilder.toString());
 
             StringBuilder insertTableStringBuilder = new StringBuilder();
@@ -90,6 +92,7 @@ public class MigrationHelper {
             insertTableStringBuilder.append(TextUtils.join(",", properties));
             insertTableStringBuilder.append(" FROM ").append(tableName).append(";");
 
+            L.i("HanMaxMin" ,"我是数据库语句insertTableStringBuilder" +insertTableStringBuilder.toString());
             db.execSQL(insertTableStringBuilder.toString());
 
         }

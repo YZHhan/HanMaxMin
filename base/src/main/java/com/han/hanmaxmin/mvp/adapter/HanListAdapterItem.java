@@ -17,7 +17,7 @@ public abstract class HanListAdapterItem<T> {
     public abstract int getItemLayout();
 
     public void init(View contentView){
-//        HanHelper.getInstance().//bind
+        HanHelper.getInstance().getViewBindHelper().bind(this, contentView);
 
     }
 

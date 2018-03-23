@@ -28,32 +28,6 @@ import java.util.List;
  */
 
 public class HomePullListFragment extends HanFragment<HomePullPresenter> {
-    private BeautyCircleRefreshHeader refreshHeader;
-
-
-//    @Override
-//    public PtrUIHandler getPtrUIHandlerView() {
-//        if (refreshHeader == null) {
-//            refreshHeader = new BeautyCircleRefreshHeader(getContext());
-//        }
-//        return refreshHeader;
-//    }
-//
-//    @Override
-//    public void onRefresh() {
-//getPresenter().requestData();
-//    }
-//
-//    @Override
-//    public void onLoad() {
-//        getPresenter().requestData();
-//    }
-//
-//    @Override
-//    public int layoutId() {
-//        return R.layout.activity_main;
-//    }
-//
 
     @Override
     public int layoutId() {
@@ -64,21 +38,21 @@ public class HomePullListFragment extends HanFragment<HomePullPresenter> {
     public void initData(Bundle savedInstanceState) {
         L.i("HanMaxMin","我是一个Fragment");
         showContentView();
-//        getPresenter().requestData();
     }
 
-    @OnClick({ R.id.thread_main, R.id.thread_http, R.id.thread_work, R.id.thread_single})public void onClick(View view){
+    @OnClick({ R.id.thread_main, R.id.thread_http, R.id.thread_work, R.id.thread_single, R.id.tv_intent})public void onClick(View view){
         switch (view.getId()){
             case R.id.thread_main:
                 HanToast.show("我看是插入");
                 UserInfo userInfo = new UserInfo();
-                userInfo.setName("李梦苛");
+                userInfo.setName("ZZZZZZ");
                 userInfo.setLike("孙大圣");
                 userInfo.setAge("18");
-                userInfo.setId(1);
+                userInfo.setId(5);
                 userInfo.setNumber("3214567543");
                 userInfo.setSpeak("我爱你");
                 userInfo.setTeacher_tag_t1("最优秀女朋友");
+                userInfo.setTeacher_tag_t4("最智障的人");
                 DataBaseHelper.getInstance().getDataBaseUserInfoHelper().insertOrReplace(userInfo);
                 break;
             case R.id.thread_http:
@@ -102,14 +76,19 @@ public class HomePullListFragment extends HanFragment<HomePullPresenter> {
                 userInfo1.setAge("18");
                 userInfo1.setNumber("3214567543");
                 userInfo1.setSpeak("我爱你");
-                userInfo1.setId(2);
+                userInfo1.setId(3);
                 userInfo1.setTeacher_tag_t1("最优秀男朋友");
+                userInfo1.setTeacher_tag_t4("最棒的");
                 DataBaseHelper.getInstance().getDataBaseUserInfoHelper().insertOrReplace(userInfo1);
                 break;
             case R.id.thread_single:
                     HanToast.show("删除数据库");
                 List<UserInfo> infos= DataBaseHelper.getInstance().getDataBaseUserInfoHelper().queryUser(UserInfoDao.Properties.Age, "18");
             DataBaseHelper.getInstance().getDataBaseUserInfoHelper().delete(infos);
+                break;
+
+            case R.id.tv_intent:
+commitFragment(new DataBaseListFragment());
                 break;
 
 

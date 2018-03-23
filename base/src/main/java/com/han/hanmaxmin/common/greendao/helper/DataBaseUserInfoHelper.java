@@ -94,7 +94,7 @@ public class DataBaseUserInfoHelper {
     }
 
     public List<UserInfo> queryUser (Property property, Object value){
-        return getDao().queryBuilder().where(UserInfoDao.Properties.Age.eq("18")).list();
+        return getDao().queryBuilder().where(property.eq(value)).list();
     }
 
 
