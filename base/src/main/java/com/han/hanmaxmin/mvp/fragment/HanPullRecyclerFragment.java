@@ -15,6 +15,8 @@ import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
 import com.han.hanmaxmin.common.widget.ptr.PtrDefaultHandler;
 import com.han.hanmaxmin.common.widget.ptr.PtrFrameLayout;
 import com.han.hanmaxmin.common.widget.ptr.PtrHandler;
+import com.han.hanmaxmin.common.widget.ptr.PtrUIHandler;
+import com.han.hanmaxmin.common.widget.ptr.header.StoreHouseHeader;
 import com.han.hanmaxmin.common.widget.recyclerview.EndlessRecyclerOnScrollListener;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 
@@ -34,7 +36,7 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
 
     @Override
     public int getFooterLayout() {
-        return HanHelper.getInstance().getApplication().listFooterLayoutId();
+        return R.layout.han_loading_footer;
     }
 
     @Override
@@ -47,6 +49,11 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
         View view = super.initView(inflater);
         initPtrFrameLayout(view);
         return super.initView(inflater);
+    }
+
+    @Override
+    public PtrUIHandler getPtrUIHandlerView() {
+        return new StoreHouseHeader(getContext());
     }
 
     protected void initPtrFrameLayout(View view) {

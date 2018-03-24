@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.han.hanmaxmin.R;
@@ -100,20 +99,14 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
         if (getHeaderLayout() > 0) {
              headerView = inflater.inflate(getHeaderLayout(), null);
              mRecyclerView.addHeaderView(headerView);
-//                HanHelper.getInstance()//  bindView
+            HanHelper.getInstance().getViewBindHelper().bind(this, headerView);
         }
 
         if (getFooterLayout() > 0) {
             footerView = inflater.inflate(getFooterLayout(), null);
-//            if (footerView != null) {
-//                if (footerView instanceof LoadingFooter) {
-//                    mLoadingFooter = (LoadingFooter) footerView;
-//                } else {
-//                    mLoadingFooter = (LoadingFooter) footerView.findViewById(R.id.loading_footer);
-//                }
+             mRecyclerView.addFooterView(footerView);
+            HanHelper.getInstance().getViewBindHelper().bind(this, footerView);
             mRecyclerView.addFooterView(view);
-//               HanHelper.getInstance()   // BindView
-//            }
         }
 
         mRecyclerViewAdapter = onCreateAdapter();
@@ -304,7 +297,7 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
      * 封装适配器在Fragment中，作为内部类。我们用的HanRecyclerVIewAdapterITem并不是真正的适配器。
      */
     // ----------------------------------适配器-----------------------------------
-    public class MyRecyclerAdapter extends RecyclerView.Adapter {
+    public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerViewHolder<D>> {
         private LayoutInflater mInflater;
 
         public MyRecyclerAdapter(LayoutInflater inflater) {
@@ -312,29 +305,32 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyRecyclerViewHolder<D> onCreateViewHolder(ViewGroup parent, int viewType) {
             HanRecyclerAdapterItem recyclerAdapterItem = getRecyclerAdapterItem(mInflater, parent, viewType);
-            recyclerAdapterItem.getViewHolder().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            MyRecyclerViewHolder<D> holder = new MyRecyclerViewHolder<D>(recyclerAdapterItem);
+            holder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     HanRecyclerFragment.this.onItemClick(parent, view, position, id);
                 }
             });
-            recyclerAdapterItem.getViewHolder().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            holder.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                     return HanRecyclerFragment.this.onItemLongClick(parent, view, position, id);
                 }
             });
-            return recyclerAdapterItem.getViewHolder();
+
+            return holder;
         }
 
+        /**
+         * 绑定数据
+         */
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            MyRecyclerViewHolder<Object> j2WRecyclerViewHolder = (MyRecyclerViewHolder<Object>) holder;
-            j2WRecyclerViewHolder.setPosition(position, getItemCount());// 设置给ViewHolder的当前索引和item的总数
-            j2WRecyclerViewHolder.onBindData(mList.get(position), position, mList.size());
-
+        public void onBindViewHolder(MyRecyclerViewHolder<D> holder, int position) {
+            holder.onBindData(mList.get(position),position, mList.size());
         }
 
         @Override

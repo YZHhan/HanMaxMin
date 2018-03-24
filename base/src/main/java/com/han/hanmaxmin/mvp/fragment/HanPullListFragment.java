@@ -15,6 +15,8 @@ import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
 import com.han.hanmaxmin.common.widget.ptr.PtrDefaultHandler;
 import com.han.hanmaxmin.common.widget.ptr.PtrFrameLayout;
 import com.han.hanmaxmin.common.widget.ptr.PtrHandler;
+import com.han.hanmaxmin.common.widget.ptr.PtrUIHandler;
+import com.han.hanmaxmin.common.widget.ptr.header.StoreHouseHeader;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 
 import java.util.List;
@@ -45,12 +47,11 @@ public abstract class HanPullListFragment<T extends HanPresenter, D> extends Han
         return (!isOpenViewState() && (getTopLayout() > 0 || getBottomLayout() > 0)) ? R.layout.han_fragment_pull_listview_with_top_bottom : R.layout.han_fragment_pull_listview;
     }
 
-    /**
-     * 关联到Application
-     */
+
+    // 修改
     @Override
     public int getFooterLayout() {
-        return HanHelper.getInstance().getApplication().listFooterLayoutId();
+        return R.layout.han_loading_footer;
     }
 
     @Override
@@ -58,6 +59,15 @@ public abstract class HanPullListFragment<T extends HanPresenter, D> extends Han
         View view = super.initView(inflater);
         initPtrFrameLayout(view);
         return super.initView(inflater);
+    }
+
+    /**
+     * StoreHouse  储存室
+     * @return
+     */
+    @Override
+    public PtrUIHandler getPtrUIHandlerView() {
+        return new StoreHouseHeader(getContext());
     }
 
     @Override

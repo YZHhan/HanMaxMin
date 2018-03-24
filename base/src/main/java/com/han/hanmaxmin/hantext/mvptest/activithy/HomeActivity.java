@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.hantext.mvptest.MineActivity;
+import com.han.hanmaxmin.hantext.mvptest.fragment.DataBaseListFragment;
 import com.han.hanmaxmin.hantext.mvptest.fragment.HomePullListFragment;
 import com.han.hanmaxmin.mvp.HanABActivity;
 import com.han.hanmaxmin.mvp.HanActivity;
@@ -18,7 +19,7 @@ public class HomeActivity extends HanABActivity {
     public void initData(Bundle savedInstanceState) {
         L.i("HanMaxMin","我是一个Activity");
 
-        commitFragment(new HomePullListFragment());
+        commitFragment(new DataBaseListFragment());
     }
 
     @Override
