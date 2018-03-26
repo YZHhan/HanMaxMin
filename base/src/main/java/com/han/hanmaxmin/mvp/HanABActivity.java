@@ -66,7 +66,7 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         View view = initView();
         setContentView(view);
         //自己封装的  ViewBind
-//        HanHelper.getInstance().ge
+        HanHelper.getInstance().getViewBindHelper().bind(this, view);
         //进行EventBus  的注册。
         if (isOpenEventBus() && !EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);

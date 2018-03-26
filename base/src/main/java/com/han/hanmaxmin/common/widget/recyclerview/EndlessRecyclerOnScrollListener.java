@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.han.hanmaxmin.common.log.L;
+
 /**
  * Created by ptxy on 2018/3/16.
  * 继承RecyclerView.OnScrollListener,可以监听到是否滑动到页面最底部
@@ -45,6 +47,8 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+        L.i( "HanPullRecyclerFragment", "我是onScrolled");
+
         if(layoutManager == null){
             layoutManager = recyclerView.getLayoutManager();
         }
@@ -82,12 +86,13 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
+        L.i( "HanPullRecyclerFragment", "我是onScrollStateChanged");
         currentScrollState = newState;
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         int visibleItemCount  = layoutManager.getChildCount();// 可见Item的个数
         int totalItemCount = layoutManager.getItemCount();// item的总数
         if((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItemPosition) >= totalItemCount -1)){
-                onLoadNextPage(recyclerView);
+                onLoadNextPage(recyclerView);//   ---------
         }
 
     }
@@ -104,7 +109,7 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
                 max = value;
             }
         }
-        return 0;
+        return max;
     }
 
     public enum LayoutManagerType{

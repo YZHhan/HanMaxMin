@@ -31,11 +31,11 @@ public class LoadingFooter extends RelativeLayout implements HeaderFooterRecycle
 
 
     public LoadingFooter(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public LoadingFooter(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public LoadingFooter(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -48,8 +48,13 @@ public class LoadingFooter extends RelativeLayout implements HeaderFooterRecycle
         setState(State.Normal);
     }
 
+    /**
+     * 当recyclerView回调
+     * {@link HeaderFooterRecyclerAdapter#onBindViewHolder(RecyclerView.ViewHolder, int)}
+     */
     @Override
     public void onAdapterBindViewHolder() {
+        L.i(TAG, "onAdapterBindViewHolder  state:" + mState);
 
     }
 
@@ -73,7 +78,7 @@ public class LoadingFooter extends RelativeLayout implements HeaderFooterRecycle
        switch (status){
            case Normal:
                if(mTheEndView != null)mTheEndView.setVisibility(GONE);
-               if(mNetWorkErrorView != null)mNetWorkErrorView.setVisibility(VISIBLE);
+               if(mNetWorkErrorView != null)mNetWorkErrorView.setVisibility(GONE);
                if(mLoadingView != null)mLoadingView.setVisibility(GONE);
                if(mNormalView != null){
                    mNormalView.setVisibility(VISIBLE);
@@ -91,7 +96,7 @@ public class LoadingFooter extends RelativeLayout implements HeaderFooterRecycle
                    mLoadingView.setVisibility(VISIBLE);
                } else {
                    ViewStub viewStub = (ViewStub) findViewById(R.id.loading_viewStub);
-                   mLoadingView = viewStub.inflate();//  空指针出现过
+                   mLoadingView = viewStub.inflate();//  空指针出现过-----
                }
                break;
 

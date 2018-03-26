@@ -48,7 +48,19 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
     protected View initView(LayoutInflater inflater) {
         View view = super.initView(inflater);
         initPtrFrameLayout(view);
-        return super.initView(inflater);
+        getRecyclerView().addOnScrollListener(mOnScrollListener);// 添加滑动。
+        return view;
+    }
+
+    @Override
+    protected void initRecyclerView(LayoutInflater inflater, View view) {
+        super.initRecyclerView(inflater, view);
+        View footerView = getFooterView();
+        if (footerView instanceof LoadingFooter) {
+            mLoadingFooter = (LoadingFooter) footerView;
+        } else if (footerView != null) {
+            mLoadingFooter = (LoadingFooter) footerView.findViewById(R.id.loading_footer);
+        }
     }
 
     @Override
@@ -63,7 +75,7 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
             mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.swipe_container);
         }
         if (mPtrFrameLayout == null)
-            throw new RuntimeException("PtrframeLayout is not exit or its id not 'R.id.swipe_container' in current layout！！");
+            throw new RuntimeException("PtrFrameLayout is not exit or its id not 'R.id.swipe_container' in current layout！！");
         mPtrFrameLayout.setHeaderView((View) getPtrUIHandlerView());
         mPtrFrameLayout.addPtrUIHandler(getPtrUIHandlerView());
         mPtrFrameLayout.setPtrHandler(new PtrHandler() {
@@ -91,9 +103,9 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
 
    @Override  @ThreadPoint(ThreadType.MAIN)
     public void setLoadingState(LoadingFooter.State state) {
-        if(mLoadingFooter != null){
+        if(mLoadingFooter != null){//  -------------
             L.i(initTag(), "设置刷新尾部状态");
-            mLoadingFooter.setState(state);
+            mLoadingFooter.setState(state); //----------------
         }
     }
 
@@ -137,11 +149,11 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
         @Override
         public void onLoadNextPage(View view) {
             super.onLoadNextPage(view);
-            loadMoreData();
+            loadingMoreData();// -----------------
         }
     };
 
-    private   void loadMoreData(){
+    private   void loadingMoreData(){
         if(mLoadingFooter != null){
             LoadingFooter.State state = mLoadingFooter.getState();
             if(!canLoadingMore){
@@ -153,7 +165,7 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
                 L.i(initTag(), "no more data......................");
                 return;
             }
-            setLoadingState(LoadingFooter.State.Loading);
+            setLoadingState(LoadingFooter.State.Loading);// --------------
             onLoad();
         }
     }

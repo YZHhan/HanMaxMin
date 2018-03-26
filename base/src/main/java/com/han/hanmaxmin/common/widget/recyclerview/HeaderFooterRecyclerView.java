@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.han.hanmaxmin.common.log.L;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +69,7 @@ public class HeaderFooterRecyclerView extends RecyclerView {
     public void addHeaderView(View view){
         mHeaderViews.add(view);
         if(mAdapter != null){
+            L.i("Recycler", "我是Recycler的addHeaderView");
             mAdapter.notifyDataSetChanged();
         }
     }

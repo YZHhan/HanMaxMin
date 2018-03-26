@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.utils.CommonUtils;
 import com.han.hanmaxmin.common.widget.ptr.PtrFrameLayout;
 import com.han.hanmaxmin.common.widget.ptr.PtrUIHandler;
@@ -34,14 +35,17 @@ public class BeautyCircleRefreshHeader extends RelativeLayout implements PtrUIHa
 
     public BeautyCircleRefreshHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initView();
     }
 
     private void initView(){
+        L.i("HanPullRecyclerFragment","我是BeautyCircleRefreshHeader的init方法");
         setGravity(Gravity.CENTER);
         addView(getHeaderView());
     }
 
     private View getHeaderView() {
+        L.i("HanPullRecyclerFragment","我是BeautyCircleRefreshHeader的getHeaderView方法");
         if (ivRefresh == null) {
             ivRefresh = new ImageView(getContext());
             ivRefresh.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -66,6 +70,7 @@ public class BeautyCircleRefreshHeader extends RelativeLayout implements PtrUIHa
      * 准备刷新
      */
     @Override public void onUIRefreshPrepare(PtrFrameLayout ptrFrameLayout) {
+        L.i("BeautyCircleRefreshHeader", "我是准备刷新");
         if (circleLogoDrawable != null) {
             circleLogoDrawable.onPrepare();
         }
@@ -75,6 +80,7 @@ public class BeautyCircleRefreshHeader extends RelativeLayout implements PtrUIHa
      * 开始刷新
      */
     @Override public void onUIRefreshBegin(PtrFrameLayout ptrFrameLayout) {
+        L.i("BeautyCircleRefreshHeader", "我是开始刷新");
         if (circleLogoDrawable != null) {
             circleLogoDrawable.onBegin();
         }
@@ -84,6 +90,8 @@ public class BeautyCircleRefreshHeader extends RelativeLayout implements PtrUIHa
      * 刷新完成
      */
     @Override public void onUIRefreshComplete(PtrFrameLayout ptrFrameLayout) {
+        L.i("BeautyCircleRefreshHeader", "我是刷新完成");
+
         if (circleLogoDrawable != null) {
             circleLogoDrawable.onRefreshComplete();
         }
@@ -93,6 +101,7 @@ public class BeautyCircleRefreshHeader extends RelativeLayout implements PtrUIHa
      * 刷新重置
      */
     @Override public void onUIReset(PtrFrameLayout ptrFrameLayout) {
+        L.i("BeautyCircleRefreshHeader", "我是刷新充值");
         if (circleLogoDrawable != null) {
             circleLogoDrawable.onReset();
         }
@@ -103,6 +112,7 @@ public class BeautyCircleRefreshHeader extends RelativeLayout implements PtrUIHa
      * 当下拉高度高于设定临界点时改变刷新头状态
      */
     @Override public void onUIPositionChange(PtrFrameLayout ptrFrameLayout, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
+        L.i("HanPullRecyclerFragment","我是BeautyCircleRefreshHeader ptrIndicator.getRatioOfHeaderToHeightRefresh()" +ptrIndicator.getRatioOfHeaderToHeightRefresh() + "    ptrIndicator.getCurrentPercent()"  +ptrIndicator.getCurrentPercent()  );
         float percent = Math.min(ptrIndicator.getRatioOfHeaderToHeightRefresh(), ptrIndicator.getCurrentPercent());
         if (checkCanAnimation()) {
             circleLogoDrawable.setPercent(percent);

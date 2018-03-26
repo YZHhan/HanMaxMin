@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.greendao.helper.DataBaseHelper;
 import com.han.hanmaxmin.common.greendao.model.UserInfo;
 import com.han.hanmaxmin.common.greendao.model.UserInfoDao;
 import com.han.hanmaxmin.common.widget.ptr.PtrUIHandler;
 import com.han.hanmaxmin.hantext.httptext.model.BaseModel;
+import com.han.hanmaxmin.hantext.mvptest.HomePullPresenter;
 import com.han.hanmaxmin.hantext.mvptest.adapter.DataBaseAdapterItem;
 import com.han.hanmaxmin.hantext.mvptest.fragment.base.BasePullRecyclerFragment;
 import com.han.hanmaxmin.hantext.mvptest.model.ModelUserInfo;
@@ -25,17 +27,10 @@ import java.util.List;
  * Created by ptxy on 2018/3/22.
  */
 
-public class DataBaseListFragment extends BasePullRecyclerFragment<HanPresenter, UserInfo> {
+public class DataBaseListFragment extends BasePullRecyclerFragment<HomePullPresenter, UserInfo> {
     @Override
     public void initData(Bundle savedInstanceState) {
-        openPullRefreshing();
-        List<UserInfo> infos = DataBaseHelper.getInstance().getDataBaseUserInfoHelper().queryUser(UserInfoDao.Properties.Age, "18");
-        List list = new ArrayList();
-        for (UserInfo info : infos){
-            list.add(info);
-        }
-        setData(list);
-
+        getPresenter().requestData();
     }
 
     @Override
@@ -45,7 +40,7 @@ public class DataBaseListFragment extends BasePullRecyclerFragment<HanPresenter,
 
     @Override
     public void onLoad() {
-
+    getPresenter().requestData();
     }
 
     @Override

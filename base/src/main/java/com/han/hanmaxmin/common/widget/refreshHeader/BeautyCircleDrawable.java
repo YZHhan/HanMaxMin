@@ -33,7 +33,7 @@ public class BeautyCircleDrawable extends Drawable {
 
     public BeautyCircleDrawable() {
         mPaint = new Paint();
-        mPaint.setColor(HanHelper.getInstance().getApplication().getResources().getColor(R.color.colorAccent));
+        mPaint.setColor(HanHelper.getInstance().getApplication().getResources().getColor(R.color.colorAccent_point));
         mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
         list = new ArrayList<>();

@@ -37,7 +37,6 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
 
     private HeaderFooterRecyclerView mRecyclerView;
     protected RecyclerView.Adapter mRecyclerViewAdapter;
-    protected LoadingFooter mLoadingFooter;
     private View headerView;
     private View footerView;
     protected StaggeredGridLayoutManager staggeredGridLayoutManager;// 实现交错式网格布局
@@ -330,6 +329,7 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
          */
         @Override
         public void onBindViewHolder(MyRecyclerViewHolder<D> holder, int position) {
+            L.i("Recycler", "position : "  + position);
             holder.onBindData(mList.get(position),position, mList.size());
         }
 

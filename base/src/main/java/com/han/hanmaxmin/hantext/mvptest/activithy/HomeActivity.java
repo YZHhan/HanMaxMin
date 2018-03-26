@@ -1,9 +1,12 @@
 package com.han.hanmaxmin.hantext.mvptest.activithy;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.log.L;
+import com.han.hanmaxmin.common.viewbind.annotation.Bind;
+import com.han.hanmaxmin.common.widget.refreshHeader.BeautyCircleDrawable;
 import com.han.hanmaxmin.hantext.mvptest.MineActivity;
 import com.han.hanmaxmin.hantext.mvptest.fragment.DataBaseListFragment;
 import com.han.hanmaxmin.hantext.mvptest.fragment.HomePullListFragment;
@@ -15,16 +18,12 @@ import com.han.hanmaxmin.mvp.HanActivity;
  */
 
 public class HomeActivity extends HanABActivity {
+
+
     @Override
     public void initData(Bundle savedInstanceState) {
         L.i("HanMaxMin","我是一个Activity");
-
         commitFragment(new DataBaseListFragment());
-    }
-
-    @Override
-    public int layoutId() {
-        return super.layoutId();
     }
 
     @Override
