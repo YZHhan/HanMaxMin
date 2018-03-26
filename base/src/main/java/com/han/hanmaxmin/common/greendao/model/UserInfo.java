@@ -1,5 +1,7 @@
 package com.han.hanmaxmin.common.greendao.model;
 
+import com.han.hanmaxmin.hantext.httptext.model.BaseModel;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
@@ -8,7 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * Created by ptxy on 2018/3/21.
  */
 @Entity(nameInDb = "UserInfo")
-public class UserInfo {
+public class UserInfo extends BaseModel{
     @Id
     private long id;
     private String name;

@@ -46,30 +46,34 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
      */
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-        super.onScrolled(recyclerView, dx, dy);
+//        super.onScrolled(recyclerView, dx, dy);
         L.i( "HanPullRecyclerFragment", "我是onScrolled");
 
         if(layoutManager == null){
             layoutManager = recyclerView.getLayoutManager();
         }
 
-        if(layoutManagerType == null){
-            if(layoutManager instanceof GridLayoutManager){
+        if(layoutManagerType == null) {
+            if (layoutManager instanceof GridLayoutManager) {
                 layoutManagerType = LayoutManagerType.GridLayout;
-            } else if (layoutManager instanceof LinearLayoutManager){
+            } else if (layoutManager instanceof LinearLayoutManager) {
                 layoutManagerType = LayoutManagerType.LinearLayout;
-            } else if (layoutManager instanceof StaggeredGridLayoutManager){
+            } else if (layoutManager instanceof StaggeredGridLayoutManager) {
                 layoutManagerType = LayoutManagerType.StaggeredGridLayout;
             } else {
                 throw new RuntimeException("Unsupported LayoutManager Used. Valid ones are LinearLayoutManager, GridLayoutManager and StaggeredGridLayoutManager");
             }
 
+        }
             switch (layoutManagerType){
                 case LinearLayout:
                     lastVisibleItemPosition = ((LinearLayoutManager)layoutManager).findLastVisibleItemPosition();
+                    L.i("RecyclerView","我是可见的Item  是第" +lastVisibleItemPosition);
                     break;
                 case GridLayout:
                     lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+                    L.i("RecyclerView","我是可见的Item  是第" +lastVisibleItemPosition);
+
                     break;
                 case StaggeredGridLayout:
                     StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
@@ -78,8 +82,8 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
                     }
                     staggeredGridLayoutManager.findLastVisibleItemPositions(lastPositions);
                     lastVisibleItemPosition = findMax(lastPositions);// 如果是瀑布流布局的话
+                    L.i("RecyclerView","我是可见的Item  是第" +lastVisibleItemPosition);
                     break;
-            }
         }
     }
 
@@ -91,7 +95,7 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         int visibleItemCount  = layoutManager.getChildCount();// 可见Item的个数
         int totalItemCount = layoutManager.getItemCount();// item的总数
-        if((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItemPosition) >= totalItemCount -1)){
+        if((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItemPosition) >= totalItemCount -1)){// 当前状态为SCROLL_STATE_IDLE  静止
                 onLoadNextPage(recyclerView);//   ---------
         }
 
@@ -102,6 +106,11 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
 
     }
 
+
+    /**
+     *因为StaggeredGridLayoutManager的特殊性可能导致最后显示的item存在多个，所以这里取到的是一个数组
+     *得到这个数组后再取到数组中position值最大的那个就是最后显示的position值了
+     */
     private int findMax(int[] lastPositions) {
         int max = lastPositions[0];
         for (int value : lastPositions){

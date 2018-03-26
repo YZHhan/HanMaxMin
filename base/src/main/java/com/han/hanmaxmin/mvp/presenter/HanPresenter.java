@@ -173,4 +173,31 @@ public class HanPresenter<V extends HanIView> {
         return !isAttach || mView == null;
     }
 
+
+    /**
+     * 分页数据持有。
+     * @param model
+     */
+    @ThreadPoint(ThreadType.MAIN) public void paging(HanModel model){
+        if(model != null && !isViewDetach()){
+            HanIView hanIView = getView();
+            if (hanIView == null)return;
+            if(hanIView instanceof HanIPullListFragment){
+                if(model.isLastPage()){
+                    ((HanIPullListFragment) hanIView).setLoadingState(LoadingFooter.State.TheEnd);
+                } else {
+                    ((HanIPullListFragment) hanIView).setLoadingState(LoadingFooter.State.Normal);
+                }
+            } else if (hanIView instanceof HanIPullRecyclerFragment){
+                if(model.isLastPage()){
+                    ((HanIPullRecyclerFragment) hanIView).setLoadingState(LoadingFooter.State.TheEnd);
+                } else {
+                    ((HanIPullRecyclerFragment) hanIView).setLoadingState(LoadingFooter.State.Normal);
+                }
+            } else {
+                L.e(initTag(), "not QsPullListFragment or QsPullRecyclerFragment view, so invalid paging(...)");
+            }
+        }
+    }
+
 }

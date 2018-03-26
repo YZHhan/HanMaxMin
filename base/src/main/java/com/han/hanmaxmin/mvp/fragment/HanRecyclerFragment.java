@@ -101,11 +101,10 @@ public abstract class HanRecyclerFragment<P extends HanPresenter, D> extends Han
             HanHelper.getInstance().getViewBindHelper().bind(this, headerView);
         }
 
-        if (getFooterLayout() > 0) {
+        if (getFooterLayout() > 0) {// 控制着FootView。
             footerView = inflater.inflate(getFooterLayout(), null);
              mRecyclerView.addFooterView(footerView);
             HanHelper.getInstance().getViewBindHelper().bind(this, footerView);
-            mRecyclerView.addFooterView(view);
         }
 
         mRecyclerViewAdapter = onCreateAdapter();

@@ -30,7 +30,7 @@ import java.util.List;
 public class DataBaseListFragment extends BasePullRecyclerFragment<HomePullPresenter, UserInfo> {
     @Override
     public void initData(Bundle savedInstanceState) {
-        getPresenter().requestData();
+        getPresenter().requestData(false);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class DataBaseListFragment extends BasePullRecyclerFragment<HomePullPrese
 
     @Override
     public void onLoad() {
-    getPresenter().requestData();
+    getPresenter().requestData(true);
     }
 
     @Override

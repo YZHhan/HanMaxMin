@@ -48,7 +48,7 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
     protected View initView(LayoutInflater inflater) {
         View view = super.initView(inflater);
         initPtrFrameLayout(view);
-        getRecyclerView().addOnScrollListener(mOnScrollListener);// 添加滑动。
+        getRecyclerView().addOnScrollListener(mOnScrollListener);// 添加滑动。监听进行刷新的功能
         return view;
     }
 
