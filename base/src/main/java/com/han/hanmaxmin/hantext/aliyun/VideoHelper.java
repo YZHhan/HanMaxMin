@@ -22,7 +22,7 @@ public class VideoHelper {
     }
 
     public void init(Application application,String businessId ){
-        AliVcMediaPlayer.init(application,businessId);
+//        AliVcMediaPlayer.init(application,businessId);
     }
 
 

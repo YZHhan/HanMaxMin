@@ -27,6 +27,7 @@ import com.han.hanmaxmin.common.constants.HanConstants;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.utils.HanHelper;
 import com.han.hanmaxmin.common.utils.PresenterUtils;
+import com.han.hanmaxmin.common.utils.permission.PermissionUtils;
 import com.han.hanmaxmin.common.widget.dialog.HanProgressDialog;
 import com.han.hanmaxmin.mvp.fragment.HanFragment;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
@@ -439,7 +440,7 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        PermissionUtils.getInstance().pare
+        PermissionUtils.getInstance().parsePermissionResultData(requestCode, permissions, grantResults, this);
     }
 
     @Override

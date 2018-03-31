@@ -109,7 +109,7 @@ public class PermissionUtils {
 
 
                 if(grantedAll){// 判断是否同意所有。
-                    L.i(TAG, "User granted all permisison");
+                    L.i(TAG, "User granted all Permission");
                     if(builder.getListener() != null){
                         builder.getListener().onPermissionCallback(requestCode, true);
                     }
@@ -176,7 +176,7 @@ public class PermissionUtils {
      */
     private String getPermissionDialogMessage(ArrayList<String> permission){
 
-        if(permission == null || permission.size() > 1 ) return null;
+        if(permission == null || permission.size() < 1 ) return null;
         StringBuilder stringbuilder =new StringBuilder();
 
         stringbuilder.append("(");
@@ -186,25 +186,25 @@ public class PermissionUtils {
                     stringbuilder.append("定位").append(i == size - 1 ? "" :  ",") ;
                     break;
                 case Manifest.permission.READ_EXTERNAL_STORAGE:
-//                    stringbuilder.append().append((i == size - 1) ? "" : "，");
+                    stringbuilder.append("读取外部储存").append((i == size - 1) ? "" : "，");
                     break;
                 case Manifest.permission.WRITE_EXTERNAL_STORAGE:
-//                    stringbuilder.append(QsHelper.getInstance().getApplication().getString(R.string.request_write_external_storage_permission)).append((i == size - 1) ? "" : "，");
+                    stringbuilder.append(HanHelper.getInstance().getApplication().getString(R.string.request_write_external_storage_permission)).append((i == size - 1) ? "" : "，");
                     break;
                 case Manifest.permission.READ_CONTACTS:
-//                    stringbuilder.append(QsHelper.getInstance().getApplication().getString(R.string.request_constants_permission)).append((i == size - 1) ? "" : "，");
+                    stringbuilder.append(HanHelper.getInstance().getApplication().getString(R.string.request_constants_permission)).append((i == size - 1) ? "" : "，");
                     break;
                 case Manifest.permission.CALL_PHONE:
-//                    stringbuilder.append(QsHelper.getInstance().getApplication().getString(R.string.request_call_permission)).append((i == size - 1) ? "" : "，");
+                    stringbuilder.append(HanHelper.getInstance().getApplication().getString(R.string.request_call_permission)).append((i == size - 1) ? "" : "，");
                     break;
                 case Manifest.permission.CAMERA:
-//                    stringbuilder.append(QsHelper.getInstance().getApplication().getString(R.string.request_camera_permission)).append((i == size - 1) ? "" : "，");
+                    stringbuilder.append(HanHelper.getInstance().getApplication().getString(R.string.request_camera_permission)).append((i == size - 1) ? "" : "，");
                     break;
                 case Manifest.permission.RECORD_AUDIO:
-//                    stringbuilder.append(QsHelper.getInstance().getApplication().getString(R.string.request_record_audio_permission)).append((i == size - 1) ? "" : "，");
+                    stringbuilder.append(HanHelper.getInstance().getApplication().getString(R.string.request_record_audio_permission)).append((i == size - 1) ? "" : "，");
                     break;
                 case Manifest.permission.READ_PHONE_STATE:
-//                    stringbuilder.append(QsHelper.getInstance().getApplication().getString(R.string.request_read_phone_state_permission)).append((i == size - 1) ? "" : "，");
+                    stringbuilder.append(HanHelper.getInstance().getApplication().getString(R.string.request_read_phone_state_permission)).append((i == size - 1) ? "" : "，");
                     break;
             }
         }

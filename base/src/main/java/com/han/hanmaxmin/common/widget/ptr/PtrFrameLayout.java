@@ -12,6 +12,7 @@ import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.han.hanmaxmin.R;
+import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.widget.ptr.indicator.PtrIndicator;
 import com.han.hanmaxmin.common.widget.ptr.utils.PtrCLog;
 
@@ -91,14 +92,14 @@ public class PtrFrameLayout extends ViewGroup {
         if (arr != null) {
             mHeaderId = arr.getResourceId(R.styleable.PtrFrameLayout_ptr_header, mHeaderId);
             mContainerId = arr.getResourceId(R.styleable.PtrFrameLayout_ptr_content, mContainerId);
-            mPtrIndicator.setResistance(arr.getFloat(R.styleable.PtrFrameLayout_ptr_resistance, mPtrIndicator.getResistance()));
-            mDurationToClose = arr.getInt(R.styleable.PtrFrameLayout_ptr_duration_to_close, mDurationToClose);
-            mDurationToCloseHeader = arr.getInt(R.styleable.PtrFrameLayout_ptr_duration_to_close_header, mDurationToCloseHeader);
+            mPtrIndicator.setResistance(arr.getFloat(R.styleable.PtrFrameLayout_ptr_resistance, mPtrIndicator.getResistance()));// 设置阻尼系数，值越大感觉越难下拉
+            mDurationToClose = arr.getInt(R.styleable.PtrFrameLayout_ptr_duration_to_close, mDurationToClose);// 设置下拉回弹时间
+            mDurationToCloseHeader = arr.getInt(R.styleable.PtrFrameLayout_ptr_duration_to_close_header, mDurationToCloseHeader);//  设置刷新完成，头部回弹时间，注意和前一个进行区别
             float ratio = mPtrIndicator.getRatioOfHeaderToHeightRefresh();
-            ratio = arr.getFloat(R.styleable.PtrFrameLayout_ptr_ratio_of_header_height_to_refresh, ratio);
+            ratio = arr.getFloat(R.styleable.PtrFrameLayout_ptr_ratio_of_header_height_to_refresh, ratio);// 设置超过头部多少时，释放执行刷新效果
             mPtrIndicator.setRatioOfHeaderHeightToRefresh(ratio);
-            mKeepHeaderWhenRefresh = arr.getBoolean(R.styleable.PtrFrameLayout_ptr_keep_header_when_refresh, mKeepHeaderWhenRefresh);
-            mPullToRefresh = arr.getBoolean(R.styleable.PtrFrameLayout_ptr_pull_to_fresh, mPullToRefresh);
+            mKeepHeaderWhenRefresh = arr.getBoolean(R.styleable.PtrFrameLayout_ptr_keep_header_when_refresh, mKeepHeaderWhenRefresh);//设置刷新的时候是否保持头部
+            mPullToRefresh = arr.getBoolean(R.styleable.PtrFrameLayout_ptr_pull_to_fresh, mPullToRefresh);//// 设置下拉过程执行刷新，一般设置为fasle
             arr.recycle();
         }
 
@@ -340,7 +341,8 @@ public class PtrFrameLayout extends ViewGroup {
 
         mPtrIndicator.setCurrentPos(to);
         int change = to - mPtrIndicator.getLastPosY();
-        updatePos(change);
+        L.i("PtrFrameLayout", "PtrFrameLayout   change" +change);
+        updatePos(change);//--------------
     }
 
     private void updatePos(int change) {
@@ -391,8 +393,8 @@ public class PtrFrameLayout extends ViewGroup {
         if (DEBUG) {
             PtrCLog.v(LOG_TAG, "updatePos: change: %s, current: %s last: %s, top: %s, headerHeight: %s", change, mPtrIndicator.getCurrentPosY(), mPtrIndicator.getLastPosY(), mContent.getTop(), mHeaderHeight);
         }
-
-        mHeaderView.offsetTopAndBottom(change);
+        L.i("PtrFrameLayout", "PtrFrameLayout   change" +change);
+        mHeaderView.offsetTopAndBottom(change);//-------------------
         if (!isPinContent()) {
             mContent.offsetTopAndBottom(change);
         }
@@ -929,7 +931,8 @@ public class PtrFrameLayout extends ViewGroup {
             }
             if (!finish) {
                 mLastFlingY = curY;
-                movePos(deltaY);
+                L.i("PtrFrameLayout", "PtrFrameLayout   deltaY" +deltaY);
+                movePos(deltaY);//----------------------
                 post(this);
             } else {
                 finish();

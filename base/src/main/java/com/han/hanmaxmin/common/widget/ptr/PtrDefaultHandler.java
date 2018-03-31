@@ -19,7 +19,7 @@ public abstract class PtrDefaultHandler implements PtrHandler {
                         &&(absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
                         .getTop() < absListView.getPaddingTop());
             } else {
-                return view.getScaleY() > 0;
+                return view.getScrollY() > 0;
             }
         } else {
             return view.canScrollVertically(-1);

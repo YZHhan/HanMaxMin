@@ -98,4 +98,9 @@ dependencies {
 
     debugCompile 'me.drakeet.library:crashwoodpecker:0.9.7'
 
+    // 阿里云视频播放SDK
+//    compile(name: 'AlivcReporter', ext: 'arr')
+    compile(name: 'AlivcPlayer', ext: 'aar')
+    compile(name: 'AliyunVodPlayer', ext: 'aar')
+
 }

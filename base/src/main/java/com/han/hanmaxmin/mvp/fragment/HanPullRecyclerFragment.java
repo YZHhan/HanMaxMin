@@ -26,6 +26,14 @@ import javax.xml.transform.sax.TemplatesHandler;
 
 /**
  * Created by ptxy on 2018/3/15.
+ * PtrFrameLayout ：设置刷新，只需要三步
+ * 1.设置setPtrHandler：主要是为了判断是否可以刷新（考虑到有AbsListView等滑动view的情况）以及设置刷新前的设置：
+ * 2.设置PtrUIHandler，通过addPtrUIHandler为PtrFrameLayout设置PtrUIHandler，此设置主要是控制下拉时UI变化，
+ * 当然，所引用的第三方库有写好的PtrUIHandler：
+ * 3.设置HeaderView，通过setHeaderView，此第三方库也是包含写好的view的；PtrClassicDefaultHeader 就是其中一个了
+ *
+ *
+ *
  */
 
 public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends HanRecyclerFragment<P, D> implements HanIPullRecyclerFragment<D> {
@@ -77,15 +85,22 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
         if (mPtrFrameLayout == null)
             throw new RuntimeException("PtrFrameLayout is not exit or its id not 'R.id.swipe_container' in current layout！！");
         mPtrFrameLayout.setHeaderView((View) getPtrUIHandlerView());
-        mPtrFrameLayout.addPtrUIHandler(getPtrUIHandlerView());
+        mPtrFrameLayout.addPtrUIHandler(getPtrUIHandlerView());//下拉时 UI的变化
         mPtrFrameLayout.setPtrHandler(new PtrHandler() {
             @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {// 检查是否可以刷新
+                /**
+                 *检查是否可以刷新，这里使用默认的PtrHandler进行判断
+                 */
                 return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                /**
+                 * 在刷新前需要准备什么工作
+                 */
+                L.i("PtrFrameLayout", "id = "+Thread.currentThread());
                 onRefresh();
             }
         });
