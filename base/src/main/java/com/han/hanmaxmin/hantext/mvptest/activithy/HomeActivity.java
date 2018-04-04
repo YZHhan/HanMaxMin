@@ -2,18 +2,31 @@ package com.han.hanmaxmin.hantext.mvptest.activithy;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.app.hubert.library.Controller;
+import com.app.hubert.library.HighLight;
+import com.app.hubert.library.NewbieGuide;
+import com.app.hubert.library.OnGuideChangedListener;
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.aspect.permission.Permission;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.viewbind.annotation.Bind;
 import com.han.hanmaxmin.common.widget.refreshHeader.BeautyCircleDrawable;
+import com.han.hanmaxmin.common.widget.toast.HanToast;
 import com.han.hanmaxmin.hantext.mvptest.MineActivity;
 import com.han.hanmaxmin.hantext.mvptest.fragment.DataBaseListFragment;
 import com.han.hanmaxmin.hantext.mvptest.fragment.HomePullListFragment;
 import com.han.hanmaxmin.mvp.HanABActivity;
 import com.han.hanmaxmin.mvp.HanActivity;
+import com.han.hanmaxmin.proxy.doingproxy.HanSubject;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by ptxy on 2018/3/16.
@@ -21,16 +34,66 @@ import com.han.hanmaxmin.mvp.HanActivity;
 
 public class HomeActivity extends HanABActivity {
 
-    @Permission(value = {//
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,//
-            Manifest.permission.ACCESS_COARSE_LOCATION,//
-            Manifest.permission.ACCESS_FINE_LOCATION, //
-            Manifest.permission.READ_PHONE_STATE}//
-    )
+    @Bind(R.id.tv_title) TextView ll_linear;
+    @Bind(R.id.thread_http) TextView thread_http;
+
     @Override
     public void initData(Bundle savedInstanceState) {
-        L.i("HanMaxMin","我是一个Activity");
-        commitFragment(new DataBaseListFragment());
+//        L.i("HanMaxMin", "我是一个Activity");
+         Controller controller1 = NewbieGuide.with(this)
+                .setOnGuideChangedListener(new OnGuideChangedListener() {
+                    @Override
+                    public void onShowed(Controller controller) {// 引导层显示
+                        HanToast.show("nihao");
+                    }
+
+                    @Override
+                    public void onRemoved(Controller controller) {//引导层消失
+                        HanToast.show("removed");
+                    }
+                })
+                .alwaysShow(true)
+                .addHighLight(thread_http, HighLight.Type.RECTANGLE)//
+                .setLayoutRes(R.layout.text_null1)//
+                .setLabel("Text")
+                .build();
+//        Controller controllerJiaoCai = NewbieGuide.with(this)
+//                .setOnGuideChangedListener(new OnGuideChangedListener() {
+//                    @Override
+//                    public void onShowed(Controller controller) {// 引导层显示
+//                        HanToast.show("nihao");
+//                    }
+//
+//                    @Override
+//                    public void onRemoved(final Controller controller) {//引导层消失
+//
+//                        final Controller wocao = NewbieGuide.with(HomeActivity.this)
+//                                .setLabel("WOCAO")//
+//                                .addHighLight(thread_http, HighLight.Type.RECTANGLE)//
+//                                .alwaysShow(true)
+//                                .setEveryWhereCancelable(true)
+//                                .setLayoutRes(R.layout.text_null1)//
+//                                .show();
+//                    }
+//                })
+//                .alwaysShow(true)
+//                .addHighLight(ll_linear, HighLight.Type.RECTANGLE)//
+//                .setLayoutRes(R.layout.text_null)//
+//                .setLabel("Title")
+//                .build();
+//        controllerJiaoCai.show();
+
+        FrameLayout decorView = (FrameLayout) getWindow().getDecorView();
+        View inflate = LayoutInflater.from(this).inflate(R.layout.text_null, null);
+        decorView.addView(inflate);
+
+
+//        commitFragment(new DataBaseListFragment());
+    }
+
+    @Override
+    public int layoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
