@@ -2,6 +2,8 @@ package com.han.hanmaxmin;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
 
 import com.han.hanmaxmin.common.http.HttpBuilder;
 import com.han.hanmaxmin.common.log.L;
@@ -52,15 +54,19 @@ public abstract class AsApplication extends Application{
         return null;
     }
 
-    public int loadingLayoutId() {
+    public @LayoutRes int loadingLayoutId() {
         return 0;
     }
 
-    public int emptyLayoutId() {
+    public @LayoutRes int emptyLayoutId() {
         return 0;
     }
 
-    public int errorLayoutId() {return 0;}
+    public @LayoutRes int errorLayoutId() {return 0;}
+
+    public @DrawableRes int defaultImageHolder(){
+        return 0;
+    }
 
     /**
      * 在HanPullListFragment作为Footer的布局，全局使用

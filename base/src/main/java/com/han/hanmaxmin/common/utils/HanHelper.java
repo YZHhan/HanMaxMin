@@ -17,12 +17,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.han.hanmaxmin.AsApplication;
-import com.han.hanmaxmin.HanMacMinApplication;
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.aspect.thread.ThreadPoint;
 import com.han.hanmaxmin.common.aspect.thread.ThreadType;
 import com.han.hanmaxmin.common.http.HttpAdapter;
-import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.threadpoll.HanThreadPollHelper;
 import com.han.hanmaxmin.common.utils.helper.CacheHelper;
 import com.han.hanmaxmin.common.utils.helper.ImageHelper;

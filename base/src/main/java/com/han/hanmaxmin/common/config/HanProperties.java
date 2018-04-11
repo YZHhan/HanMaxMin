@@ -36,12 +36,12 @@ public abstract class HanProperties {
     private static final String DEFAULT_ANNOTATION_VALUE = "";
     private static final String EXTENSION = ".properties";
     private final Properties mProperties = new Properties();
-    private static final int OPEN_TYPE_ASSETS = 1;
-    private static final int OPEN_TYPE_DATA = 2;
+    public static final int OPEN_TYPE_ASSETS = 1;
+    public static final int OPEN_TYPE_DATA = 2;
 
-    private String mPropertiesFileName;
-    private File propertyFilePath;
-    private PropertyCallback propertyCallback;
+    private String mPropertiesFileName;// 文件名字。
+    private File propertyFilePath;//文件地址
+    private PropertyCallback propertyCallback;//文件监听
 
 
     public HanProperties() {
@@ -56,14 +56,15 @@ public abstract class HanProperties {
     public HanProperties(String propertiesFileName) {
         this.mPropertiesFileName = propertiesFileName;
         propertyFilePath = HanHelper.getInstance().getApplication().getFilesDir();
+        L.i(initTag(), "propertyFilePath   =   " + propertyFilePath);
 
         switch (initType()) {
-            case OPEN_TYPE_ASSETS:
+            case OPEN_TYPE_ASSETS:// 读取已有文件。
                 InputStream inputStream = null;
                 Resources resources = HanHelper.getInstance().getApplication().getResources();
                 try {
                     inputStream = resources.getAssets().open(mPropertiesFileName + EXTENSION);
-                    mProperties.load(inputStream);
+                    mProperties.load(inputStream);// 读取文件
                     loadPropertiesValues();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -71,7 +72,7 @@ public abstract class HanProperties {
                     StreamCloseUtils.close(inputStream);
                 }
                 break;
-            case OPEN_TYPE_DATA:
+            case OPEN_TYPE_DATA:// 重新写入文件。
                 InputStream in = null;
 
                     try {

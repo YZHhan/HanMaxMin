@@ -17,6 +17,7 @@ import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.aspect.permission.Permission;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.viewbind.annotation.Bind;
+import com.han.hanmaxmin.common.viewbind.annotation.OnClick;
 import com.han.hanmaxmin.common.widget.refreshHeader.BeautyCircleDrawable;
 import com.han.hanmaxmin.common.widget.toast.HanToast;
 import com.han.hanmaxmin.hantext.mvptest.MineActivity;
@@ -24,6 +25,7 @@ import com.han.hanmaxmin.hantext.mvptest.fragment.DataBaseListFragment;
 import com.han.hanmaxmin.hantext.mvptest.fragment.HomePullListFragment;
 import com.han.hanmaxmin.mvp.HanABActivity;
 import com.han.hanmaxmin.mvp.HanActivity;
+import com.han.hanmaxmin.mvp.common.UserConfig;
 import com.han.hanmaxmin.proxy.doingproxy.HanSubject;
 
 import org.w3c.dom.Text;
@@ -34,29 +36,31 @@ import org.w3c.dom.Text;
 
 public class HomeActivity extends HanABActivity {
 
-    @Bind(R.id.tv_title) TextView ll_linear;
-    @Bind(R.id.thread_http) TextView thread_http;
+    @Bind(R.id.tv_title)
+    TextView ll_linear;
+    @Bind(R.id.thread_http)
+    TextView thread_http;
 
-    @Override
-    public void initData(Bundle savedInstanceState) {
+//    @Override
+//    public void initData(Bundle savedInstanceState) {
 //        L.i("HanMaxMin", "我是一个Activity");
-         Controller controller1 = NewbieGuide.with(this)
-                .setOnGuideChangedListener(new OnGuideChangedListener() {
-                    @Override
-                    public void onShowed(Controller controller) {// 引导层显示
-                        HanToast.show("nihao");
-                    }
-
-                    @Override
-                    public void onRemoved(Controller controller) {//引导层消失
-                        HanToast.show("removed");
-                    }
-                })
-                .alwaysShow(true)
-                .addHighLight(thread_http, HighLight.Type.RECTANGLE)//
-                .setLayoutRes(R.layout.text_null1)//
-                .setLabel("Text")
-                .build();
+//         Controller controller1 = NewbieGuide.with(this)
+//                .setOnGuideChangedListener(new OnGuideChangedListener() {
+//                    @Override
+//                    public void onShowed(Controller controller) {// 引导层显示
+//                        HanToast.show("nihao");
+//                    }
+//
+//                    @Override
+//                    public void onRemoved(Controller controller) {//引导层消失
+//                        HanToast.show("removed");
+//                    }
+//                })
+//                .alwaysShow(true)
+//                .addHighLight(thread_http, HighLight.Type.RECTANGLE)//
+//                .setLayoutRes(R.layout.text_null1)//
+//                .setLabel("Text")
+//                .build();
 //        Controller controllerJiaoCai = NewbieGuide.with(this)
 //                .setOnGuideChangedListener(new OnGuideChangedListener() {
 //                    @Override
@@ -83,17 +87,23 @@ public class HomeActivity extends HanABActivity {
 //                .build();
 //        controllerJiaoCai.show();
 
-        FrameLayout decorView = (FrameLayout) getWindow().getDecorView();
-        View inflate = LayoutInflater.from(this).inflate(R.layout.text_null, null);
-        decorView.addView(inflate);
-
-
+//        FrameLayout decorView = (FrameLayout) getWindow().getDecorView();
+//        View inflate = LayoutInflater.from(this).inflate(R.layout.text_null, null);
+//        decorView.addView(inflate);
+//
+//
 //        commitFragment(new DataBaseListFragment());
-    }
+//    }
 
     @Override
     public int layoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    public void initData(Bundle savedInstanceState) {
+
+
     }
 
     @Override
@@ -104,6 +114,32 @@ public class HomeActivity extends HanABActivity {
     @Override
     public int actionbarLayoutId() {
         return R.layout.actionbar_title_back;
+    }
+
+    @OnClick({R.id.thread_http,R.id.thread_main, R.id.thread_work, R.id.thread_single})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.thread_http:
+                HanToast.show("http");
+                L.i("UserConfig",UserConfig.getInstance().UserName);
+                break;
+            case R.id.thread_main:
+                HanToast.show("main");
+                UserConfig.getInstance().UserName = "YinZiHan";
+                UserConfig.getInstance().UserAge = "18";
+                UserConfig.getInstance().UserPhone = "0120";
+                UserConfig.getInstance().UserHeight = "177";
+                UserConfig.getInstance().UserSex = "MAN";
+                UserConfig.getInstance().UserLike = "I Like You";
+                UserConfig.getInstance().commit();
+                break;
+            case R.id.thread_work:
+                HanToast.show("work");
+                break;
+            case R.id.thread_single:
+                HanToast.show("single");
+                break;
+        }
     }
 
 }
