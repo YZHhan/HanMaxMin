@@ -118,7 +118,7 @@ public abstract class HanViewPagerActivity<P extends HanPresenter> extends HanAc
     }
 
     @Override
-    public void onPageSelected(View childAt, View oldView, int position, int oldPosition) {
+    public void onPageSelected(View currentTabItem, View oldTabItem, int position, int oldPosition) {
 
     }
 

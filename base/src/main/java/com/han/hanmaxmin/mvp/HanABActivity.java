@@ -289,6 +289,16 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         loading(message, true);
     }
 
+    @Override
+    public void loading(int resId) {
+        loading(resId, true);
+    }
+
+    @Override
+    public void loading(int resId, boolean cancelAble) {
+        loading(getResources().getString(resId), cancelAble);
+    }
+
     @ThreadPoint(ThreadType.MAIN)
     @Override
     public void loading(String message, boolean cancelAble) {
@@ -464,7 +474,7 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
     }
 
     @ThreadPoint(ThreadType.MAIN)
-    public void setViewState(int showState) {
+    protected void setViewState(int showState) {
         L.i(initTag(), "setViewState() showState=" + showState);
         if (!isOpenViewState()) {
             L.i(initTag(), "当前Activity 没有打开状态模式! isOpenViewState() = false");
@@ -481,15 +491,15 @@ public abstract class HanABActivity<P extends HanPresenter> extends AppCompatAct
         }
 
         mViewAnimator.setDisplayedChild(showState);
-        if (showState == HanConstants.VIEW_STATE_ERROR) {
-            mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showLoadingView();
-                    initData(getIntent().getExtras());
-                }
-            });
-        }
+//        if (showState == HanConstants.VIEW_STATE_ERROR) {
+//            mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    showLoadingView();
+//                    initData(getIntent().getExtras());
+//                }
+//            });
+//        }
     }
 
     @Override
