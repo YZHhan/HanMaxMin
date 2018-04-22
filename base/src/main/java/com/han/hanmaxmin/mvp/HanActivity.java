@@ -255,6 +255,16 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
         loading(message, true);
     }
 
+    @Override
+    public void loading(int resId) {
+        loading(resId, true);
+    }
+
+    @Override
+    public void loading(int resId, boolean cancelAble) {
+        loading(getResources().getString(resId), cancelAble);
+    }
+
     //需要放在主线程 一个注解
     @ThreadPoint(ThreadType.MAIN) @Override public void loading(String message, boolean cancelAble) {
         if (mProgressDialog == null) mProgressDialog = HanHelper.getInstance().getApplication().getCommonProgressDialog();
@@ -317,14 +327,14 @@ public abstract class HanActivity<P extends HanPresenter> extends FragmentActivi
             return;
         }
         mViewAnimator.setDisplayedChild(showState);
-        if (showState == HanConstants.VIEW_STATE_ERROR) {
-            mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    showLoadingView();
-                    initData(getIntent().getExtras());
-                }
-            });
-        }
+//        if (showState == HanConstants.VIEW_STATE_ERROR) {
+//            mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
+//                @Override public void onClick(View v) {
+//                    showLoadingView();
+//                    initData(getIntent().getExtras());
+//                }
+//            });
+//        }
     }
 
     @Override

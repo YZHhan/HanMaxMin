@@ -2,6 +2,7 @@ package com.han.hanmaxmin.mvp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityOptionsCompat;
 
 /**
@@ -87,6 +88,10 @@ public interface HanIView<P> {
     void loading(String message);
 
     void loading(boolean cancelAble);
+
+    void loading(@StringRes int resId);
+
+    void loading(@StringRes int resId, boolean cancelAble);
 
     void loading(String message,boolean cancelAble);
 
