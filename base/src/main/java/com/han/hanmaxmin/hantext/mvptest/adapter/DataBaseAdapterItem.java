@@ -7,8 +7,6 @@ import android.widget.TextView;
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.greendao.model.UserInfo;
 import com.han.hanmaxmin.common.viewbind.annotation.Bind;
-import com.han.hanmaxmin.hantext.mvptest.model.ModelUserInfo;
-import com.han.hanmaxmin.mvp.adapter.HanListAdapterItem;
 import com.han.hanmaxmin.mvp.adapter.HanRecyclerAdapterItem;
 
 /**
@@ -34,11 +32,6 @@ public class DataBaseAdapterItem extends HanRecyclerAdapterItem<UserInfo> {
 
     @Override
     protected void onBindItemData(UserInfo info, int position, int totalCount) {
-        tv_name.setText(info.getName());
-        tv_tagType1.setText(info.getTeacher_tag_t1());
-        tv_age.setText(info.getAge());
-        tv_like.setText(info.getLike());
-        tv_number.setText(info.getNumber());
-        tv_tagType2.setText(info.getTeacher_tag_t4());
+//
     }
 }

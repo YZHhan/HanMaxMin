@@ -3,6 +3,7 @@ package com.han.hanmaxmin.common.utils.helper;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.ImageWriter;
 import android.net.Uri;
@@ -285,6 +286,15 @@ public class ImageHelper {
             }
             requestBuilder.into(view);
         }
+
+        public Bitmap getBitmap(String url){
+            return getBitmap(url, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        }
+
+        public Bitmap getBitmap(String url, int width, int height){
+            return null;
+        }
+
 
         private void setRequestOptionsIfNeed(RequestBuilder requestBuilder) {
             if (shouldCreateReqeustOptions()) {

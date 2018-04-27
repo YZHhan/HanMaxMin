@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.han.hanmaxmin.common.greendao.model.DaoMaster;
+import com.han.hanmaxmin.common.greendao.model.UserInfo;
 import com.han.hanmaxmin.common.greendao.model.UserInfoDao;
 import com.han.hanmaxmin.common.log.L;
 

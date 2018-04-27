@@ -5,9 +5,7 @@ import com.han.hanmaxmin.common.greendao.model.UserInfoDao;
 import com.han.hanmaxmin.common.utils.HanHelper;
 
 import org.greenrobot.greendao.Property;
-import org.greenrobot.greendao.query.WhereCondition;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -57,6 +55,8 @@ public class DataBaseUserInfoHelper {
     public void insertOrReplace(UserInfo info){
         if(info != null)getDao().insertOrReplace(info);
     }
+
+
 
     public void delete(UserInfo info){
         if(info != null)getDao().delete(info);

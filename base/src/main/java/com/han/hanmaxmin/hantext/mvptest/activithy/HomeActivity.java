@@ -14,8 +14,10 @@ import com.app.hubert.library.HighLight;
 import com.app.hubert.library.NewbieGuide;
 import com.app.hubert.library.OnGuideChangedListener;
 import com.han.hanmaxmin.R;
+import com.han.hanmaxmin.common.Common;
 import com.han.hanmaxmin.common.aspect.permission.Permission;
 import com.han.hanmaxmin.common.log.L;
+import com.han.hanmaxmin.common.utils.CommonUtils;
 import com.han.hanmaxmin.common.viewbind.annotation.Bind;
 import com.han.hanmaxmin.common.viewbind.annotation.OnClick;
 import com.han.hanmaxmin.common.widget.refreshHeader.BeautyCircleDrawable;
@@ -36,10 +38,10 @@ import org.w3c.dom.Text;
 
 public class HomeActivity extends HanABActivity {
 
-    @Bind(R.id.tv_title)
-    TextView ll_linear;
-    @Bind(R.id.thread_http)
-    TextView thread_http;
+//    @Bind(R.id.tv_title)
+//    TextView ll_linear;
+//    @Bind(R.id.thread_http)
+//    TextView thread_http;
 
 //    @Override
 //    public void initData(Bundle savedInstanceState) {
@@ -95,14 +97,14 @@ public class HomeActivity extends HanABActivity {
 //        commitFragment(new DataBaseListFragment());
 //    }
 
-    @Override
-    public int layoutId() {
-        return R.layout.activity_main;
-    }
+//    @Override
+//    public int layoutId() {
+//        return R.layout.activity_main;
+//    }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
+        commitFragment(new HomePullListFragment());
 
     }
 
@@ -116,30 +118,32 @@ public class HomeActivity extends HanABActivity {
         return R.layout.actionbar_title_back;
     }
 
-    @OnClick({R.id.thread_http,R.id.thread_main, R.id.thread_work, R.id.thread_single})
-    public void onClick(View view){
-        switch (view.getId()){
-            case R.id.thread_http:
-                HanToast.show("http");
-                L.i("UserConfig",UserConfig.getInstance().UserName);
-                break;
-            case R.id.thread_main:
-                HanToast.show("main");
-                UserConfig.getInstance().UserName = "YinZiHan";
-                UserConfig.getInstance().UserAge = "18";
-                UserConfig.getInstance().UserPhone = "0120";
-                UserConfig.getInstance().UserHeight = "177";
-                UserConfig.getInstance().UserSex = "MAN";
-                UserConfig.getInstance().UserLike = "I Like You";
-                UserConfig.getInstance().commit();
-                break;
-            case R.id.thread_work:
-                HanToast.show("work");
-                break;
-            case R.id.thread_single:
-                HanToast.show("single");
-                break;
-        }
-    }
+//    @OnClick({R.id.thread_http,R.id.thread_main, R.id.thread_work, R.id.thread_single})
+//    public void onClick(View view){
+//        switch (view.getId()){
+//            case R.id.thread_http:
+//                HanToast.show("http");
+//                L.i("UserConfig",UserConfig.getInstance().UserName);
+//                L.i("UserConfig", "CommonUtils.getLocalTime()"+CommonUtils.getLocalTime());
+//                CommonUtils.isTimeOut("2018-01-01 23:59:59");
+//                break;
+//            case R.id.thread_main:
+//                HanToast.show("main");
+//                UserConfig.getInstance().UserName = "YinZiHan";
+//                UserConfig.getInstance().UserAge = "18";
+//                UserConfig.getInstance().UserPhone = "0120";
+//                UserConfig.getInstance().UserHeight = "177";
+//                UserConfig.getInstance().UserSex = "MAN";
+//                UserConfig.getInstance().UserLike = "I Like You";
+//                UserConfig.getInstance().commit();
+//                break;
+//            case R.id.thread_work:
+//                HanToast.show("work");
+//                break;
+//            case R.id.thread_single:
+//                HanToast.show("single");
+//                break;
+//        }
+//    }
 
 }

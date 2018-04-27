@@ -2,15 +2,10 @@ package com.han.hanmaxmin.hantext.mvptest;
 
 import com.han.hanmaxmin.common.aspect.thread.ThreadPoint;
 import com.han.hanmaxmin.common.aspect.thread.ThreadType;
-import com.han.hanmaxmin.common.greendao.helper.DataBaseHelper;
 import com.han.hanmaxmin.common.greendao.model.UserInfo;
-import com.han.hanmaxmin.common.greendao.model.UserInfoDao;
 import com.han.hanmaxmin.common.model.HanModel;
 import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
-import com.han.hanmaxmin.hantext.httptext.http.AppHttp;
-import com.han.hanmaxmin.hantext.httptext.model.resq.ModelApp;
 import com.han.hanmaxmin.hantext.mvptest.fragment.DataBaseListFragment;
-import com.han.hanmaxmin.hantext.mvptest.fragment.HomePullListFragment;
 import com.han.hanmaxmin.mvp.fragment.HanPullRecyclerFragment;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 

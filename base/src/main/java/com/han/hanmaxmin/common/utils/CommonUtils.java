@@ -15,6 +15,8 @@ import android.util.DisplayMetrics;
 
 import com.han.hanmaxmin.common.aspect.thread.ThreadPoint;
 import com.han.hanmaxmin.common.aspect.thread.ThreadType;
+import com.han.hanmaxmin.common.log.L;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -23,6 +25,11 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -36,8 +43,8 @@ import java.util.regex.Pattern;
 public class CommonUtils {
 
     private static long lastClickTime;
-    private static int  screenWidth;
-    private static int  screenHeight;
+    private static int screenWidth;
+    private static int screenHeight;
 
     public static int dp2px(float dp) {
         return (int) dp2px(HanHelper.getInstance().getApplication().getResources(), dp);
@@ -121,6 +128,7 @@ public class CommonUtils {
 
     /**
      * 是否连击(在View的onClick回调中不断调用该方法来确定是否连击)
+     *
      * @return true：连击，false：非连击  0.6秒
      */
     public static boolean isSeriesClick() {
@@ -139,6 +147,7 @@ public class CommonUtils {
 
     /**
      * 判断是否是数字
+     *
      * @return true:是，false:不是
      */
     public static boolean isNumber(String str) {
@@ -262,7 +271,8 @@ public class CommonUtils {
     }
 
 
-    @ThreadPoint(ThreadType.MAIN) public static void restartApp() {
+    @ThreadPoint(ThreadType.MAIN)
+    public static void restartApp() {
         HanHelper.getInstance().getScreenHelper().popAllActivityExceptMain(null);
         Intent intent = HanHelper.getInstance().getApplication().getPackageManager().getLaunchIntentForPackage(HanHelper.getInstance().getApplication().getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -274,4 +284,33 @@ public class CommonUtils {
         return getMetaInfo("UMENG_CHANNEL", "DYT");
     }
 
+
+    public static String getLocalTime() {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        String format = formatter.format(calendar.getTime());
+        return format;
+    }
+
+    public static boolean isTimeOut(String dateTime) {
+        String localTime = getLocalTime();
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date parse = formatter.parse(dateTime);
+            L.i("UserConfig", "parse = " + parse);
+            Date parse1 = formatter.parse(localTime);
+            L.i("UserConfig", "parse1 = " + parse1);
+            if (parse.getTime() > parse1.getTime()) {
+                L.i("UserConfig", "我还没过期");
+                return false;
+            } else {
+                L.i("UserConfig", "我已经过期了");
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
