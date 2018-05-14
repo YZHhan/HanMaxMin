@@ -62,6 +62,16 @@ public class WebFragment extends HanFragment {
     }
 
     @Override
+    public void loading(int resId) {
+
+    }
+
+    @Override
+    public void loading(int resId, boolean cancelAble) {
+
+    }
+
+    @Override
     public void loading(String message, boolean cancelAble) {
 
     }
