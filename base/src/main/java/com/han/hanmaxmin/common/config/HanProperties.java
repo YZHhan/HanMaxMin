@@ -3,6 +3,7 @@ package com.han.hanmaxmin.common.config;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.utils.HanHelper;
 import com.han.hanmaxmin.common.utils.stream.StreamCloseUtils;
@@ -42,6 +43,8 @@ public abstract class HanProperties {
     private String mPropertiesFileName;// 文件名字。
     private File propertyFilePath;//文件地址
     private PropertyCallback propertyCallback;//文件监听
+    private Gson gson;
+
 
 
     public HanProperties() {
@@ -159,7 +162,7 @@ public abstract class HanProperties {
         } else if (clazz == long.class || clazz == Long.class){
             return getLong(key, 0);
         } else {
-            return null;
+            return getObject(key, clazz, null);
         }
     }
 
@@ -244,6 +247,18 @@ public abstract class HanProperties {
         }
     }
 
+    public Object getObject(String key, Class<?> clazz, Object defaultValue){
+        Object object;
+        try {
+            String property = mProperties.getProperty(key);
+            if(gson == null) gson = new Gson();
+            object = gson.fromJson(property, clazz);
+        } catch (Exception e){
+            return null;
+        }
+            return object;
+    }
+
     /**
      * 所有属性写到properties里面
      */
@@ -312,6 +327,20 @@ public abstract class HanProperties {
         }
     }
 
+    private boolean isCommonlyType(Class<?> clazz){
+        return clazz == String.class
+                || clazz == int.class
+                || clazz == Integer.class
+                || clazz == boolean.class
+                || clazz == Boolean.class
+                || clazz == long.class
+                || clazz == Long.class
+                || clazz == float.class
+                || clazz == Float.class
+                || clazz == double.class
+                || clazz == Double.class;
+    }
+
     /**
      * 所有属性写到Properties 里面。
      */
@@ -325,14 +354,27 @@ public abstract class HanProperties {
                 Property annotation = field.getAnnotation(Property.class);
                 if(annotation.value().equals(DEFAULT_ANNOTATION_VALUE)){
                     try {
-                        mProperties.put(fieldName, field.get(this) == null ? "" : String.valueOf(field.get(this)));
+                        Object value = field.get(this);
+                        if(isCommonlyType(field.getType())){
+                            mProperties.put(fieldName, field.get(this) == null ? "" : String.valueOf(field.get(this)));
+                        } else {
+                            if (gson == null) gson = new Gson();
+                            String jsonStr = gson.toJson(value);
+                            mProperties.put(fieldName, jsonStr);
+                        }
                     } catch (IllegalAccessException e) {
                         L.e(initTag(), "Properties写入错误:" + e.toString());
                     }
                 } else {
                     try {
-                        mProperties.put(annotation.value(), field.get(this) == null ? "" : String.valueOf(field.get(this)));
-                    } catch (IllegalAccessException e) {
+                        Object value = field.get(this);
+                        if (isCommonlyType(field.getType())) {
+                            mProperties.put(annotation.value(), field.get(this) == null ? "" : String.valueOf(value));
+                        } else {
+                            if (gson == null) gson = new Gson();
+                            String jsonStr = gson.toJson(value);
+                            mProperties.put(annotation.value(), jsonStr);
+                        }                    } catch (IllegalAccessException e) {
                         L.e(initTag(), "Properties写入错误:" + e.toString());
                     }
 
@@ -367,9 +409,15 @@ public abstract class HanProperties {
             synchronized (mProperties){
                 out = new BufferedOutputStream(new FileOutputStream(file));
                 writePropertiesValues();
+                mProperties.store(out, "");
+            }
+            if (callback != null) {
+                callback.onSuccess();
             }
         }catch (Exception e){
-
+                e.printStackTrace();
+        } finally {
+            StreamCloseUtils.close(out);
         }
     }
 
