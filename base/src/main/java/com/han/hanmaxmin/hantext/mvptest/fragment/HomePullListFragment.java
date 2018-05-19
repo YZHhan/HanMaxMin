@@ -68,4 +68,14 @@ commitFragment(new DataBaseListFragment());
     public boolean isOpenViewState() {
         return true;
     }
+
+    @Override
+    public void loading(int resId) {
+
+    }
+
+    @Override
+    public void loading(int resId, boolean cancelAble) {
+
+    }
 }

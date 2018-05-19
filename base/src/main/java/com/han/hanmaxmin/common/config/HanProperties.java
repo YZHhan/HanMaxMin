@@ -32,7 +32,7 @@ import java.util.Properties;
 
 public abstract class HanProperties {
 
-    private static final String DEFAULT_CODE = "utf-8";
+    private static final String DEFAULT_CODE = "utf-8";//默认CODE
     private static final String DEFAULT_ANNOTATION_VALUE = "";
     private static final String EXTENSION = ".properties";
     private final Properties mProperties = new Properties();
@@ -102,15 +102,23 @@ public abstract class HanProperties {
     }
 
 
+    /**--------反射
+     *得到Class对象
+     * 得到所有的字段
+     * 遍历字段数组，注解验证
+     * 暴力访问，得到名字
+     * 得到注解的值
+     */
     private void loadPropertiesValues() {
         Class<? extends HanProperties> thisClass = this.getClass();
         Field[] fields = thisClass.getDeclaredFields();//获取自己声明的各种字段，包括public，protected，private
         for (Field field : fields) {
             if (field.isAnnotationPresent(Property.class)) {// 是否使用了某个注解
-                field.setAccessible(true);//将一个类的成员变量设置为private
+                field.setAccessible(true);//暴力访问，忽略private修饰
                 String fieldName = field.getName();// 得到名字
                 Property annotation = field.getAnnotation(Property.class);
 
+                //注解的值
                 if (annotation.value().equals(DEFAULT_ANNOTATION_VALUE)) {
                     setFieldValue(field, fieldName);
                 } else {

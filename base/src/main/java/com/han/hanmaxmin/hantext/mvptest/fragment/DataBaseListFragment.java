@@ -21,6 +21,16 @@ public class DataBaseListFragment extends BasePullRecyclerFragment<HomePullPrese
     }
 
     @Override
+    public void loading(int resId) {
+
+    }
+
+    @Override
+    public void loading(int resId, boolean cancelAble) {
+
+    }
+
+    @Override
     public void onRefresh() {
 
     }
