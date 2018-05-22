@@ -1,23 +1,35 @@
 package com.han.hanmaxmin.hantext.mvptest.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
+import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.greendao.model.UserInfo;
+import com.han.hanmaxmin.common.viewbind.annotation.Bind;
+import com.han.hanmaxmin.common.widget.refreshHeader.BeautyCircleRefreshHeader;
+import com.han.hanmaxmin.common.widget.toast.HanToast;
 import com.han.hanmaxmin.hantext.mvptest.HomePullPresenter;
 import com.han.hanmaxmin.hantext.mvptest.adapter.DataBaseAdapterItem;
-import com.han.hanmaxmin.hantext.mvptest.fragment.base.BasePullRecyclerFragment;
-import com.han.hanmaxmin.mvp.adapter.HanRecyclerAdapterItem;
+import com.han.hanmaxmin.hantext.mvptest.fragment.base.BasePullListViewFragment;
+import com.han.hanmaxmin.mvp.adapter.HanListAdapterItem;
 
 /**
  * Created by ptxy on 2018/3/22.
  */
 
-public class DataBaseListFragment extends BasePullRecyclerFragment<HomePullPresenter, UserInfo> {
+public class DataBaseListFragment extends BasePullListViewFragment<HomePullPresenter, UserInfo> {
+
+    @Bind(R.id.bcrh_refresh)
+    BeautyCircleRefreshHeader bcrh_refresh;
+
     @Override
     public void initData(Bundle savedInstanceState) {
+        getPtrFragment().addPtrUIHandler(bcrh_refresh);
         getPresenter().requestData(false);
+    }
+
+    @Override
+    public int getHeaderLayout() {
+        return R.layout.data_listview_fragment;
     }
 
     @Override
@@ -32,16 +44,21 @@ public class DataBaseListFragment extends BasePullRecyclerFragment<HomePullPrese
 
     @Override
     public void onRefresh() {
+        HanToast.show("刷新");
+        getPresenter().requestData(false);
 
     }
 
     @Override
     public void onLoad() {
-//    getPresenter().requestData(true);
+    getPresenter().requestData(true);
+        HanToast.show("加载");
     }
 
+
     @Override
-    public HanRecyclerAdapterItem<UserInfo> getRecyclerAdapterItem(LayoutInflater inflater, ViewGroup viewGroup, int type) {
-        return new DataBaseAdapterItem(inflater, viewGroup);
+    public HanListAdapterItem<UserInfo> getListAdapterItem(int type) {
+        return new DataBaseAdapterItem();
     }
+
 }

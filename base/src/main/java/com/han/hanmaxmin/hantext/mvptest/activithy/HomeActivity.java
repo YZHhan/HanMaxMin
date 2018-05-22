@@ -104,8 +104,8 @@ public class HomeActivity extends HanABActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        UserConfig.getInstance().UserLike = "111";
-//        commitFragment(new HomePullListFragment());
+//        UserConfig.getInstance().UserLike = "111";
+        commitFragment(new HomePullListFragment());
 
     }
 

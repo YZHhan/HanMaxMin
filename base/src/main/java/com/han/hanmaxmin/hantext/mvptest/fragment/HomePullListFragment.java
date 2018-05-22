@@ -12,7 +12,9 @@ import com.han.hanmaxmin.common.log.L;
 import com.han.hanmaxmin.common.viewbind.annotation.OnClick;
 import com.han.hanmaxmin.common.widget.toast.HanToast;
 import com.han.hanmaxmin.hantext.mvptest.HomePullPresenter;
+import com.han.hanmaxmin.mvp.adapter.HanListAdapterItem;
 import com.han.hanmaxmin.mvp.fragment.HanFragment;
+import com.han.hanmaxmin.mvp.fragment.HanPullListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +39,6 @@ public class HomePullListFragment extends HanFragment<HomePullPresenter> {
     @OnClick({ R.id.thread_main, R.id.thread_http, R.id.thread_work, R.id.thread_single, R.id.tv_intent})public void onClick(View view){
         switch (view.getId()){
             case R.id.thread_main:
-              HanToast.show("我是插入");
-                UserInfo userInfo = new UserInfo();
-                userInfo.setName("yinzhan");
-                userInfo.setAge("18");
-                userInfo.setSex("nan");
-                DataBaseHelper.getInstance().getDataBaseUserInfoHelper().insertOrReplace(userInfo);
 
                 break;
             case R.id.thread_http:
@@ -78,4 +74,5 @@ commitFragment(new DataBaseListFragment());
     public void loading(int resId, boolean cancelAble) {
 
     }
+
 }

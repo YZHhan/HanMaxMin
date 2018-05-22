@@ -16,6 +16,8 @@ import com.han.hanmaxmin.common.widget.ptr.indicator.PtrIndicator;
 
 /**
  * Created by ptxy on 2018/3/16.
+ * PtrUIHandler  下拉刷新的UI接口（）
+ * 准备下拉，下拉中，下拉完成，重置，下拉过程位置变化
  */
 
 public class BeautyCircleRefreshHeader extends RelativeLayout implements PtrUIHandler {

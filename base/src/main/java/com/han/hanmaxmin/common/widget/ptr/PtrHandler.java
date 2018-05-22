@@ -4,6 +4,8 @@ import android.view.View;
 
 /**
  * Created by ptxy on 2018/3/12.
+ * 下拉刷新的功能接口
+ * 刷新功能回调以及判断是否可以下拉刷新。
  */
 
 public interface PtrHandler {

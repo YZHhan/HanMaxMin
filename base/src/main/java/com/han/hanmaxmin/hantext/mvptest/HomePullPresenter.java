@@ -6,6 +6,7 @@ import com.han.hanmaxmin.common.greendao.model.UserInfo;
 import com.han.hanmaxmin.common.model.HanModel;
 import com.han.hanmaxmin.common.widget.listview.LoadingFooter;
 import com.han.hanmaxmin.hantext.mvptest.fragment.DataBaseListFragment;
+import com.han.hanmaxmin.mvp.fragment.HanPullListFragment;
 import com.han.hanmaxmin.mvp.fragment.HanPullRecyclerFragment;
 import com.han.hanmaxmin.mvp.presenter.HanPresenter;
 
@@ -69,7 +70,7 @@ public class HomePullPresenter extends HanPresenter <DataBaseListFragment>{
     @Override
     public void paging(HanModel model) {
         if(model != null){
-            HanPullRecyclerFragment view = getView();
+            HanPullListFragment view = getView();
             view.setLoadingState(LoadingFooter.State.Normal);
         }
     }

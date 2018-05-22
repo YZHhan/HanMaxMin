@@ -58,17 +58,17 @@ public abstract class HanPullListFragment<T extends HanPresenter, D> extends Han
     protected View initView(LayoutInflater inflater) {
         View view = super.initView(inflater);
         initPtrFrameLayout(view);
-        return super.initView(inflater);
+        return view;
     }
 
-    /**
-     * StoreHouse  储存室
-     * @return
-     */
-    @Override
-    public PtrUIHandler getPtrUIHandlerView() {
-        return new StoreHouseHeader(getContext());
-    }
+//    /**
+//     * StoreHouse  储存室
+//     * @return
+//     */
+//    @Override
+//    public PtrUIHandler getPtrUIHandlerView() {
+//        return new StoreHouseHeader(getContext());
+//    }
 
     @Override
     protected void initListView(LayoutInflater inflater, View view) {

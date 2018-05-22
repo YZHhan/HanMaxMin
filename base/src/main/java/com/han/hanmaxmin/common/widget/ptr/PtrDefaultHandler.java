@@ -2,7 +2,9 @@ package com.han.hanmaxmin.common.widget.ptr;
 
 import android.os.Build;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ScrollView;
 
 /**
  * Created by ptxy on 2018/3/12.
@@ -39,5 +41,4 @@ public abstract class PtrDefaultHandler implements PtrHandler {
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
         return checkContentCanBePulledDown(frame, content, header);
     }
-
 }

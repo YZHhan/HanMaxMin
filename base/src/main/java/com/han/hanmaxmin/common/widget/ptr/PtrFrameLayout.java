@@ -42,12 +42,12 @@ public class PtrFrameLayout extends ViewGroup {
     private final static byte    MASK_AUTO_REFRESH            = 0x03;
     protected View mContent;
     // optional config for define header and content in xml file
-    private int     mHeaderId              = 0;
-    private int     mContainerId           = 0;
+    private int     mHeaderId              = 0;//设置头部ID
+    private int     mContainerId           = 0;//设置内容ID
     // config
-    private int     mDurationToClose       = 200;
-    private int     mDurationToCloseHeader = 1000;
-    private boolean mKeepHeaderWhenRefresh = true;
+    private int     mDurationToClose       = 200;//回弹延时，默认200ms，回弹到刷新高度所用时间。
+    private int     mDurationToCloseHeader = 1000;//头部回弹时间，默认1000ms。
+    private boolean mKeepHeaderWhenRefresh = true;//刷新是否保持头部，默认值true。
     private boolean mPullToRefresh         = false;
     private View mHeaderView;
     private PtrUIHandlerHolder mPtrUIHandlerHolder = PtrUIHandlerHolder.create();
@@ -67,7 +67,7 @@ public class PtrFrameLayout extends ViewGroup {
 
     private int  mLoadingMinTime   = 500;
     private long mLoadingStartTime = 0;
-    private PtrIndicator mPtrIndicator;
+    private PtrIndicator mPtrIndicator;//阻尼系数，默认:1.7f，越大，感觉下拉时越吃力。
     private boolean  mHasSendCancelEvent          = false;
     private Runnable mPerformRefreshCompleteDelay = new Runnable() {
         @Override public void run() {
@@ -106,6 +106,9 @@ public class PtrFrameLayout extends ViewGroup {
         mScrollChecker = new ScrollChecker();
     }
 
+    /**
+     * 确定header 和content
+     */
     @Override protected void onFinishInflate() {
         final int childCount = getChildCount();
         if (childCount > 2) {
@@ -174,6 +177,9 @@ public class PtrFrameLayout extends ViewGroup {
         }
     }
 
+    /**
+     * 测量 Header 和 Content
+     */
     @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (isDebug()) {

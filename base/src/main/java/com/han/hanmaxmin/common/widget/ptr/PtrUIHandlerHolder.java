@@ -4,6 +4,7 @@ import com.han.hanmaxmin.common.widget.ptr.indicator.PtrIndicator;
 
 /**
  * Created by ptxy on 2018/3/11.
+ * 实现 UI 接口 PtrUIHandler ，封装了 PtrUIHandler ，并将其组织成链表的形式。
  */
 
 public class PtrUIHandlerHolder implements PtrUIHandler {
@@ -125,16 +126,35 @@ public class PtrUIHandlerHolder implements PtrUIHandler {
 
     @Override
     public void onUIRefreshBegin(PtrFrameLayout frame) {
+        PtrUIHandlerHolder current = this;
+        do {
+            PtrUIHandler handler = current.getHandler();
+            if(null != handler){
+                handler.onUIRefreshBegin(frame);
+            }
+        } while ((current =current.mNext) != null);
 
     }
 
     @Override
     public void onUIRefreshComplete(PtrFrameLayout frame) {
-
+        PtrUIHandlerHolder current = this;
+        do {
+            final PtrUIHandler handler = current.getHandler();
+            if (null != handler) {
+                handler.onUIRefreshComplete(frame);
+            }
+        } while ((current = current.mNext) != null);
     }
 
     @Override
-    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator indicator) {
-
+    public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
+        PtrUIHandlerHolder current = this;
+        do {
+            final PtrUIHandler handler = current.getHandler();
+            if (null != handler) {
+                handler.onUIPositionChange(frame, isUnderTouch, status, ptrIndicator);
+            }
+        } while ((current = current.mNext) != null);
     }
 }

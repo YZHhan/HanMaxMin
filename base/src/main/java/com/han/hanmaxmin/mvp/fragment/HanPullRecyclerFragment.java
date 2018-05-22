@@ -76,6 +76,10 @@ public abstract class HanPullRecyclerFragment<P extends HanPresenter, D> extends
         return new StoreHouseHeader(getContext());
     }
 
+    /**
+     *  setPtrHandler：主要是为了判断是否可以刷新（考虑到有AbsListView等滑动view的情况）以及设置刷新前的设置：
+     *  设置PtrUIHandler，通过addPtrUIHandler为PtrFrameLayout设置PtrUIHandler，此设置主要是控制下拉时UI变化，当然，所引用的第三方库有写好的PtrUIHandler：
+     */
     protected void initPtrFrameLayout(View view) {
         if (view instanceof PtrFrameLayout) {
             mPtrFrameLayout = (PtrFrameLayout) view;
