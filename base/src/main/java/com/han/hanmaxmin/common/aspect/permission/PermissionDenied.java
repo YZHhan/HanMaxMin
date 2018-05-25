@@ -1,24 +1,20 @@
 package com.han.hanmaxmin.common.aspect.permission;
 
+import android.app.ActivityManager;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 /**
- * @CreateBy Administrator
- * @Date 2017/11/3  11:38
- * @Description
+ * 权限拒绝
  */
+
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Permission {
-    String [] value()   default {};
+public @interface PermissionDenied {
 
-    int requestCode() default 0;
-    
-    boolean forceGoOn() default false;
 }

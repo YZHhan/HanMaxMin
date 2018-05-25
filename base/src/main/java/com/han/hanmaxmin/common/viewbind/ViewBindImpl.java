@@ -67,7 +67,7 @@ public final class ViewBindImpl implements ViewBind {
         IGNORED.add(HanTabViewPagerAdapter.class);
         IGNORED.add(HanListAdapterItem.class);
         IGNORED.add(HanRecyclerAdapterItem.class);
-        /*自己的封装的 类也需要忽略*/
+        /*各个View的父类，*/
     }
 
     @Override public void bind(Object handler, View view) {

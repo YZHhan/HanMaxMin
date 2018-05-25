@@ -2,9 +2,12 @@ package com.han.hanmaxmin.common.greendao.model;
 
 import com.han.hanmaxmin.hantext.httptext.model.BaseModel;
 
+import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+
+import java.util.List;
 
 /**
  * Created by ptxy on 2018/4/24.
@@ -19,13 +22,23 @@ public class UserInfo extends BaseModel{
     private String sex;
     private String age;
     private String like;
-    @Generated(hash = 1331572585)
-    public UserInfo(long id, String name, String sex, String age, String like) {
+
+    @Convert(columnType = String.class, converter = StringConverter.class)
+    private List<String> userInfoVips;
+
+    @Convert(columnType = String.class, converter = StringConverter.class)
+    private List<String> userUpdateVipCard;
+
+    @Generated(hash = 1107500778)
+    public UserInfo(long id, String name, String sex, String age, String like,
+            List<String> userInfoVips, List<String> userUpdateVipCard) {
         this.id = id;
         this.name = name;
         this.sex = sex;
         this.age = age;
         this.like = like;
+        this.userInfoVips = userInfoVips;
+        this.userUpdateVipCard = userUpdateVipCard;
     }
     @Generated(hash = 1279772520)
     public UserInfo() {
@@ -59,5 +72,17 @@ public class UserInfo extends BaseModel{
     }
     public void setLike(String like) {
         this.like = like;
+    }
+    public List<String> getUserInfoVips() {
+        return this.userInfoVips;
+    }
+    public void setUserInfoVips(List<String> userInfoVips) {
+        this.userInfoVips = userInfoVips;
+    }
+    public List<String> getUserUpdateVipCard() {
+        return this.userUpdateVipCard;
+    }
+    public void setUserUpdateVipCard(List<String> userUpdateVipCard) {
+        this.userUpdateVipCard = userUpdateVipCard;
     }
 }

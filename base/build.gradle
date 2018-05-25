@@ -26,7 +26,7 @@ android {
     }
 
     greendao {
-        schemaVersion 15
+        schemaVersion 21
 //        daoPackage 'com.zgl.greentest.gen'   由GreenDao自动生成代码所在的包名，默认的是在项目包下面新建一个gen。
 //        targetGenDir 'src/main/java'   设置自动生成代码的目录。
     }
@@ -66,7 +66,7 @@ dependencies {
      * debugCompile: debug Build Type
      * releaseCompile: release Build Type.
      */
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -74,10 +74,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:recyclerview-v7:25.3.1'
-
-//    compile 'com.facebook.react:react-native:0.42.3'
+    //    compile 'com.facebook.react:react-native:0.42.3'
     compile 'org.greenrobot:greendao:3.2.2'
-
     testCompile 'junit:junit:4.12'
     /*AspectJ*/
     compile 'org.aspectj:aspectjrt:1.8.10'
@@ -91,29 +89,23 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     /*阿里云视频*/
     compile(name: 'AlivcPlayer', ext: 'aar')
-
     /*ButterKnife*/
     compile 'com.jakewharton:butterknife:8.4.0'
-//    apt 'com.jakewharton:butterknife-compiler:8.4.0'
-
+    //    apt 'com.jakewharton:butterknife-compiler:8.4.0'
     debugCompile 'me.drakeet.library:crashwoodpecker:0.9.7'
-
     /**
      * 浮层库
      */
     compile 'com.github.huburt-Hu:NewbieGuide:v1.0.2'
-
     // 阿里云视频播放SDK
-//    compile(name: 'AlivcReporter', ext: 'arr')
+    //    compile(name: 'AlivcReporter', ext: 'arr')
     compile(name: 'AlivcPlayer', ext: 'aar')
     compile(name: 'AliyunVodPlayer', ext: 'aar')
-
     /**
      * Retrofit
      */
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
-
-
+    implementation project(':mylibrary')
 }

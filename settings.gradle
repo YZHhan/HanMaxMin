@@ -1,1 +1,1 @@
-include ':base', ':temperature', ':hanbase', ':myapplication'
+include ':base', ':temperature', ':hanbase', ':myapplication', ':mylibrary'

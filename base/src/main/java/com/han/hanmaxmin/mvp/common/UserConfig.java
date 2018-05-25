@@ -4,6 +4,7 @@ import com.han.hanmaxmin.common.config.HanProperties;
 import com.han.hanmaxmin.common.config.Property;
 
 import java.security.PublicKey;
+import java.util.List;
 
 /**
  * Created by ptxy on 2018/4/4.
@@ -51,6 +52,7 @@ public class UserConfig extends HanProperties {
     @Property public String UserSex;
     @Property public String UserHeight;
     @Property public String UserLike;
+    @Property public List<String> UserVipList;
 
 
 

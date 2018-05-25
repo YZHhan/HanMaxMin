@@ -6,19 +6,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 /**
- * @CreateBy Administrator
- * @Date 2017/11/3  11:38
- * @Description
+ * 权限取消
  */
+
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Permission {
-    String [] value()   default {};
-
-    int requestCode() default 0;
-    
-    boolean forceGoOn() default false;
+public @interface PermissionCancel {
+    int requestCode () default 0;
 }

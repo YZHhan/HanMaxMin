@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/hanbase" />
             <option value="$PROJECT_DIR$/myapplication" />
+            <option value="$PROJECT_DIR$/mylibrary" />
             <option value="$PROJECT_DIR$/temperature" />
           </set>
         </option>
