@@ -22,12 +22,12 @@ public class HomePullAdapterItem extends HanListAdapterItem <ModelApp> {
     @Override
     public void init(View contentView) {
         super.init(contentView);
-        jump_textView = (TextView) contentView.findViewById(R.id.jump_text);
+//        jump_textView = (TextView) contentView.findViewById(R.id.jump_text);
     }
 
     @Override
     public void bindData(ModelApp modelApp, int position, int count) {
-        jump_textView.setText(modelApp.name);
+//        jump_textView.setText(modelApp.name);
     }
 
     @Override

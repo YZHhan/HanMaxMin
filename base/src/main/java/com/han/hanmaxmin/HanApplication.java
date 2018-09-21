@@ -2,6 +2,7 @@ package com.han.hanmaxmin;
 
 import android.text.TextUtils;
 
+import com.alivc.live.pusher.AlivcLivePusher;
 import com.han.hanmaxmin.common.http.HttpBuilder;
 
 import me.drakeet.library.CrashWoodpecker;
@@ -25,6 +26,8 @@ public class HanApplication extends AsApplication {
     public void onCreate() {
         super.onCreate();
         CrashWoodpecker.fly().to(this);
+        AlivcLivePusher.showDebugView(this);
+
 
     }
 

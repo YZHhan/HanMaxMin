@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.bumptech.glide.annotation.GlideModule;
-import com.example.mylibrary.common.Demo;
 import com.han.hanmaxmin.R;
 import com.han.hanmaxmin.common.aspect.permission.NeedPermission;
 import com.han.hanmaxmin.common.aspect.permission.PermissionCancel;
@@ -53,26 +52,27 @@ public class HomePullListFragment extends HanFragment<HomePullPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        L.i("HanMaxMin","我是一个Fragment");
+        L.i("HanMaxMin", "我是一个Fragment");
         showContentView();
     }
 
-    @OnClick({ R.id.thread_main, R.id.thread_http, R.id.thread_work, R.id.thread_single, R.id.tv_intent})public void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.thread_main, R.id.thread_http, R.id.thread_work, R.id.thread_single, R.id.tv_intent})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.thread_main:
-            HanToast.show("我是插入");
-            UserInfo userInfo= new UserInfo();
-            userInfo.setName("日复一日");
-            userInfo.setAge("2");
-            userInfo.setLike("日久生情");
-            List<String> list = new ArrayList<>();
-            list.add("123");
-            list.add("234");
-            list.add("345");
-            list.add("456");
-            userInfo.setUserInfoVips(list);
+                HanToast.show("我是插入");
+                UserInfo userInfo = new UserInfo();
+                userInfo.setName("日复一日");
+                userInfo.setAge("2");
+                userInfo.setLike("日久生情");
+                List<String> list = new ArrayList<>();
+                list.add("123");
+                list.add("234");
+                list.add("345");
+                list.add("456");
+                userInfo.setUserInfoVips(list);
 
-                UserInfo userInfo1= new UserInfo();
+                UserInfo userInfo1 = new UserInfo();
                 userInfo1.setName("Android");
                 userInfo1.setAge("2");
                 userInfo1.setLike("Kotlin");
@@ -85,7 +85,7 @@ public class HomePullListFragment extends HanFragment<HomePullPresenter> {
                 List<UserInfo> list2 = new ArrayList<>();
                 list2.add(userInfo);
                 list2.add(userInfo1);
-            DataBaseHelper.getInstance().getDataBaseUserInfoHelper().insertOrReplace(userInfo1);
+                DataBaseHelper.getInstance().getDataBaseUserInfoHelper().insertOrReplace(userInfo1);
                 break;
             case R.id.thread_http:
                 HanToast.show("我是查询");
@@ -125,7 +125,7 @@ public class HomePullListFragment extends HanFragment<HomePullPresenter> {
 //                UserConfig.getInstance().UserLike = "本兮";
 //                UserConfig.getInstance().UserAge = "22";
 //                UserConfig.getInstance().UserName = "YZH";
-                List<String> vipLsit= new ArrayList<>();
+                List<String> vipLsit = new ArrayList<>();
                 vipLsit.add("12343567889");
                 vipLsit.add("adsfdghjytrew");
                 vipLsit.add("123qwetryt43567889");
@@ -133,7 +133,6 @@ public class HomePullListFragment extends HanFragment<HomePullPresenter> {
                 vipLsit.add("ertyuytrewsdvbn");
                 UserConfig.getInstance().UserVipList = vipLsit;
                 UserConfig.getInstance().commit();
-
 
 
 //                com.han.hanmaxmin.common.greendao1.model.User user = new com.han.hanmaxmin.common.greendao1.model.User();
@@ -151,6 +150,7 @@ public class HomePullListFragment extends HanFragment<HomePullPresenter> {
                 break;
             case R.id.thread_single:
                 HanToast.show("Config查询");
+                intentActivity();
 //                Student student1 = DataBaseUtils.getStudentDao().queryValue(Student.class, StudentDao.Properties.StudentAge, "2222");
 
 //                if(student1 == null){
@@ -168,41 +168,46 @@ public class HomePullListFragment extends HanFragment<HomePullPresenter> {
 //                    L.i("DataBaseDao","User= " + user1.getAge() + user1.getName());
 //                }
 
-                L.i("HanProperties",UserConfig.getInstance().UserName + UserConfig.getInstance().UserAge + UserConfig.getInstance().UserLike);
-
-                List<String> userVipList = UserConfig.getInstance().UserVipList;
-                for (String str : userVipList){
-                    L.i("HanProperties","userVipList==" + str);
-                }
+//                L.i("HanProperties",UserConfig.getInstance().UserName + UserConfig.getInstance().UserAge + UserConfig.getInstance().UserLike);
+//
+//                List<String> userVipList = UserConfig.getInstance().UserVipList;
+//                for (String str : userVipList){
+//                    L.i("HanProperties","userVipList==" + str);
+//                }
 
                 break;
 
             case R.id.tv_intent:
-commitFragment(new DataBaseListFragment());
+                commitFragment(new DataBaseListFragment());
                 break;
 
 
         }
     }
 
+    @NeedPermission(value = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE})
+    private void intentActivity() {
+//        intent2Activity(TakePhoteActivity.class);
+
+    }
 
 
-        @NeedPermission(value = {Manifest.permission.CALL_PHONE}, requestCode = 0)
-        private void show (){
-            HanToast.show("同意了");
+    @NeedPermission(value = {Manifest.permission.CALL_PHONE}, requestCode = 0)
+    private void show() {
+        HanToast.show("同意了");
 
-        }
+    }
 
-        @PermissionCancel
-        private void cancelPermission(CancelBean cancelBean){
-               HanToast.show("你取消了我的权限，你不能在活着");
-        }
+    @PermissionCancel
+    private void cancelPermission(CancelBean cancelBean) {
+        HanToast.show("你取消了我的权限，你不能在活着");
+    }
 
-        @PermissionDenied
-        private void denyPermission(DenyBean denyBean){
-            HanToast.show("你拒绝了我的权限，你失去我了");
+    @PermissionDenied
+    private void denyPermission(DenyBean denyBean) {
+        HanToast.show("你拒绝了我的权限，你失去我了");
 
-        }
+    }
 
 
     @Override

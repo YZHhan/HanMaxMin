@@ -26,6 +26,7 @@ class HanRealSubject implements HanSubject {
 }
 
 /**
+ * 动态创建代理对象的类。
  * 代理对象
  *
  * Proxy  的静态方法  newProxyInstance（ClassLoader loader,Class<?>[] interfaces,InvocationHandler h）
@@ -42,6 +43,7 @@ class HanProxyHandler implements InvocationHandler {
 
     /**
      * 绑定委托对象，并返回代理类。
+     * 绑定关系，也就是关联到哪个接口（与具体的实现类绑定）的哪些方法将被调用时，执行invoke方法。
      */
     public Object bind(Object tar) {
         this.tar = tar;
@@ -68,6 +70,19 @@ class HanProxyHandler implements InvocationHandler {
         result = method.invoke(tar, args);
         return result;
     }
+}
+
+class Client{
+
+    public static void main(String [] args) throws Throwable{
+        HanProxyHandler hanProxyHandler = new HanProxyHandler();
+        hanProxyHandler.bind(new HanRealSubject());
+
+    }
 
 }
+
+
+
+
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">葡萄学院</string>
+    <string name="app_name">HanMaxMin</string>
     <string name="loading">加载中…</string>
     <string name="http_error">网络异常</string>
     <string name="push_loading">上拉加载</string>

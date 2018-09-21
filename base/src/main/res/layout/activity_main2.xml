@@ -9,9 +9,9 @@
     tools:context="com.han.hanmaxmin.activity.listview.Main2Activity">
 
 
-    <TextView
-        android:id="@+id/jump_text"
+    <ImageView
+        android:id="@+id/iv_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="跳转的Activity"/>
+        android:layout_height="match_parent"
+        />
 </LinearLayout>

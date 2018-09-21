@@ -9,6 +9,7 @@ import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ViewSwitcher;
 
+import com.bumptech.glide.Glide;
 import com.han.hanmaxmin.R;
 
 /**
@@ -49,6 +50,11 @@ public class ImageSwitcherActivity extends FragmentActivity {
         imageSwitcher.setInAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_in_left));
         //设置切出动画
         imageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.slide_out_right));
+
+
+        Glide.get(this).clearDiskCache();
+
+
 
 
     }

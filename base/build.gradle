@@ -8,7 +8,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.han.hanmaxmin"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -16,6 +16,19 @@ android {
 ///*GrowingIO*/
 //        resValue("string", "growingio_project_id", "8fbd1fd181b92a19")
 //        resValue("string", "growingio_url_scheme", "growing.4cf69b63d2ebb042")
+
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'x86', 'armeabi-v7a','x86_64','arm64-v8a'
+                universalApk true
+            }
+        }
+
+        ndk {
+            abiFilters  "armeabi-v7a", "arm64-v8a"
+        }
 
     }
     buildTypes {
@@ -34,7 +47,13 @@ android {
 
     /*阿里云视频*/
     repositories {
-        flatDir { dirs 'libs' }
+        flatDir { dirs 'libs', 'src/main/jniLibs'}
+    }
+
+    sourceSets{
+        main{
+            jniLibs.srcDirs = ['libs','src/main/jniLibs']
+        }
     }
 }
 /**
@@ -92,7 +111,7 @@ dependencies {
     /*ButterKnife*/
     compile 'com.jakewharton:butterknife:8.4.0'
     //    apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    debugCompile 'me.drakeet.library:crashwoodpecker:0.9.7'
+    compile 'me.drakeet.library:crashwoodpecker:0.9.7'
     /**
      * 浮层库
      */
@@ -101,11 +120,21 @@ dependencies {
     //    compile(name: 'AlivcReporter', ext: 'arr')
     compile(name: 'AlivcPlayer', ext: 'aar')
     compile(name: 'AliyunVodPlayer', ext: 'aar')
+    compile(name: 'AlivcReporter', ext: 'aar')
+//    compile(name: 'live-pusher-3.3.4', ext: 'aar')
+//    compile(name: 'live-face-beauty-3.3.4', ext: 'aar')
+    compile(name: 'live-pusher-resources-3.3.5', ext: 'aar')
+
+
     /**
      * Retrofit
      */
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    implementation project(':mylibrary')
+//    implementation project(':mylibrary')
+
+    /* picasso*/
+    compile 'com.squareup.picasso:picasso:2.5.1'
+
 }

@@ -33,8 +33,10 @@ import java.util.concurrent.TimeUnit;
  *                     活动状态时，线程池会创建新的线程来处理新任务，否则就会利用空闲线程来处理新任务。线程池中的空闲线程是有超时机制
  *                     ，这个超时机制为60秒
  *
- *              ScheduledThreadPool：
- *              SingleThreadPoo:
+ *              ScheduledThreadPool：通过指定的顺序将任务一个个丢到线程，都乖乖的排队等待执行，不处理并发的操作，不会被回收。确定就是一个人干活效率慢。
+ *              SingleThreadPoo:是唯一一个有延迟执行和周期重复执行的线程池。它的核心线程池固定，非核心线程的数量没有限制，但是闲置时会立即会被回收。
+
+
  *
  *
  *
